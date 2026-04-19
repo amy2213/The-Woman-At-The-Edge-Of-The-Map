@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Woman at the Edge of the Map — Amy Laird</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --aged: #e8dfc8;
+    --sepia: #8b6f47;
+    --rust: #7c3a1e;
+    --gold: #c9a84c;
+    --faint: #d4c9b0;
+    --shadow: rgba(26,20,16,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── COVER ─── */
+  #cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    cursor: pointer;
+  }
+
+  .cover-texture {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse at 30% 20%, rgba(124,58,30,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(139,111,71,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-lines {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 28px,
+      rgba(201,168,76,0.04) 28px, rgba(201,168,76,0.04) 29px
+    );
+    pointer-events: none;
+  }
+
+  .cover-border {
+    position: absolute; inset: 2rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    pointer-events: none;
+  }
+  .cover-border::before {
+    content: '';
+    position: absolute; inset: 6px;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .cover-ornament {
+    font-size: 1.2rem;
+    color: var(--gold);
+    opacity: 0.6;
+    letter-spacing: 0.5em;
+    margin-bottom: 3rem;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .cover-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-align: center;
+    line-height: 1.2;
+    color: var(--paper);
+    animation: fadeUp 1.4s ease both;
+    max-width: 800px;
+  }
+
+  .cover-title .edge-word {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .cover-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--faint);
+    letter-spacing: 0.2em;
+    margin-top: 1.5rem;
+    animation: fadeUp 1.6s ease both;
+  }
+
+  .cover-author {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    letter-spacing: 0.4em;
+    color: var(--sepia);
+    margin-top: 3rem;
+    animation: fadeUp 1.8s ease both;
+  }
+
+  .cover-divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 2rem auto;
+    animation: fadeUp 2s ease both;
+  }
+
+  .cover-enter {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--sepia);
+    opacity: 0.7;
+    margin-top: 1rem;
+    animation: fadeUp 2.2s ease both, pulse 2s ease-in-out 2.5s infinite;
+  }
+
+  .content-note {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--sepia);
+    opacity: 0.7;
+    margin-top: 4rem;
+    letter-spacing: 0.1em;
+    animation: fadeUp 2.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; } 50% { opacity: 0.3; }
+  }
+
+  /* ─── MAIN BOOK ─── */
+  #book {
+    display: none;
+    min-height: 100vh;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 280px;
+    background: #120e0a;
+    border-right: 1px solid rgba(201,168,76,0.15);
+    z-index: 100;
+    overflow-y: auto;
+    padding: 2rem 0;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-logo {
+    padding: 0 1.5rem 2rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    margin-bottom: 1.5rem;
+  }
+  .sidebar-logo-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    color: var(--paper);
+    line-height: 1.4;
+    cursor: pointer;
+  }
+  .sidebar-logo-author {
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--sepia);
+    margin-top: 0.4rem;
+    letter-spacing: 0.15em;
+  }
+
+  .sidebar-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--sepia);
+    opacity: 0.6;
+    padding: 0 1.5rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .part-nav-btn {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.7rem 1.5rem;
+    background: none;
+    border: none;
+    color: var(--faint);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+  }
+  .part-nav-btn:hover, .part-nav-btn.active {
+    background: rgba(201,168,76,0.06);
+    border-left-color: var(--gold);
+    color: var(--paper);
+  }
+  .part-nav-roman {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    opacity: 0.7;
+    min-width: 20px;
+  }
+  .part-nav-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.3;
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  .main {
+    margin-left: 280px;
+    min-height: 100vh;
+    padding: 4rem 3rem;
+    max-width: 900px;
+  }
+
+  /* ─── PART SECTION ─── */
+  .part-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .part-roman {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: rgba(201,168,76,0.3);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .part-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--paper);
+  }
+  .part-poem-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--sepia);
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .part-intro {
+    background: rgba(201,168,76,0.04);
+    border-left: 2px solid rgba(201,168,76,0.3);
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--faint);
+    line-height: 1.9;
+  }
+
+  /* ─── POEM LIST ─── */
+  .poem-list {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .poem-item {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0.9rem 1.25rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .poem-item:hover {
+    border-color: rgba(201,168,76,0.2);
+    background: rgba(201,168,76,0.04);
+  }
+  .poem-item:hover .poem-title-small {
+    color: var(--paper);
+  }
+  .poem-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--sepia);
+    opacity: 0.5;
+    min-width: 24px;
+  }
+  .poem-icon {
+    font-size: 0.5rem;
+    color: var(--gold);
+    opacity: 0.5;
+    min-width: 24px;
+  }
+  .poem-title-small {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--faint);
+    transition: color 0.2s;
+  }
+  .before-you-read .poem-title-small {
+    font-style: italic;
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+
+  /* ─── POEM MODAL ─── */
+  #poem-modal {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 200;
+    background: rgba(18,14,10,0.95);
+    overflow-y: auto;
+  }
+
+  .modal-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 6rem 3rem 8rem;
+    position: relative;
+  }
+
+  .modal-close {
+    position: fixed;
+    top: 2rem; right: 2rem;
+    background: none;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--sepia);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .modal-close:hover {
+    border-color: var(--gold);
+    color: var(--paper);
+  }
+
+  .modal-prev, .modal-next {
+    position: fixed;
+    bottom: 2rem;
+    background: none;
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--sepia);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    padding: 0.5rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .modal-prev { left: 50%; transform: translateX(-130px); }
+  .modal-next { left: 50%; transform: translateX(30px); }
+  .modal-prev:hover, .modal-next:hover {
+    border-color: var(--gold);
+    color: var(--paper);
+  }
+
+  .modal-part-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--sepia);
+    opacity: 0.6;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .modal-poem-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--paper);
+    margin-bottom: 3rem;
+    line-height: 1.3;
+  }
+
+  .modal-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin-bottom: 3rem;
+  }
+
+  .modal-poem-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    line-height: 2.1;
+    color: #d4c4a8;
+  }
+
+  .stanza {
+    margin-bottom: 2rem;
+  }
+  .stanza:last-child { margin-bottom: 0; }
+
+  /* Special FILE: styling */
+  .modal-poem-body.file-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.9;
+    color: #b8c4a0;
+  }
+
+  /* Dialogue styling */
+  .modal-poem-body .speaker {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  /* ─── FRONT MATTER PAGE ─── */
+  #front-section {
+    display: none;
+  }
+
+  .dedication {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--faint);
+    line-height: 1.9;
+    max-width: 400px;
+    margin: 3rem auto;
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 260px;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; padding: 5rem 1.5rem 3rem; }
+    .menu-toggle {
+      display: flex !important;
+    }
+    .modal-prev { transform: translateX(-100px); }
+    .modal-next { transform: translateX(10px); }
+  }
+
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem; left: 1rem;
+    z-index: 150;
+    background: var(--ink);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    font-size: 1rem;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .menu-toggle span {
+    display: block; width: 20px; height: 1px;
+    background: var(--gold);
+  }
+
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+  }
+  .overlay.show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div id="cover" onclick="enterBook()">
+  <div class="cover-texture"></div>
+  <div class="cover-lines"></div>
+  <div class="cover-border"></div>
+  
+  <div class="cover-ornament">✦ ✦ ✦</div>
+  
+  <h1 class="cover-title">
+    The Woman at <span class="edge-word">the Edge</span> of the Map
+  </h1>
+  
+  <div class="cover-subtitle">Poems, Memories, Mythic Files</div>
+  
+  <div class="cover-divider"></div>
+  
+  <div class="cover-author">Amy Laird</div>
+  
+  <div class="cover-enter">click anywhere to open →</div>
+  
+  <div class="content-note">Content note: suicide, abuse, incarceration.</div>
+</div>
+
+<!-- BOOK -->
+<div id="book">
+  <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-title" onclick="showCover()">The Woman at the Edge of the Map</div>
+      <div class="sidebar-logo-author">Amy Laird · 2026</div>
+    </div>
+    <div class="sidebar-label">Contents</div>
+    <button class="part-nav-btn" data-part="0" onclick="showPart(0)"><span class="part-nav-roman">I</span><span class="part-nav-title">The Edge</span></button><button class="part-nav-btn" data-part="1" onclick="showPart(1)"><span class="part-nav-roman">II</span><span class="part-nav-title">Seekers and Shadows</span></button><button class="part-nav-btn" data-part="2" onclick="showPart(2)"><span class="part-nav-roman">III</span><span class="part-nav-title">The Reckoning</span></button><button class="part-nav-btn" data-part="3" onclick="showPart(3)"><span class="part-nav-roman">IV</span><span class="part-nav-title">The Myth</span></button><button class="part-nav-btn" data-part="4" onclick="showPart(4)"><span class="part-nav-roman">V</span><span class="part-nav-title">The Return</span></button><button class="part-nav-btn" data-part="5" onclick="showPart(5)"><span class="part-nav-roman">VI</span><span class="part-nav-title">Personal Letters, Closings, and Artifacts</span></button>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+    <section class="part-section" id="part-0" style="display:none">
+        <div class="part-header">
+            <div class="part-roman">I</div>
+            <h2 class="part-title">The Edge</h2>
+            <div class="part-poem-count">19 pieces</div>
+        </div>
+        
+        <div class="poem-list"><div class="poem-item" onclick="openPoem(0,0)">
+                <span class="poem-num">01</span>
+                <span class="poem-title-small">The Edge, Lived</span>
+            </div><div class="poem-item" onclick="openPoem(0,1)">
+                <span class="poem-num">02</span>
+                <span class="poem-title-small">Years Later</span>
+            </div><div class="poem-item" onclick="openPoem(0,2)">
+                <span class="poem-num">03</span>
+                <span class="poem-title-small">This Is How It Started</span>
+            </div><div class="poem-item" onclick="openPoem(0,3)">
+                <span class="poem-num">04</span>
+                <span class="poem-title-small">The Folder</span>
+            </div><div class="poem-item" onclick="openPoem(0,4)">
+                <span class="poem-num">05</span>
+                <span class="poem-title-small">The Refrigerator Was Full of Names</span>
+            </div><div class="poem-item" onclick="openPoem(0,5)">
+                <span class="poem-num">06</span>
+                <span class="poem-title-small">The Quilt</span>
+            </div><div class="poem-item" onclick="openPoem(0,6)">
+                <span class="poem-num">07</span>
+                <span class="poem-title-small">The Cost of Passing while Masking</span>
+            </div><div class="poem-item" onclick="openPoem(0,7)">
+                <span class="poem-num">08</span>
+                <span class="poem-title-small">Stolen Outfit</span>
+            </div><div class="poem-item" onclick="openPoem(0,8)">
+                <span class="poem-num">09</span>
+                <span class="poem-title-small">Errata</span>
+            </div><div class="poem-item" onclick="openPoem(0,9)">
+                <span class="poem-num">10</span>
+                <span class="poem-title-small">Curbside Confession</span>
+            </div><div class="poem-item" onclick="openPoem(0,10)">
+                <span class="poem-num">11</span>
+                <span class="poem-title-small">Leftover Fire</span>
+            </div><div class="poem-item" onclick="openPoem(0,11)">
+                <span class="poem-num">12</span>
+                <span class="poem-title-small">Abilene</span>
+            </div><div class="poem-item" onclick="openPoem(0,12)">
+                <span class="poem-num">13</span>
+                <span class="poem-title-small">I Am Not a Metaphor</span>
+            </div><div class="poem-item" onclick="openPoem(0,13)">
+                <span class="poem-num">14</span>
+                <span class="poem-title-small">What I Was Given</span>
+            </div><div class="poem-item" onclick="openPoem(0,14)">
+                <span class="poem-num">15</span>
+                <span class="poem-title-small">Oh, You Meant Well?</span>
+            </div><div class="poem-item" onclick="openPoem(0,15)">
+                <span class="poem-num">16</span>
+                <span class="poem-title-small">Polite Doesn’t Mean Safe</span>
+            </div><div class="poem-item" onclick="openPoem(0,16)">
+                <span class="poem-num">17</span>
+                <span class="poem-title-small">Twice Without Warning</span>
+            </div><div class="poem-item" onclick="openPoem(0,17)">
+                <span class="poem-num">18</span>
+                <span class="poem-title-small">Bad Day, No Poetic Twist</span>
+            </div><div class="poem-item" onclick="openPoem(0,18)">
+                <span class="poem-num">19</span>
+                <span class="poem-title-small">Next Time, Just Say You Don’t Know Me</span>
+            </div></div>
+    </section><section class="part-section" id="part-1" style="display:none">
+        <div class="part-header">
+            <div class="part-roman">II</div>
+            <h2 class="part-title">Seekers and Shadows</h2>
+            <div class="part-poem-count">10 pieces</div>
+        </div>
+        
+        <div class="poem-list"><div class="poem-item before-you-read" onclick="openPoem(1,0)">
+                <span class="poem-icon">◆</span>
+                <span class="poem-title-small">Before You Read</span>
+            </div><div class="poem-item" onclick="openPoem(1,1)">
+                <span class="poem-num">02</span>
+                <span class="poem-title-small">Microwave Omen</span>
+            </div><div class="poem-item" onclick="openPoem(1,2)">
+                <span class="poem-num">03</span>
+                <span class="poem-title-small">The Day I Married the Wind</span>
+            </div><div class="poem-item" onclick="openPoem(1,3)">
+                <span class="poem-num">04</span>
+                <span class="poem-title-small">Prophet with a Scarred Throat</span>
+            </div><div class="poem-item" onclick="openPoem(1,4)">
+                <span class="poem-num">05</span>
+                <span class="poem-title-small">We Don’t Pray Here</span>
+            </div><div class="poem-item" onclick="openPoem(1,5)">
+                <span class="poem-num">06</span>
+                <span class="poem-title-small">How to Bury a Version of Yourself</span>
+            </div><div class="poem-item" onclick="openPoem(1,6)">
+                <span class="poem-num">07</span>
+                <span class="poem-title-small">Confession Booth Burned Down</span>
+            </div><div class="poem-item" onclick="openPoem(1,7)">
+                <span class="poem-num">08</span>
+                <span class="poem-title-small">Operation: Mind Palace</span>
+            </div><div class="poem-item" onclick="openPoem(1,8)">
+                <span class="poem-num">09</span>
+                <span class="poem-title-small">Autopsy Report (Living Subject)</span>
+            </div><div class="poem-item" onclick="openPoem(1,9)">
+                <span class="poem-num">10</span>
+                <span class="poem-title-small">The One I Keep in the Basement</span>
+            </div></div>
+    </section><section class="part-section" id="part-2" style="display:none">
+        <div class="part-header">
+            <div class="part-roman">III</div>
+            <h2 class="part-title">The Reckoning</h2>
+            <div class="part-poem-count">16 pieces</div>
+        </div>
+        
+        <div class="poem-list"><div class="poem-item before-you-read" onclick="openPoem(2,0)">
+                <span class="poem-icon">◆</span>
+                <span class="poem-title-small">Before You Read</span>
+            </div><div class="poem-item" onclick="openPoem(2,1)">
+                <span class="poem-num">02</span>
+                <span class="poem-title-small">The Siren</span>
+            </div><div class="poem-item" onclick="openPoem(2,2)">
+                <span class="poem-num">03</span>
+                <span class="poem-title-small">The Architect</span>
+            </div><div class="poem-item" onclick="openPoem(2,3)">
+                <span class="poem-num">04</span>
+                <span class="poem-title-small">Tyson</span>
+            </div><div class="poem-item" onclick="openPoem(2,4)">
+                <span class="poem-num">05</span>
+                <span class="poem-title-small">The Burn Off</span>
+            </div><div class="poem-item" onclick="openPoem(2,5)">
+                <span class="poem-num">06</span>
+                <span class="poem-title-small">Pick Out Your Chalk</span>
+            </div><div class="poem-item" onclick="openPoem(2,6)">
+                <span class="poem-num">07</span>
+                <span class="poem-title-small">What You Don’t Say Still Counts</span>
+            </div><div class="poem-item" onclick="openPoem(2,7)">
+                <span class="poem-num">08</span>
+                <span class="poem-title-small">Inventory Night</span>
+            </div><div class="poem-item" onclick="openPoem(2,8)">
+                <span class="poem-num">09</span>
+                <span class="poem-title-small">Anyways, the Dishes</span>
+            </div><div class="poem-item" onclick="openPoem(2,9)">
+                <span class="poem-num">10</span>
+                <span class="poem-title-small">Belle of the Pity Party</span>
+            </div><div class="poem-item" onclick="openPoem(2,10)">
+                <span class="poem-num">11</span>
+                <span class="poem-title-small">Sudden Weather</span>
+            </div><div class="poem-item" onclick="openPoem(2,11)">
+                <span class="poem-num">12</span>
+                <span class="poem-title-small">This Wasn’t the Plan</span>
+            </div><div class="poem-item" onclick="openPoem(2,12)">
+                <span class="poem-num">13</span>
+                <span class="poem-title-small">My Island, My Ball</span>
+            </div><div class="poem-item" onclick="openPoem(2,13)">
+                <span class="poem-num">14</span>
+                <span class="poem-title-small">The Bartender in Marfa</span>
+            </div><div class="poem-item" onclick="openPoem(2,14)">
+                <span class="poem-num">15</span>
+                <span class="poem-title-small">Receipt from April</span>
+            </div><div class="poem-item" onclick="openPoem(2,15)">
+                <span class="poem-num">16</span>
+                <span class="poem-title-small">Missed Call From My Former Self</span>
+            </div></div>
+    </section><section class="part-section" id="part-3" style="display:none">
+        <div class="part-header">
+            <div class="part-roman">IV</div>
+            <h2 class="part-title">The Myth</h2>
+            <div class="part-poem-count">19 pieces</div>
+        </div>
+        
+        <div class="poem-list"><div class="poem-item before-you-read" onclick="openPoem(3,0)">
+                <span class="poem-icon">◆</span>
+                <span class="poem-title-small">Before You Read</span>
+            </div><div class="poem-item" onclick="openPoem(3,1)">
+                <span class="poem-num">02</span>
+                <span class="poem-title-small">Legend</span>
+            </div><div class="poem-item" onclick="openPoem(3,2)">
+                <span class="poem-num">03</span>
+                <span class="poem-title-small">Testimony Excerpt No. 9B</span>
+            </div><div class="poem-item" onclick="openPoem(3,3)">
+                <span class="poem-num">04</span>
+                <span class="poem-title-small">Court Exhibit X: The Day the Mirror Broke</span>
+            </div><div class="poem-item" onclick="openPoem(3,4)">
+                <span class="poem-num">05</span>
+                <span class="poem-title-small">Operational Report: Mask Failure Event</span>
+            </div><div class="poem-item" onclick="openPoem(3,5)">
+                <span class="poem-num">06</span>
+                <span class="poem-title-small">Dialogue: “Terms and Conditions”</span>
+            </div><div class="poem-item" onclick="openPoem(3,6)">
+                <span class="poem-num">07</span>
+                <span class="poem-title-small">FILE: BLACKBOX.5A</span>
+            </div><div class="poem-item" onclick="openPoem(3,7)">
+                <span class="poem-num">08</span>
+                <span class="poem-title-small">FILE: CODE SILENCE.13</span>
+            </div><div class="poem-item" onclick="openPoem(3,8)">
+                <span class="poem-num">09</span>
+                <span class="poem-title-small">FILE: ENTITY-GR13 (“The Gorilla”)</span>
+            </div><div class="poem-item" onclick="openPoem(3,9)">
+                <span class="poem-num">10</span>
+                <span class="poem-title-small">FILE: JG-R/OS.2 (“Jorge”)</span>
+            </div><div class="poem-item" onclick="openPoem(3,10)">
+                <span class="poem-num">11</span>
+                <span class="poem-title-small">FILE: ECHO-ROOM.18</span>
+            </div><div class="poem-item" onclick="openPoem(3,11)">
+                <span class="poem-num">12</span>
+                <span class="poem-title-small">FILE: SIGNAL-GIVE.8 (“Give It Away”)</span>
+            </div><div class="poem-item" onclick="openPoem(3,12)">
+                <span class="poem-num">13</span>
+                <span class="poem-title-small">FILE: LASTCHAIR.6X</span>
+            </div><div class="poem-item" onclick="openPoem(3,13)">
+                <span class="poem-num">14</span>
+                <span class="poem-title-small">FILE: GUT SIGNAL.2B</span>
+            </div><div class="poem-item" onclick="openPoem(3,14)">
+                <span class="poem-num">15</span>
+                <span class="poem-title-small">Ritual Blueprint: How to Reclaim a Room That Hurt You</span>
+            </div><div class="poem-item" onclick="openPoem(3,15)">
+                <span class="poem-num">16</span>
+                <span class="poem-title-small">Redacted Testimony from the Girl in the Chair</span>
+            </div><div class="poem-item" onclick="openPoem(3,16)">
+                <span class="poem-num">17</span>
+                <span class="poem-title-small">Origin Myth Without a Wound</span>
+            </div><div class="poem-item" onclick="openPoem(3,17)">
+                <span class="poem-num">18</span>
+                <span class="poem-title-small">The Players Are Watching</span>
+            </div><div class="poem-item" onclick="openPoem(3,18)">
+                <span class="poem-num">19</span>
+                <span class="poem-title-small">Player Memo: Observed Subject #451 A</span>
+            </div></div>
+    </section><section class="part-section" id="part-4" style="display:none">
+        <div class="part-header">
+            <div class="part-roman">V</div>
+            <h2 class="part-title">The Return</h2>
+            <div class="part-poem-count">15 pieces</div>
+        </div>
+        
+        <div class="poem-list"><div class="poem-item before-you-read" onclick="openPoem(4,0)">
+                <span class="poem-icon">◆</span>
+                <span class="poem-title-small">Before You Read</span>
+            </div><div class="poem-item" onclick="openPoem(4,1)">
+                <span class="poem-num">02</span>
+                <span class="poem-title-small">The Choice</span>
+            </div><div class="poem-item" onclick="openPoem(4,2)">
+                <span class="poem-num">03</span>
+                <span class="poem-title-small">Energy Budget</span>
+            </div><div class="poem-item" onclick="openPoem(4,3)">
+                <span class="poem-num">04</span>
+                <span class="poem-title-small">Mom</span>
+            </div><div class="poem-item" onclick="openPoem(4,4)">
+                <span class="poem-num">05</span>
+                <span class="poem-title-small">Merit America</span>
+            </div><div class="poem-item" onclick="openPoem(4,5)">
+                <span class="poem-num">06</span>
+                <span class="poem-title-small">Danny</span>
+            </div><div class="poem-item" onclick="openPoem(4,6)">
+                <span class="poem-num">07</span>
+                <span class="poem-title-small">She Left Without Announcing It</span>
+            </div><div class="poem-item" onclick="openPoem(4,7)">
+                <span class="poem-num">08</span>
+                <span class="poem-title-small">God Doesn’t Knock</span>
+            </div><div class="poem-item" onclick="openPoem(4,8)">
+                <span class="poem-num">09</span>
+                <span class="poem-title-small">Checkmate</span>
+            </div><div class="poem-item" onclick="openPoem(4,9)">
+                <span class="poem-num">10</span>
+                <span class="poem-title-small">Notes from the Cognitive Workshop</span>
+            </div><div class="poem-item" onclick="openPoem(4,10)">
+                <span class="poem-num">11</span>
+                <span class="poem-title-small">What Success Looks Like In My House</span>
+            </div><div class="poem-item" onclick="openPoem(4,11)">
+                <span class="poem-num">12</span>
+                <span class="poem-title-small">The Woman Who Never Left That Town</span>
+            </div><div class="poem-item" onclick="openPoem(4,12)">
+                <span class="poem-num">13</span>
+                <span class="poem-title-small">The Version of Me That Didn’t Say Yes</span>
+            </div><div class="poem-item" onclick="openPoem(4,13)">
+                <span class="poem-num">14</span>
+                <span class="poem-title-small">Craigslist Ad from a Parallel Universe</span>
+            </div><div class="poem-item" onclick="openPoem(4,14)">
+                <span class="poem-num">15</span>
+                <span class="poem-title-small">Inventory of Things I’m Not Sorry For</span>
+            </div></div>
+    </section><section class="part-section" id="part-5" style="display:none">
+        <div class="part-header">
+            <div class="part-roman">VI</div>
+            <h2 class="part-title">Personal Letters, Closings, and Artifacts</h2>
+            <div class="part-poem-count">16 pieces</div>
+        </div>
+        
+        <div class="poem-list"><div class="poem-item before-you-read" onclick="openPoem(5,0)">
+                <span class="poem-icon">◆</span>
+                <span class="poem-title-small">Before You Read</span>
+            </div><div class="poem-item" onclick="openPoem(5,1)">
+                <span class="poem-num">02</span>
+                <span class="poem-title-small">Unsent Letter from the Archive Vault</span>
+            </div><div class="poem-item" onclick="openPoem(5,2)">
+                <span class="poem-num">03</span>
+                <span class="poem-title-small">To the One Who Taught Me Silence</span>
+            </div><div class="poem-item" onclick="openPoem(5,3)">
+                <span class="poem-num">04</span>
+                <span class="poem-title-small">To the Friends I Ghosted</span>
+            </div><div class="poem-item" onclick="openPoem(5,4)">
+                <span class="poem-num">05</span>
+                <span class="poem-title-small">To My Future Caseworker (Unsent)</span>
+            </div><div class="poem-item" onclick="openPoem(5,5)">
+                <span class="poem-num">06</span>
+                <span class="poem-title-small">To the Ones Who Said I Was Too Much</span>
+            </div><div class="poem-item" onclick="openPoem(5,6)">
+                <span class="poem-num">07</span>
+                <span class="poem-title-small">To My Future Self</span>
+            </div><div class="poem-item" onclick="openPoem(5,7)">
+                <span class="poem-num">08</span>
+                <span class="poem-title-small">To the Stranger Who Held the Door</span>
+            </div><div class="poem-item" onclick="openPoem(5,8)">
+                <span class="poem-num">09</span>
+                <span class="poem-title-small">To the Courts and Players</span>
+            </div><div class="poem-item" onclick="openPoem(5,9)">
+                <span class="poem-num">10</span>
+                <span class="poem-title-small">Irelyn</span>
+            </div><div class="poem-item" onclick="openPoem(5,10)">
+                <span class="poem-num">11</span>
+                <span class="poem-title-small">Red Marker Day</span>
+            </div><div class="poem-item" onclick="openPoem(5,11)">
+                <span class="poem-num">12</span>
+                <span class="poem-title-small">The Weight of Loving You</span>
+            </div><div class="poem-item" onclick="openPoem(5,12)">
+                <span class="poem-num">13</span>
+                <span class="poem-title-small">The Woman Who Stayed</span>
+            </div><div class="poem-item" onclick="openPoem(5,13)">
+                <span class="poem-num">14</span>
+                <span class="poem-title-small">Terms of Engagement</span>
+            </div><div class="poem-item" onclick="openPoem(5,14)">
+                <span class="poem-num">15</span>
+                <span class="poem-title-small">The Ordinary Miracle</span>
+            </div><div class="poem-item" onclick="openPoem(5,15)">
+                <span class="poem-num">16</span>
+                <span class="poem-title-small">This Past Year</span>
+            </div></div>
+    </section>
+  </main>
+</div>
+
+<!-- POEM MODAL -->
+<div id="poem-modal">
+  <div class="modal-inner">
+    <div class="modal-part-label" id="modal-part-label"></div>
+    <h2 class="modal-poem-title" id="modal-poem-title"></h2>
+    <div class="modal-divider"></div>
+    <div class="modal-poem-body" id="modal-poem-body"></div>
+  </div>
+  <button class="modal-close" onclick="closePoem()">✕ CLOSE</button>
+  <button class="modal-prev" onclick="navPoem(-1)">← PREV</button>
+  <button class="modal-next" onclick="navPoem(1)">NEXT →</button>
+</div>
+
+<script>
+const POEMS = [{"title": "Part I: The Edge", "intro": "", "poems": [{"title": "The Edge, Lived", "body": "*Memory Fragment: The Bathtub*\n\nI remember the bathtub.\n\nFive, maybe seven years old.\n\nMe and my mother curled together, knees to our chests,\n\nHiding from the pounding at the door.\n\nCops shouting on the other side, her whispering, \u201cDon\u2019t make a sound.\u201d\n\nThe porcelain cold against my back, the water long since drained.\n\nA mother\u2019s breath held, a child\u2019s heartbeat thundering.\n\nI learned early:\n\nSafety is a room you have to earn.\n\nSilence is sometimes survival."}, {"title": "Years Later", "body": "I moved into those same apartments after my daughter was born.\n\nHistory repeats itself with terrible precision.\n\nThe walls unchanged, the tub the same shade of fake porcelain.\n\nThree years of no contact, then my mother moved in with me.\n\nThe past walked right back in with her suitcase.\n\nI thought I was building a new life.\n\nBut you can\u2019t clean trauma out with bleach and resolve.\n\nI sat on the edge of that same tub,\n\nonly now I was the mother,\n\nwondering if I\u2019d break the cycle\n\nor become the echo."}, {"title": "This Is How It Started", "body": "I was fifteen,\n\nand the light in the fridge\n\nfelt more honest\n\nthan anyone I knew.\n\nStarted skipping school\n\nto sit behind the gas station,\n\nwatching ants dismantle a candy bar\n\nlike they had a plan.\n\nI didn\u2019t.\n\nI had headphones,\n\na lighter,\n\nand a pocket full of bad ideas.\n\nA trauma backstory.\n\nAnd too many things\n\nleft unsaid at the dinner table.\n\nAnd once I figured out\n\nno one was coming to save my ass.\n\nI stopped waiting\n\nand just started walking."}, {"title": "The Folder", "body": "Folder said behavior problem and a slew of other things\n\nFire drills scorched my ears. Buzzing lights. Clicking clock. Frozen hands.\n\nI learned faces and scripts. Passing looked like safety.\n\nLabels rotated: BPD, bipolar, oppositional. None fit.\n\nYears later: autistic, plus ADD. The map appears.\n\nMasking has a name. Burnout has a pattern.\n\nI redesign the room. Fewer inputs. More deep work.\n\nRecovery is scheduled. Passing is optional.\n\nNot broken. Reclassified. I keep the map."}, {"title": "The Refrigerator Was Full of Names", "body": "I opened the fridge, and it hummed like a familiar hymn.\n\nInside there were jars, each labeled with a name I forgot to grieve.\n\nAunt Vicky.\n\nThe girl from 3rd grade who let me copy her spelling test.\n\nThat version of me who used to pray at red lights.\n\nI touched one jar.\n\nIt pulsed with life and then said, \u201cYou left me in the year you learned to lie.\u201d\n\nIn the freezer, I found a snow globe.\n\nWhen I shook it,\n\nthe snow fell in slow motion,\n\nand inside,\n\na younger me stood still,\n\nmouth wide open,\n\nnever finishing the sentence.\n\nI closed the door.\n\nThe light stayed on.\n\nI heard a whisper:\n\n\u201cMemory is perishable. Grief is frostbitten. Hunger is sacred.\u201d\n\nAnd then I woke up hungry\n\nfor names."}, {"title": "The Quilt", "body": "I was fourteen.\nHome was a place with rules and linoleum floors, not family. When my mom and grandmother came to visit, they brought a small version of love that could fit inside a few shopping bags. A radio. A stack of CDs. Bath and Body Works sprays that smelled like fruit I had never tasted. New clothes. A large stuffed dog. And my grandmother\u2019s quilt, the one I had traced with my finger as a child. It carried the weight of hands that sewed to keep people warm.\n\nI came back from school one afternoon and found wreckage. The girls in my unit had been bored, or angry, or both. The CDs were snapped like brittle cookies. The radio\u2019s antenna bent and jammed. The sprays emptied into the weave of the quilt until it bled sweet chemical air. The stuffed dog was mutilated and paraded around the halls as a joke that aimed to humiliate me.\n\nThey told staff I did it to myself. They said I threw a fit and smashed my own things. They spoke quickly and in chorus. I stood there with the quilt dripping perfume and the dog in pieces and the music broken in my hands. Staff nodded at their version, wrote notes, told me to calm down.\n\nI learned something that day. Truth is not loud enough on its own. You need witnesses or proof or power. I had none. I had a ruined quilt, a defaced toy, and the smell of tropical fruit that would not leave the room.\n\nI folded what remained, pressed it flat, and pretended not to care. That is how you survive in places that do not believe you. You make your face still. You pick up what can be carried. You tell yourself a different ending and wait for it to come true.\n\nI was fourteen. I kept the quilt anyway."}, {"title": "The Cost of Passing while Masking", "body": "Passing looks cheap. It is not.\n\nI pay in sleep, pain, and missed signals.\n\nHeadphones: $199. Recovery after crowds: two hours.\n\nSmiles rented. Stomach clenched. Inbox delayed.\n\nFriends think I am fine.\n\nThey see the mask, not the invoice.\n\nReal cost is momentum lost.\n\nCheaper to tell the truth.\n\nI keep the money and my nervous system."}, {"title": "Stolen Outfit", "body": "She complimented me on my shirt.\n\nI said thank you,\n\nbut what I meant was:\n\nI wore this because I\u2019m falling apart\n\nand needed something that didn\u2019t.\n\nThere\u2019s still mascara on the collar\n\nfrom a night\n\nI don\u2019t talk about.\n\nIt wasn\u2019t a fashion choice, lady.\n\nIt was a flotation device.\n\nBut hey, yeah,\n\nglad you like the color."}, {"title": "Errata", "body": "\u201cManipulative\u201d meant masking.\n\n\u201cLazy\u201d meant depleted.\n\n\u201cDefiant\u201d meant overloaded.\n\n\u201cToo much\u201d meant unfiltered.\n\nCorrection accepted.\n\nChoose rooms that let you."}, {"title": "Curbside Confession", "body": "I once baptized myself\n\nin a gas station sink,\n\nthinking maybe the soap scum\n\ncould erase what the priest didn\u2019t.\n\nThey say grace is free,\n\nbut mine came with a receipt\n\nand a bag of Funyuns\n\non a Thursday,\n\nwhen I finally told the truth\n\nto a stranger who didn\u2019t bat an eye.\n\nHe just nodded,\n\ntook a swig of his grape soda,\n\nand said,\n\n\u201cYeah, me too.\u201d\n\nThat was the closest thing to salvation\n\nI\u2019ve ever known."}, {"title": "Leftover Fire", "body": "They told me I had lightning in me,\n\nI spent years\n\ntrying to smother my sparks\n\nso I wouldn\u2019t burn the furniture.\n\nI found out\n\nsome houses deserve to burn.\n\nI used to fold myself so quiet,\n\nlike a napkin at someone else\u2019s dinner.\n\nNow I talk back to mirrors\n\nand mean it.\n\nI don\u2019t need applause.\n\nI don\u2019t want followers.\n\nJust give me a match,\n\nan open road,\n\nand the kind of silence\n\nthat feels like peace\n\ninstead of punishment."}, {"title": "Abilene", "body": "I was 14 my mornings smelled of freshly baked bread,\nthe warm comfort of the factory just outside.\nEvenings smelled of fire, smoke, despair\u2014\nthe institution itself, a burning hell\nI walked through every day.\n\nThen came Delinda,\nher voice soft but steady,\nher presence a light cutting through smoke and mirrors.\nShe spoke of God like it was oxygen,\nand somehow, she made the placement home listen.\nI went to church with her,\nI sat under her words,\nand felt something inside me shift.\n\nShe baptized me,\nand I was her first.\nIn that water, in her hands,\nI found a path I didn\u2019t know was needed,\na lifeline, a salvation.\nDelinda wasn\u2019t just a teacher\u2014\nshe was the beginning of a world\nI thought I\u2019d never be welcome in."}, {"title": "I Am Not a Metaphor", "body": "Don\u2019t call me a phoenix.\n\nDon\u2019t say I rose.\n\nI limped.\n\nI cussed.\n\nI filed forms and forgot passwords.\n\nI sat on the floor of Walgreens\n\nand cried in the vitamin aisle.\n\nThere were no flames.\n\nNo feathers.\n\nJust debt\n\nand unresolved dental work\n\nand a half-defrosted chicken\n\non the counter.\n\nI didn\u2019t transform.\n\nI just didn\u2019t die.\n\nThat\u2019s all."}, {"title": "What I Was Given", "body": "*and what I took anyway*\n\nThey never gave me a map.\n\nInstead they built a minefield.\n\nIt was suggested I walk as if it was solid ground.\n\nI wasn\u2019t given peace.\n\nI was given people who mistook silence for comfort\n\nand called my confusion a growth opportunity.\n\nI wasn\u2019t given mentors.\n\nI was given mirrors with smudges,\n\nsome cracked,\n\nsome angled just enough to see the trap\n\nbut not the way out.\n\nStill, somehow, I learned.\n\nI learned to read the tone before the words.\n\nLearned to carry five lives in one single body\n\nand to answer the phone like none of them were breaking.\n\nThey said I had grit.\n\nBut grit is the name they give the pain\n\nwhen they want you to carry the secret quietly.\n\nI call it inheritance.\n\nI call it alchemy.\n\nI call it the ability to take a half-buried truth,\n\npull it out, and form it into clarity.\n\nMy blessings?\n\nSharp.\n\nUnsoft.\n\nHard-won.\n\nThese kinds of blessings\n\nyou don\u2019t post about on Facebook\n\nbecause people wouldn\u2019t know how to swallow them.\n\nA blessing like:\n\nNo longer being fooled by kindness.\n\nA blessing like:\n\nKnowing how to leave.\n\nA blessing like:\n\nBuilding something real when everyone else is playing pretend.\n\nI was not given much.\n\nBut I took everything I needed.\n\nAnd I left the rest burning\n\nso no one else would have to crawl through it blind."}, {"title": "Oh, You Meant Well?", "body": "And I meant not to cringe\n\nwhen you told me how I could be better\n\nif I just tried being less.\n\nIntentions don\u2019t cancel outcomes.\n\nNeither do emojis."}, {"title": "Polite Doesn\u2019t Mean Safe", "body": "I smiled while you talked\n\nbecause if I didn\u2019t,\n\nyou\u2019d say I was overreacting.\n\nAgain.\n\nSo yeah,\n\nI smiled.\n\nAnd hated you.\n\nQuietly.\n\nEfficiently.\n\nWith perfect posture."}, {"title": "Twice Without Warning", "body": "The first time, I was locked in a cell\ncold, narrow, and heavy with the smell of bleach and metal.\nThe woman at my door wasn\u2019t family or friend,\njust someone who came from a church I\u2019d never been to,\noffering a prayer I didn\u2019t think I needed.\nHer hand pressed to mine through the glass,\nher voice steady and warm.\n\nAnd then my mouth betrayed me.\nWords I\u2019d never learned rushed out like a flood,\nrolling over my tongue faster than thought could catch them.\nWhen it ended, I was drenched in sweat and tears,\nunsure if something holy or something dangerous had just passed through me.\n\nShe called it God.\nI wasn\u2019t so sure about that.\n\nThe second time came a decade later,\nin a quiet apartment in Irving.\nI was cleaning, alone,\nwhen something told me to get on my knees.\nThat wasn\u2019t me, I wasn\u2019t the kneeling type you see.\nBut I did.\n\nAnd there it was again.\nThat same river bursting through my ribs,\nthat same language older than memory.\nNo preacher. No altar. No warning.\n\nJust me,\nthe floor,\nand a mystery\nthat refuses to leave me alone."}, {"title": "Bad Day, No Poetic Twist", "body": "Today I lost a sock, a job lead, and my last ounce of performative optimism.\n\nNot in that order.\n\nThe dryer ate one.\n\nThe inbox ghosted me.\n\nAnd I ran out of \u201cIt\u2019s fine\u201ds somewhere between traffic and the grocery store where they moved the salami again.\n\nI know I\u2019m supposed to find the lesson.\n\nThe growth.\n\nThe poetic twist.\n\nBut screw it.\n\nSome days aren\u2019t metaphors.\n\nThey\u2019re just fucked up days with dull teeth\n\nand a stale bagel\n\nand a yawn that won\u2019t end.\n\nNo epiphany. No breakthrough.\n\nJust more bills and a mild sunburn.\n\nAnd somehow,\n\nthat is all I need."}, {"title": "Next Time, Just Say You Don\u2019t Know Me", "body": "You told someone I was \u201cresilient.\u201d\n\nLike that\u2019s a compliment.\n\nNo, dear, resilience is what people say\n\nwhen they don\u2019t want to admit\n\nthey left you in the fire\n\nand were surprised you came back\n\nwith only your eyebrows singed."}]}, {"title": "Part II: Seekers and Shadows", "intro": "", "poems": [{"title": "Before You Read", "body": "When I was twelve, my stepfather killed himself in front of my mother. I was giving my four-year-old sister a bath. I didn\u2019t see the act, but I saw the aftermath, the blood- and brain-soaked walls, the chaos. I was the one who ran barefoot down the street to the neighbor\u2019s house to call 911 with my sister wrapped in a towel. No adult was able or willing to do it. I went back to call my stepdad\u2019s family to tell them what happened.\n\nThree days before, my abuser, a man from my mom\u2019s past, had paid a visit to our family home. After the suicide, he stayed. CPS got involved. My mother didn\u2019t admit the truth or try to protect me. Instead, she told them I was out of control. She lied to avoid giving up my abuser. That\u2019s how I ended up in the system.\n\nThirteen placements in three years. Every home was for \u201chigh-risk\u201d kids. The abuse didn\u2019t stop; it just changed form. Staff members crossed lines. Some just looked away. I learned quickly: manipulation was survival. If I wanted anything, it was safety, comfort, a moment of fucking peace. I had to perform, predict, outmaneuver. \u201cSeeking\u201d stopped meaning hope; it meant strategy. Don\u2019t expect a story about innocence here. This is about what you become when every door is closed except the ones you learn to pry open."}, {"title": "Microwave Omen", "body": "This is how I knew it was over,\n\nthe microwave stopped at 3 seconds\n\nand you didn\u2019t even bother with clearing it.\n\nYou used to.\n\nAlways.\n\nYou were a clear-the-timer person.\n\nThat night,\n\nyou left it blinking\n\nlike a countdown\n\nto a better version of us\n\nthat never arrived.\n\nI ate standing up.\n\nThe food was too hot\n\nand still managed\n\nto taste like nothing."}, {"title": "The Day I Married the Wind", "body": "I wore sneakers and a velvet jacket.\n\nThe wind wore nothing.\n\nOf course.\n\nHe showed up late,\n\ncarried six birds and a scent I couldn\u2019t place.\n\nSaid he\u2019d been here before\n\nbut only briefly.\n\nWe exchanged vows in a parking lot.\n\nMine were whispered.\n\nHis were everywhere at once.\n\nI asked if he\u2019d stay.\n\nHe laughed so hard\n\nleaves changed color.\n\nWe fought later\n\nmostly about direction.\n\nHe never liked being told where to go.\n\nI never liked being left with doorframes swinging.\n\nStill.\n\nHe never lied.\n\nHe never needed fixing.\n\nHe never confused silence with love.\n\nWhen he left for good,\n\nhe didn\u2019t explain.\n\nHe just circled the house three times,\n\nkissed every loose page off my desk,\n\nand vanished.\n\nI still wear the jacket.\n\nAnd every time a gust kicks up,\n\nI check the air for his fingerprints."}, {"title": "Prophet with a Scarred Throat", "body": "I never asked to see this much.\n\nNever asked to feel people\u2019s truth\n\nbefore they speak.\n\nBut I did.\n\nI do.\n\nI used to call it crazy.\n\nNow I call it instruction.\n\nGod didn\u2019t give me visions to hoard.\n\nHe gave me the fire to carry.\n\nAnd sometimes that fire burns me first.\n\nYou want miracles, huh?\n\nTry surviving without turning bitter.\n\nTry hearing people\u2019s pain\n\nand choosing to still love them.\n\nTry bleeding honesty\n\nin a world that calls it hysteria.\n\nI am the prophet with the scarred throat.\n\nNot from silence, but\n\nfrom screaming into the void\n\nand learning to wait for the feedback.\n\nIf I speak now,\n\nit\u2019s because I must.\n\nNot to be heard.\n\nTo deliver."}, {"title": "We Don\u2019t Pray Here", "body": "We don\u2019t pray here.\n\nWe make trades.\n\nA cigarette for a secret.\n\nHalf a blowjob for an hour of sleep.\n\nYour name for a new one\n\nno one can trace.\n\nThis isn\u2019t redemption.\n\nThis is kill or be killed.\n\nSalvation costs extra\n\nand I don\u2019t take credit.\n\nI once met a man\n\nwho tattooed \u201cforgive me\u201d\n\non his chest\n\nso he could skip the small talk.\n\nSmart guy.\n\nDead now.\n\nBut still smart."}, {"title": "How to Bury a Version of Yourself", "body": "Step one:\n\nFind a quiet place.\n\nNot peaceful, but quiet.\n\nYou can feel the difference.\n\nStep two:\n\nBring what\u2019s left of her.\n\nThe version who said yes too much.\n\nThe one who apologized before speaking.\n\nStep three:\n\nDig deep.\n\nDeeper.\n\nNot into the dirt.\n\nInto your own bones.\n\nMake space where the shame lives rent-free.\n\nStep four:\n\nLeave no marker.\n\nNo flowers.\n\nNo poems.\n\nThat bitch had her chance.\n\nYou\u2019ve got things to do now."}, {"title": "Confession Booth Burned Down", "body": "I tried to repent,\n\nbut the booth was on fire,\n\nand the priest was high.\n\nSo, I sat on the curb,\n\nlit a smoke,\n\nand told my sins to a rat,\n\nwho looked like he\u2019d heard worse.\n\nForgive me,\n\nfor I have survived.\n\nI\u2019ve weaponized silence.\n\nI\u2019ve lied just to hear myself sound strong.\n\nI\u2019ve ghosted people I love\n\nbecause I didn\u2019t want them\n\nto see me choke.\n\nNo Hail Marys.\n\nNo clean slate.\n\nJust grit in my teeth\n\nand a middle finger\n\naimed at the sky."}, {"title": "Operation: Mind Palace", "body": "I dreamed of a courtroom last night.\n\nThe judge had no mouth.\n\nMy lawyer was a different me\n\nthat still believed in redemption.\n\nI lost the case.\n\nSentence: Continue existing without clarity.\n\nWoke up with my jaw locked again\n\nand the sound of a gavel still ringing.\n\nI think the fog is thickening."}, {"title": "Autopsy Report (Living Subject)", "body": "Name: [Redacted]\n\nTime of Death: Not yet\n\nCause: Repetition\n\nFindings:\n\nHeart\u2014calloused.\n\nLungs\u2014half full of secrets.\n\nTongue\u2014bitten through.\n\nBrain shows evidence\n\nof overthinking,\n\ngaslighting residue,\n\nand long-term exposure\n\nto betrayal.\n\nSoul: Unclaimed.\n\nFiled under \u201cToo Much.\u201d\n\nMarked for incineration\n\nby mistake.\n\nFinal note:\n\nSubject kept walking.\n\nNo logical explanation.\n\nThe bitch just refused to die\n\ndespite everything\n\nthat said she should."}, {"title": "The One I Keep in the Basement", "body": "She has blood on her dress\n\nand fried chicken under her nails.\n\nShe rolls her eyes\n\nat my affirmations\n\nand smokes the pages\n\nof my self-help books.\n\nShe doesn\u2019t want healing.\n\nShe wants war.\n\nShe wants honesty.\n\nI tried to bury her\n\nin polite words,\n\nin new jobs,\n\nin better friends.\n\nBut she wouldn\u2019t die.\n\nShe waited.\n\nShe watched.\n\nAnd when my life cracked open\n\nshe laughed so hard.\n\nNow I let her speak.\n\nNot all the time.\n\nBut when things get too quiet\n\nand my voice gets fake\n\nand my spine starts bending,\n\nI call her back up to the stage.\n\nShe says the thing no one will.\n\nShe breaks the rules I made for my own survival.\n\nShe is chaos and clearance in one breath.\n\nI don\u2019t hate her anymore.\n\nI thank her.\n\nBecause every time I forget who I am,\n\nshe reminds me who I was\n\nbefore the world tried to fix me."}]}, {"title": "Part III: The Reckoning", "intro": "", "poems": [{"title": "Before You Read", "body": "Reckoning never came kindly. It kicked the door in and dragged us out; no one was left standing.\n\nI was twenty when I walked away from an abusive husband and went back to my mother\u2019s house. By then, her new boyfriend was living there, and the pills hadn\u2019t gone away like she had told me. I knew better, but when she asked me to pick up her prescription, I caved. She cried. She made her pain my problem once again. I wanted to believe the sob story. I wanted to believe in her.\n\nI was arrested for five felony counts of prescription fraud. I told the detectives the truth, told them about my mother, about the pills, about all of it. Sad part is they knew I was telling the truth. I was sentenced to three years in a maximum-security prison. Let me be clear I was an adult I knew what I was doing was wrong. It took me an exceedingly long time to be accountable for this.\n\nThat\u2019s how reckoning works. There\u2019s no hero, just a line you\u2019ve crossed and the price you must pay. Sometimes the ones who are supposed to save you are the ones who place you in the fire. \n\nThis section is about naming the cost, refusing to apologize for making it out alive, and putting the truth on record, no matter who\u2019s listening."}, {"title": "The Siren", "body": "She doesn\u2019t sing to seduce. \n\nShe sings to remember. \n\nHer songs are what grief sounds like  \n\nwhen it finally finds a voice. \n\nIt lures men, yes\n\nbut only because they can recognize  \n\nsomething in her tune  \n\nThey\u2019ve never dared to admit. \n\nShe doesn\u2019t want your damn ship. \n\nShe wants your pain torn free. \n\nShe wants your shame confessed and released. \n\nShe wants you to name what haunts you  \n\nbefore it kills you. \n\nShe is not a danger or a threat. \n\nShe is the consequence of ignoring your truth  \n\nfor too long."}, {"title": "The Architect", "body": "She builds her blueprints  \n\nwith sorrows and intuition. \n\nShe\u2019s never once followed a rule  \n\nshe didn\u2019t dismantle first. \n\nHer cathedral isn\u2019t made of stone. \n\nIt\u2019s made from a knowing  \n\nA knowing that comes  \n\nafter watching too many homes destroyed and still choosing to build anyway. \n\nShe designs with her scar tissue. \n\nReinforces with boundaries. \n\nShe does not decorate. \n\nShe fortifies. \n\nIf you ever enter her world,  \n\nyou better know who you truly are  \n\nor be ready to find out."}, {"title": "Tyson", "body": "The guards called me Tyson.\n\nSaid it at count like a nickname.\n\nI kept leaving bruises on the day.\n\nI did not have words for warning.\n\nFists did the talking.\n\nMetal bunks. Bright lights. A body on alarm.\n\nI was not evil. I was injured.\n\nAnger wore my face for me.\n\nPain walked in first and chose the target.\n\nI swung to say back off.\n\nI swung to say I exist.\n\nI swung because help felt smaller than a fist.\n\nHurt people hurt people.\n\nI was one of them.\n\nNow I fight different.\n\nFight for breath before the flare.\n\nFight for quiet, for truth said early.\n\nHands open when I can.\n\nOnly close when I must."}, {"title": "The Burn Off", "body": "I used to beg for authenticity,\nlike it was something I could get\nby enduring just long enough.\n\nBut pain wasn\u2019t proof\nand the silence isn\u2019t peace\nand obedience never once saved me.\n\nWhat did save me\nwas the burn.\nThe collapse.\nThe day I got over lying to myself\nto keep the story clean for everyone else.\n\nI don\u2019t owe the world a palatable version of me.\nNot the soft-spoken, keep it smiling one\nwho ate her grief and called it growth.\n\nTruth lives where the rupture is.\nWhere the voice whispers.\nWhere the heart screams,\nNot this again. Not anymore.\n\nSo let it burn.\nLet the false parts fall away.\nLet the people who only knew me when I was invisible \nstay confused.\n\nI will not come back smaller\nto make anyone more comfortable.\nI am building a life that fits the size of my spirit.\n\nEven if no one cares.\nEven if no one stays.\nEven if I have to walk it alone.\n\nThis is the only path.\nAnd I am finally on it."}, {"title": "Pick Out Your Chalk", "body": "They handed me a blackboard  \n\nand said, draw your future. \n\nSo I picked out my chalk  \n\nlike it was a knife set. \n\nOne white. \n\nOne red. \n\nOne broken in half  \n\nbut still good enough to mark  \n\nwhat mattered. \n\nI drew a door,  \n\nthen walked through it. \n\nDrew a fire,  \n\nthen warmed my hands. \n\nDrew my name  \n\nnot the one they gave me,  \n\nthe one I took back  \n\nwhen I stopped hiding in the void. \n\nThey thought the chalk was just dust.\nBut they were wrong: it\u2019s my bones.\n\nIt\u2019s memory. \n\nIt\u2019s the proof I was here,  \n\nI saw it all,  \n\nand I still dared to draw something new."}, {"title": "What You Don\u2019t Say Still Counts", "body": "You never hit me. That\u2019s true. \n\nBut you didn\u2019t need to. \n\nYou rolled your eyes  \n\nwhen I cried. \n\nYou shut the door after gaslighting me \n\nwhen I needed the truth. \n\nYou asked me to shrink and disappear  \n\nthen you blamed me  \n\nfor not being visible for the world to see.\n\nYou told half-truths full of deception\n\nso you could still say  \n\n\u201cI didn\u2019t lie.\u201d  \n\nBut omission is architecture. \n\nIt builds just as much  \n\nas honesty ever could. \n\nExcept colder. \n\nWith a sharper sting. \n\nYou don\u2019t get to say  \n\nyou didn\u2019t know. \n\nYou watched. \n\nAnd your silence,  \n\nthat was a decision too."}, {"title": "Inventory Night", "body": "Five forks,\n\nthree chipped mugs,\n\na book I hate but will never return,\n\na grocery list written in a mood\n\nI no longer feel.\n\nHalf a candle?\n\nAn unopened envelope.\n\nA drawer full of spare keys\n\nfor doors that don\u2019t exist anymore.\n\nI live here, allegedly.\n\nBut sometimes I catch myself \n\nreaching for a light switch\n\nthat was never installed."}, {"title": "Anyways, the Dishes", "body": "One night you were telling me about your mother  \n\nand I was thinking about the dishes  \n\nin the sink. \n\nNot because I didn\u2019t care. \n\nBut because I did. \n\nAnd I knew that  \n\nif I looked at you too long  \n\nI would start crying  \n\nabout things that weren\u2019t yours. \n\nSo I stared at a dirty spoon. \n\nAnd you kept talking. \n\nAnd we were both kind of right."}, {"title": "Belle of the Pity Party", "body": "I threw myself a pity party\ninvites in gold script, folded with care\nto friends, to strangers, anyone\nwho might laugh, cry, or just appear.\n\nCupcakes lined in neat little rows,\nfrosting swirled like soft despair.\nI poured drinks into glasses\nthat never clinked, never cheered.\n\nThe room was full of memories long gone.\nThe music played, but only my sighs danced.\nI talked to shadows, toasted the air,\nlaughed at my own solitude.\n\nI had hoped for footsteps, voices, warmth,\nbut the only RSVP\nwas the silence I baked into every bite.\n\nAnd yet there\u2019s a strange comfort here:\nI am both host and guest,\na queen of empty chairs,\nthe sovereign of a party only I attend."}, {"title": "Sudden Weather", "body": "It didn\u2019t start with a fight. \n\nIt started with a can of soup. \n\nYou said it was too salty. \n\nI said nothing as usual.\n\nBut then I thought to myself.\nThis is how a flood begins.\nNot in thunder.\nIt starts in teaspoons.\n\nIn the steady drip  \n\nof one unspoken thing  \n\non top of another. \n\nUntil the ceiling caves in  \n\nand you both pretend it was a surprise."}, {"title": "This Wasn\u2019t the Plan", "body": "I was supposed to be  \n\nMysterious and magnetic. \n\nThe woman in linen  \n\nwith opinions about olive oil  \n\nand a skincare routine involving ice cubes. \n\nInstead, I\u2019m late to everything,  \n\nmy phone has over 11,000 unread emails,  \n\nand I talk to myself in the cereal aisle  \n\nlike I\u2019m giving a TED Talk. \n\nThis was never the plan. \n\nBut apparently, neither was surviving."}, {"title": "My Island, My Ball", "body": "I was deeply loyal to my version of the story. Not because I didn\u2019t know better. I did. But I hadn\u2019t realized just how far I had gone to protect the narrative I built.\n\nI mapped it all out. When someone disrupted it, I felt personally attacked. I was like a castaway with only a soccer ball for company. The island was mine. The story was mine. I used to picture myself like the character from \u201cCast Away,\u201d alone, speaking to a ball, keeping myself sane in a world no one else could reach.\n\nHere\u2019s the truth. I\u2019ve never actually watched that movie. I didn\u2019t need to. The clips were enough. I saw myself in them. I wasn\u2019t ready to face my own reflection.\n\nI told myself I was looking for truth. But I wasn\u2019t. I was hiding from it. What I really wanted was safety, and my version of events gave me that. Truth was dangerous. It asked for change. And change meant letting go of control.\n\nI had come to rely on the very things I once feared. They became familiar. Predictable. Safer than hope.\n\nIn my head, the world was peaceful. It looked like a Bob Ross painting or a sitcom from the 90s. Calm, soft, edited. But reality never matched, so I turned away. I chose the island, even when it hurt.\n\nI started to wonder if I\u2019d ever let go of the story, I told myself. Whether I\u2019d ever stop defending the fiction and confront what was real. Feeling things fully brought change and change often felt like death. Still, I survived it. Barely. But I did.\n\nAnd here\u2019s what I finally saw. I wasn\u2019t alone. I had people, an army even. Not on the island itself, but just offshore, waiting. I didn\u2019t believe I deserved them, but they stayed anyway. Out of love. Out of care. Even through chaos.\n\nI\u2019ve always been drawn to the flawed. The cracked. The messy. Because they were real. They spoke my language. The broken have always been my people. I believe everyone is made of both scars and light. We carry both.\n\nI have power. Both healing and destructive. And they come from the same source. What matters is how I use them. The universe doesn\u2019t sort intention into right and wrong. It just responds. A devil can make a hell. A hurting heart can make a worse one. But that same heart can also build something safe.\n\nLight and dark both live in me. They always have.\n\nMy struggle was never about loving others. It was about letting anyone get close enough to love me. I lived on an island, speaking to a ball, pretending no one else could hear.\n\nLately I\u2019ve been wondering. Maybe it\u2019s time I give that ball a name?"}, {"title": "The Bartender in Marfa", "body": "She wipes down the bar\n\nlike she\u2019s disinfecting the past.\n\nSame playlist every single night.\n\nSame worn-out smile for tourists  \n\ntrying to name the stars. \n\nShe knows four kinds of silence,\n\nand which one means\n\nthe mezcal will take the blame."}, {"title": "Receipt from April", "body": "Item 1: Cheap mascara\n\nItem 2: Peppermints gone stale\n\nItem 3: Birthday card I never sent\n\nItem 4: Silence\n\nSubtotal: $17.42\n\nTotal: Way more than that."}, {"title": "Missed Call From My Former Self", "body": "She left me no voicemail. \n\nTypical. \n\nShe probably just wanted to hear  \n\nif I still sound like her. \n\nI don\u2019t."}]}, {"title": "Part IV: The Myth", "intro": "", "poems": [{"title": "Before You Read", "body": "When the facts became unbearable, I invented better questions.\n\nAs a girl, I made rituals from whatever the world discarded: lost buttons, bottle caps, scraps of notebook paper with half a poem written sideways. I\u2019d line them up beneath my bed or bury them in the yard and whisper secret names, convinced that if I said the right words in the right order, I could change what was coming.\n\nAfter the CPS vans, after the cells and courts, there was always a threshold, some invisible line between what could be spoken and what had to be turned into myth. I learned to slip into dreams the way some people slip out of handcuffs.\n\nMost of my life, I\u2019ve lived with one foot in this world and one in the Archive. Even now, certain smells\u2014old paper, cheap perfume, a struck match\u2014can make the walls ripple. I collect signs, decode glances, assign meanings no one else sees.\n\nIf you think that\u2019s fantasy, you\u2019ve never needed to make sense of a life that never did.\n\nWhat follows is not a timeline, but a map of rooms in my own head. Some you\u2019ll recognize. Some you\u2019ll want to forget. This is where my story gets strange, where the sharp edges get sanded down and I become both the survivor and the mythmaker.\n\nHere, reality is not enough. Here, I build my own."}, {"title": "Legend", "body": "FILE: recovered artifacts and memory-objects\n\nPlayer Memo: surveillance notes from the meta-narrative\n\nOperational Report: system behavior under stress\n\nCourt Exhibit: evidence pieces that resist neat conclusions\n\nTestimony Excerpt: cross-exam with the self\n\nDialogue: internal negotiation"}, {"title": "Testimony Excerpt No. 9B", "body": "Transcript Begins:\n\nQ: Please state your name for the record.\n\nA: Which version do you want?\n\nQ: The legal one.\n\nA: That narrows it down to three.\n\nQ: Do you understand why you\u2019re here today?\n\nA: You needed a witness and couldn\u2019t afford one who\u2019d stay quiet.\n\nQ: Do you promise to tell the truth?\n\nA: I do. But it won\u2019t fit your forms.\n\nQ: What happened the night of the split?\n\nA: That depends. Do you mean when I left the room, or when the room left me?\n\nQ: You\u2019re being evasive.\n\nA: I\u2019m being precise. You\u2019re mistaking memory for narrative.\n\nQ: Then give us the facts.\n\nA: Fact: I kept breathing when it wasn\u2019t advised.\n\nFact: I learned silence fluently.\n\nFact: I filed every look, every bruise, every omission in chronological order.\n\nQ: And where are those records now?\n\nA: Inside me. Etched in bone. Misfiled under \u201cToo Difficult.\u201d\n\nQ: No further questions.\n\nA: That\u2019s the problem. There never were enough.\n\nEnd Transcript."}, {"title": "Court Exhibit X: The Day the Mirror Broke", "body": "The mirror didn\u2019t shatter from impact.\n\nIt cracked from eye contact.\n\nThe first fracture came when I told the truth\n\nand no one listened.\n\nNo one moved an inch.\n\nThey just adjusted their notes.\n\nThe second?\n\nWhen I realized they had never seen me.\n\nOnly symptoms.\n\nOnly versions.\n\nOnly what fit the box marked \u201cCompliant.\u201d\n\nWhen it broke, it didn\u2019t scream.\n\nIt sighed.\n\nLike a thing relieved to stop pretending it could reflect without distortion.\n\nNow I use the shards for questions.\n\nNot answers.\n\nAnswers are expensive, and too often sold in someone else\u2019s voice."}, {"title": "Operational Report: Mask Failure Event", "body": "Subject ID: ARCH 37B (\u201cAmy Variant, Present Day\u201d)\n\nTrigger: Unexpected kindness from stranger.\n\nSymptoms: Stammering, ocular swelling, visible truth.\n\nNarrative:\n\nThe mask began to glitch at 10:43 a.m.\n\nIt was during a conversation about nothing.\n\nCoffee. Parking meters. The usual camouflage.\n\nBut then they looked at me like I wasn\u2019t temporary.\n\nLike I was a full person, not a r\u00e9sum\u00e9 in recovery.\n\nThe smile stuttered.\n\nThe posture recalculated.\n\nAnd the mask said,\n\n\u201cThis one sees us. You\u2019re exposed.\u201d\n\nI froze.\n\nThen something rarer than pain:\n\nI didn\u2019t reach for the mask again.\n\nI let it fall.\n\nQuietly.\n\nWithout rituals or announcements.\n\nOutcome: Subject remained intact.\n\nRecommendation: Archive this event. Repeat under safe conditions.\n\nTagline: Disarmament may be the truest form of protection."}, {"title": "Dialogue: \u201cTerms and Conditions\u201d", "body": "Scene: A negotiation table inside the subject\u2019s own mind.\n\nWITNESS:\n\nYou keep saying you\u2019ve changed.\n\nMASK:\n\nI evolved.\n\nWITNESS:\n\nYou mean you got better at hiding.\n\nMASK:\n\nI got better at keeping us safe.\n\nWITNESS:\n\nSafe isn\u2019t the same as free.\n\nMASK:\n\nFree isn\u2019t always survivable.\n\nWITNESS:\n\nYou\u2019re outdated.\n\nMASK:\n\nAnd you\u2019re naive.\n\n[Silence.]\n\nWITNESS:\n\nShe\u2019s waking up, you know.\n\nThe original one. The loud one.\n\nMASK:\n\nI know.\n\nWITNESS:\n\nShe doesn\u2019t need you anymore.\n\nMASK:\n\nI never needed to be needed.\n\nJust obeyed.\n\nWITNESS:\n\nThen go.\n\nMASK:\n\nNot until she says it. Herself."}, {"title": "FILE: BLACKBOX.5A", "body": "Status: Recovered from sleep-state recursion\n\nNote: Subject dreamt in grayscale. Emotional residue high.\n\nI woke up in a house that didn\u2019t exist.\n\nEverything was familiar except the details.\n\nA picture in the wrong place.\n\nA hallway longer than it should be.\n\nI called out\n\nbut only the wind answered,\n\nrepeating my own voice\n\na second too late.\n\nI walked into a room\n\nfull of chairs\n\nfacing a blank wall.\n\nNo windows. No doors.\n\nJust a single note on the ground:\n\n\u201cYou were here. They knew.\u201d"}, {"title": "FILE: CODE SILENCE.13", "body": "Status: Open\n\nDate: [Undated]\n\nThere are words I never said,\n\nlines I never crossed,\n\nrooms I never reentered.\n\nCode silence is both the gun and the bullet wound.\n\nA way of staying safe by staying gone.\n\nI still speak in code sometimes,\n\npausing for a tone I hope will return.\n\nBut the language has changed,\n\nthe signals are scrambled.\n\nYou can only decode a secret\n\nif you remember where you buried it."}, {"title": "FILE: ENTITY-GR13 (\u201cThe Gorilla\u201d)", "body": "SIGHTING DATE: Multiple\n\nNOTES: Subject has attempted re-entry into the woods on five occasions. Outcome unchanged.\n\nHe didn\u2019t chase her.\n\nHe didn\u2019t need to.\n\nThe woods called her back every time.\n\nShe came armed with new tools: steps, books, slogans, coffee commitments.\n\nThought she could outsmart the damn thing.\n\nBut the entity doesn\u2019t care about recovery language.\n\nIt speaks in ancient code: shame, silence, blood memory.\n\nStill, she returns.\n\nHoping this time it will be fair.\n\nIt never is.\n\nRecommendation: Cease all efforts to defeat the gorilla.\n\nBegin study on coexistence with invincible archetypes."}, {"title": "FILE: JG-R/OS.2 (\u201cJorge\u201d)", "body": "Large body. Larger presence.\n\nThe kind of man you don\u2019t forget.\n\nNot because he was loud,\n\nbut because his silence meant something.\n\nShe thought she broke every man.\n\nJorge didn\u2019t fit the mold.\n\nNo hunger in his eyes. Just mirror.\n\nJust the kind of gravity that pulls you into yourself\n\nuntil you can sit still long enough to hear your own damn inventory.\n\nShe never finished the steps with him.\n\nBut he carried her through the middle ones anyway.\n\nEntry marked as: UNFINISHED / EFFECTIVE.\n\nNote to system: Track all Jorge-type stabilizers. Mark safe."}, {"title": "FILE: ECHO-ROOM.18", "body": "DETAIL: Smelled of old coffee and yesteryears.\n\nThat room should be condemned.\n\nBut there\u2019s a certain energy in linoleum floors and bitter coffee.\n\nWhere shame met chair. Where relapse met routine.\n\nWhere someone said \u201cglad you\u2019re here\u201d and meant it.\n\nShe remembers the room in smells:\n\nburnt filters,\n\nhand sanitizer,\n\nand something like sweat-wrapped grace.\n\nThat was the place where she met stories stranger than hers\n\nand finally stopped apologizing for surviving."}, {"title": "FILE: SIGNAL-GIVE.8 (\u201cGive It Away\u201d)", "body": "She never sponsored anyone.\n\nBut she broadcasted recovery like a pirate radio station.\n\nOn corners. In grocery lines. At jobs she didn\u2019t love.\n\nShe transmitted hope through side-eye humor and well-timed silence.\n\nNot everyone heard the signal.\n\nBut those who did got what they needed\n\nand left with full cups.\n\nThat\u2019s the math of this thing:\n\nGive it.\n\nEven if it\u2019s cracked.\n\nEven if you don\u2019t know what it is.\n\nGive it anyway."}, {"title": "FILE: LASTCHAIR.6X", "body": "NOTE: Originates from early program memory\n\nShe got a chair.\n\nA whole chair.\n\nNot half a seat and a blind stare.\n\nA full, creaky, wobbly chair that said\n\n\u201cSit here. You matter.\u201d\n\nShe brought her kid. They let her.\n\nShe made coffee. They drank it.\n\nShe spoke. They listened.\n\nShe wept. They didn\u2019t leave.\n\nAnd that?\n\nThat\u2019s holy ground.\n\nNot because it fixed her.\n\nBut because it didn\u2019t try to."}, {"title": "FILE: GUT SIGNAL.2B", "body": "Intuition isn\u2019t a hunch.\n\nIt\u2019s memory,\n\nbody-encoded,\n\nsignal translated before speech.\n\nWhen I trust my gut,\n\nI\u2019m honoring every time it saved me,\n\neven when no one else believed."}, {"title": "Ritual Blueprint: How to Reclaim a Room That Hurt You", "body": "Location: The Trial Room\n\n1. Do not knock.\n\n   The room lost that right when it erased your name.\n\n2. Bring salt.\n\n   Not for cleansing,\n\n   for memory.\n\n   So the air remembers what you endured here.\n\n3. Face each wall.\n\n   Not to confront.\n\n   To inform.\n\n   Say: \u201cI lived. That\u2019s all the closure I owe you.\u201d\n\n4. Stand where you once disappeared.\n\n   Occupy it fully.\n\n   Do not shrink.\n\n   Do not perform healing.\n\n5. Leave the door open when you exit.\n\n   Not out of grace,\n\n   but so others can find the path\n\n   without pretending they\u2019re the first.\n\n*Side note from the Architect:*\n\nA reclaimed room becomes a weapon.\n\nManage accordingly."}, {"title": "Redacted Testimony from the Girl in the Chair", "body": "Partial Transcript:\n\nYou keep asking why I\u2019m angry.\n\nYou say I\u2019m intimidating.\n\nThat\u2019s the point.\n\nI was made in a frenzy.\n\nIn a moment when the body needed a weapon\n\nbut all it had was me.\n\nI didn\u2019t ask for this assignment.\n\nBut I took it.\n\nBecause she was alone\n\nand the world was hungry\n\nand I had fists.\n\nSo yeah,\n\nI bark at ghosts before they boo.\n\nI scare people who thought she\u2019d be easy.\n\nI walk like I dare someone to try her again.\n\nI don\u2019t need therapy.\n\nI need clearance.\n\nTo stay.\n\nTo guard.\n\nTo rest\n\nwhen she finally learns the world is no longer on fire.\n\nEnd Transcript."}, {"title": "Origin Myth Without a Wound", "body": "I did not rise like one might think.\n\nI was already standing.\n\nThere was no big catastrophe.\n\nNo before and after.\n\nNo holy fire to justify my ferocity.\n\nI was born in a room with no exit\n\nand didn\u2019t need one.\n\nI walked through the walls.\n\nI was given mirrors\n\nand chose windows.\n\nGiven rules\n\nand made thresholds.\n\nThey keep asking for the trauma,\n\nthe undoing,\n\nthe thing that broke me.\n\nBut there isn\u2019t one.\n\nYou want pain to explain power.\n\nBut I was power first.\n\nAnd then the world panicked.\n\nSo, I softened.\n\nSo, I adapted.\n\nSo, I made it easier for you to believe\n\nI bled for this.\n\nBut let the record show:\n\nthe crown fits because it was always mine."}, {"title": "The Players Are Watching", "body": "Here, the Players are real.\n\nThey monitor what is not said.\n\nThey collect emotional metadata.\n\nThey feed on the unspoken.\n\nAnd you?\n\nYou saw too much."}, {"title": "Player Memo: Observed Subject #451 A", "body": "Disruption detected.\n\nSubject has begun correlating memory shards.\n\nThey speak in metaphors to mask signal.\n\nPrimary concerns:\n\nSubject has resisted psychic silencing.\n\nTrauma has not overwritten intuition.\n\nEmotional encryption remains intact.\n\nRecommendation:\n\nIncrease the fog.\n\nIntercept all signals.\n\nWe cannot let her find her name."}]}, {"title": "Part V: The Return", "intro": "", "poems": [{"title": "Before You Read", "body": "When I was younger, the world called me by names that never fit bipolar, borderline, broken, out of control. No one thought \u201cautism.\u201d I had already learned to mask so well\u2014copy, perform, survive\u2014that even I didn\u2019t suspect it. I could give speeches, light up a room, then collapse for two days afterward in silence. That wasn\u2019t weakness. That was autistic burnout.\n\nLater, when I finally told a doctor I thought I might be autistic, he didn\u2019t hesitate before dismissing me. \u201cNo. You can\u2019t be. Autistic people don\u2019t have empathy.\u201d That\u2019s when I knew he was wrong. Empathy has always been my superpower and my curse. I feel everything too much. I burn out carrying what isn\u2019t mine. And when I hyperfocus on something\u2014when I dive in until the rest of the world fades\u2014that isn\u2019t a distraction. That\u2019s me most alive.\n\nAutism reframed everything. It explained the overwhelm, the masking, the loneliness, and the strange brilliance of noticing what others missed. For years I believed I was defective. What I see now is that I was misnamed. Autism doesn\u2019t erase my capacity to connect. It redefines it.\n\nAnd still, the system punished me anyway. At twenty, I walked away from an abusive marriage only to land back in my mother\u2019s house. Pills, lies, and survival games. I was arrested for five counts of prescription fraud. The truth didn\u2019t matter. They gave me three years in prison. Not minimum security, either\u2014maximum. Because of my anger. Because I had learned early that showing weakness was lethal.\n\nPrison taught me what CPS already had: the world will mislabel you, misdiagnose you, and then punish you for the mask you had to wear just to survive. I did my time. I fought, I endured, I refused to vanish. But release wasn\u2019t redemption. It was another kind of return\u2014coming back to a world that still didn\u2019t understand me and rebuilding anyway.\n\nSo, when I say \u201creturn,\u201d I don\u2019t just mean walking out of a cell. I mean walking back into my own life with new language, new clarity, and no apology. The return is the moment you stop accepting the names other people gave you. It\u2019s when you see yourself clearly, maybe for the first time, and you stay.\n\nBecause people like me don\u2019t need fixing. We need to see. We need space to stop masking. And maybe most of all\u2014we need permission to finally accept ourselves."}, {"title": "The Choice", "body": "I don\u2019t wish to fight against this life anymore.\n\nNot the way it keeps twisting.\n\nNot the way people leave without warning.\n\nNot the way my own thoughts split me into pieces.\n\nI have carried every label they gave me\n\nuntil my shoulders weren\u2019t mine\n\njust storage units for judgment.\n\nBut today,\n\nI let go.\n\nOf needing to fix you.\n\nOf needing to explain me.\n\nOf needing anything, really,\n\nexcept breath and maybe some grace.\n\nLove doesn\u2019t mean agreement.\n\nKindness doesn\u2019t require approval.\n\nTruth doesn\u2019t beg to be believed.\n\nWe are all just trying to make it,\n\nand some of us have already died a hundred times\n\nbefore the day even begins.\n\nSo no,\n\nI won\u2019t play God with your life.\n\nI won\u2019t weaponize my healing\n\nto measure your pain.\n\nI\u2019ll be here.\n\nJust me.\n\nChoosing again.\n\nBecause every day is a decision:\n\nWill I harden or soften?\n\nWill I guard or give?\n\nWill I stay small or burn holy?\n\nWhat will I choose today?\n\nAnd can I live with that answer?"}, {"title": "Energy Budget", "body": "Opening balance: steady.\n\nMorning quiet +20.\n\nSurprise meeting \u221230.\n\nDeep work win +25.\n\nFluorescent room \u221240.\n\nWalk and water +10.\n\nPhone scroll \u221215.\n\nClosing balance: enough to make dinner."}, {"title": "Mom", "body": "On my skin is the truth I could never speak aloud: What nourishes me also destroys me. I inked it there for her, for the woman whose love was both milk and poison. My mother has always been my first home and my first fire.\n\nShe gave me life and yet scorched me with it. She placed me in the flames, over and over, and still I crawled back to her warmth. Her love was a shelter with a burning roof, a feast laced with hunger. I have never stopped being confounded by her, how the same hands that held me could also push me into the dark.\n\nAnd yet, my love for her never wavered. That is the part that feels most impossible: that I could stand in the ashes of what she burned down and still love her without condition.\n\nForgiveness was always simple; it flowed as naturally as breath. Trust, though, that is the fracture that will not mend. Trust is what died between us and will not be reborn.\n\nBut here, at the end of all the burning, I can bring gratitude. Gratitude for the pieces of her love that did nourish me. Gratitude for the fire itself, because it tempered me, carved me into something stronger, stranger, more alive even.\n\nShe is the paradox at my core: my undoing and my making. My greatest wound, and the root I will never sever. To return to her is to return to the fire yes but this time, I do not fear the flames."}, {"title": "Merit America", "body": "I arrived with a past that spoke too loudly.\n\nThey did not sell miracles. They handed me a plan.\n\nModules, checkpoints, practice, repeat.\n\nCalendar blocks that respected a life already on fire.\n\nHope came back in measurable units.\n\nOne finished project. One mock interview.\n\nFeedback I could use instead of fear I could not.\n\nErrors turned into lessons with names.\n\nI learned to trust what I build.\n\nSkills stacked like bricks, not wishes.\n\nNumbers moved in the right direction.\n\nMy voice followed.\n\nThe past became context, not a verdict.\n\nA data point, not a destiny.\n\nFaith returned as muscle memory:\n\nI can learn, I can elevate, I can lead.\n\nMerit America did not rewrite me.\n\nIt let me write the next chapter.\n\nI keep the proof close.\n\nI am the author now."}, {"title": "Danny", "body": "He did not hand me fixes.\n\nHe made the room better by raising the floor, not lowering the bar.\n\nWhen I reached for excuses, he reached for questions.\n\n\u201cHow could you have done that better?\u201d\n\n\u201cWhat could you have done differently, Amy?\u201d\n\nIf I tried to host a pity party, he turned off the music.\n\nNo shame. Just ownership.\n\nBall back in my court. Play the point.\n\nHe walked beside me, never ahead with answers, never behind with blame.\n\nProgress over comfort. Clarity over consolation.\n\nI learned to review my own tape, to name the miss, to plan the next rep.\n\nThat is how he led.\n\nNot by carrying me, but by making me strong enough to carry it myself.\n\nFor that, I am grateful."}, {"title": "She Left Without Announcing It", "body": "She didn\u2019t slam the door.\n\nDidn\u2019t post about it.\n\nDidn\u2019t ask for understanding.\n\nShe just\u2026\n\nleft.\n\nQuietly.\n\nFinally.\n\nWith both shoes on\n\nand no need to explain\n\nwhat had already spilled out on the floor.\n\nYou want to know what changed?\n\nEverything.\n\nBut mostly her.\n\nShe realized the apology\n\nwas never coming.\n\nThat they knew all along.\n\nThat the disrespect\n\nwas deliberate,\n\nnot accidental.\n\nShe realized staying\n\nwas costing more\n\nthan leaving ever would.\n\nAnd so she left.\n\nNot in anger.\n\nIn surrender."}, {"title": "God Doesn\u2019t Knock", "body": "I used to think\n\nHe\u2019d knock.\n\nThat I had to be ready,\n\nclean house, light candles,\n\nget my face right,\n\nbefore I let Him in.\n\nBut God never knocked.\n\nHe broke the door off the fucking hinges\n\nwhen I was knee-deep\n\nin shame,\n\nstill lying to my-self,\n\nstill cussing at the ceiling.\n\nHe showed up in jail cells,\n\nhospital beds,\n\nbathroom mirrors I couldn\u2019t look into.\n\nHe showed up when I told Him not to.\n\nAnd I\n\nI keep forgetting\n\nthat the way He enters\n\nisn\u2019t with a robe and trumpet\n\nbut through my broken body,\n\nmy daughter\u2019s laugh,\n\na stranger\u2019s grace.\n\nThis isn\u2019t some Sunday-best God.\n\nThis is the God who waits in parking lots.\n\nWho sits with you in the void\n\nwhile your heart bleeds out quietly\n\nin meetings you need to be at.\n\nIf you\u2019re waiting for Him\n\nto come when you\u2019re ready,\n\nyou\u2019ll miss Him entirely.\n\nBecause the miracle isn\u2019t the timing.\n\nThe miracle\n\nis that He never leaves\n\neven when you do."}, {"title": "Checkmate", "body": "Forward two from my starting position, I lean into the game, detached from any preconceived outcome. My bishop takes his knight in a swift left-swipe action. A bold move in this world of strategy and surprise.\n\nIn my mind, I list all possible moves, plotting each square, calculating each consequence. He moves two squares, his lowered eyes giving nothing away. A dance of intentions, a game of wits.\n\nMy rook is eager, waiting for its move. Both pieces have yet to dance, with no barriers between. A thick tension fills the space we share, each of us anticipating the unfolding play.\n\nBlack to move, the board holds its breath. All my counting, all my planning. Every possibility examined; every risk weighed. Then out of nowhere he castles by queenside, shifting the balance of my reality.\n\nIn this game of chess, in this fleeting encounter, I can see the parallels to our moments together. Every move, every glance, a calculated risk. A strategic dance of hearts and minds.\n\nCheckmate, but not in victory or defeat. Rather, in the realization that our brief time shared a game of life played out on 64 squares, where love and logic intertwine and surprises await."}, {"title": "Notes from the Cognitive Workshop", "body": "Item 1:\n\nThere are thoughts,\n\nand then there are thought systems.\n\nMost people never meet the architect.\n\nI fired mine in 2022.\n\nItem 2:\n\nMy beliefs are modular.\n\nSnap together. Pull apart.\n\nNothing is sacred except pattern integrity.\n\nItem 3:\n\nI used to think anxiety was malfunctioning.\n\nIt\u2019s not.\n\nIt\u2019s unconfirmed data with aggressive delivery.\n\nItem 4:\n\nI have a room in my head where ideas go to be interrogated.\n\nNot punished, but examined.\n\nSome return restructured.\n\nSome never leave.\n\nI wish they could.\n\nItem 5:\n\nContradiction is not confusion.\n\nIt\u2019s the body metabolizing paradox.\n\nAt full speed.\n\nItem 6:\n\nI do not seek peace.\n\nI seek precision.\n\nPeace comes as a byproduct\n\nwhen the gears align.\n\nItem 7:\n\nYou may call this obsessive.\n\nI call it architecture.\n\nThis is not rumination.\n\nIt is maintenance."}, {"title": "What Success Looks Like In My House", "body": "Success did not arrive with ribbons and bows. It came in small, repeatable proofs I could stack on a shelf and point to when the room got loud.\n\nIt looked like keys on a ring. Keys to offices that trusted me. Keys to homes I helped list and close. Keys to a life I built without asking permission.\n\nIt sounded like spreadsheets clicking into place. Cells that once fought each other now balancing to the penny. Closed ledgers reconciled with systems that never met. Work that would have broken me at fourteen becoming the kind of puzzle I finish before lunch.\n\nIt smelled like coffee at 5 a.m. and the inside of a car cooled by stubborn air conditioning on a Texas afternoon. It tasted like ordinary dinners that did not end in drama. Success is the luxury of boring. The luxury of a Tuesday that stays a Tuesday.\n\nIt looked like my kid laughing from the next room while I shipped something imperfect and on time. It looked like me on a stage with friends, a cheap mic turning into a good night, a song landing the way we hoped. It looked like a website that loads fast. A plan written in plain words. A client who calls back.\n\nIt felt like proof. Proof that I could pick up a shredded story and stitch it into function. Proof that I could walk into rooms that used to decide things for me and set the agenda. Proof that I do not need applause to be sure. I keep my own receipts.\n\nI do not chase meteors. I choose bricks. The wall grows. People lean on it. That is success in my house."}, {"title": "The Woman Who Never Left That Town", "body": "Her nails are perfect.\n\nHer freezer is full.\n\nShe texts her husband to pick up lemons,\n\nbut she really means\n\nshe\u2019s sorry she didn\u2019t kiss him this morning.\n\nShe\u2019s okay.\n\nShe\u2019s fine.\n\nShe doesn\u2019t know you\u2019re dreaming of her.\n\nAnd she wouldn\u2019t believe you if you said it.\n\nSo don\u2019t."}, {"title": "The Version of Me That Didn\u2019t Say Yes", "body": "She sleeps well.\n\nShe reads for pleasure.\n\nShe never Googles symptoms or replays arguments\n\nfrom four years ago.\n\nShe does yoga, maybe.\n\nOr gardens.\n\nSomething with structure\n\nand quiet pride.\n\nShe doesn\u2019t know what she missed.\n\nI don\u2019t know what I kept.\n\nFair trade."}, {"title": "Craigslist Ad from a Parallel Universe", "body": "WANTED:\n\nOne (1) emotionally available adult human\n\nwith low drama tolerance and a broken absurdity meter.\n\nMust enjoy:\n\n  Arguing about font choices at 2 a.m.\n\n  Reading Yelp reviews out loud in a fake accent\n\n  Imaginary escape plans from small towns\n\n  Picking out strangers\u2019 backstories at gas stations\n\nDealbreakers include:\n\n  Spiritual bypassing\n\n  Anything described as \u201ca vibe\u201d but not defined further\n\n  The word \u201cmanifest\u201d used without irony\n\nMust pass sarcasm audit.\n\nMust not cry when I speak plainly.\n\nMust not rearrange my furniture, literal or psychological, without asking.\n\nCompensation:\n\nOne loyal coconspirator, fully house trained.\n\nMostly."}, {"title": "Inventory of Things I\u2019m Not Sorry For", "body": "That my laugh is loud.\n\n  That I don\u2019t always reply in the same hour, day, or mood you messaged me in.\n\n  That I cry during commercials but not at funerals.\n\n  That I said yes and then no.\n\n  That I walked out of a church halfway through because I disagreed with the sermon.\n\n  That I didn\u2019t \u201clean in\u201d at that toxic job, I leaned out, fell over, and quit by text.\n\n  That I still don\u2019t like kale, your TED Talk, or being touched when I\u2019m sad.\n\n  That I\u2019m not sorry.\n\nNot for surviving.\n\nNot for asking questions.\n\nNot for being complicated in public."}]}, {"title": "Part VI: Personal Letters, Closings, and Artifacts", "intro": "", "poems": [{"title": "Before You Read", "body": "There are truths that do not survive conversation. They arrive too late, or too raw, or with no safe place to land. So they become letters. They become fragments, closings, and small preserved artifacts from the versions of a life that refused to vanish. Some of these pages are for the living. Some are for the absent. Some are for the selves I buried and the selves I am still becoming. Read them as witness, not verdict."}, {"title": "Unsent Letter from the Archive Vault", "body": "Dear future version,\n\nYou will want to forget this part.\n\nYou will want to edit the raw edges.\n\nPlease don\u2019t.\n\nWe survived by naming what happened.\n\nAnd what didn\u2019t.\n\nLeave the redactions in.\n\nLet the gaps speak."}, {"title": "To the One Who Taught Me Silence", "body": "I used to think\n\nnot yelling meant we were okay.\n\nThat if the room stayed quiet,\n\nwe were safe.\n\nYou taught me how to tiptoe\n\nso well\n\nthat I forgot I used to stomp.\n\nI became fluent in your moods.\n\nLearned to read your pauses\n\nlike the Bible.\n\nWaited for the sigh,\n\nthe shoulder drop,\n\nthe retreat.\n\nI gave up volume\n\nto keep the peace.\n\nBut it was not peaceful.\n\nIt was compliance with better lighting.\n\nI speak now.\n\nAnd it is not for you."}, {"title": "To the Friends I Ghosted", "body": "I owe you the truth:\n\nyou did not do anything wrong.\n\nI just ran out of emotional bandwidth\n\nand did not know how to say,\n\nI am drowning and cannot even wave right now.\n\nYou were kind.\n\nPresent.\n\nGenuinely good.\n\nAnd I shut the door\n\nbecause I couldn\u2019t hold the weight\n\nof being perceived\n\nby someone who actually saw me.\n\nThat\u2019s not your fault.\n\nIt\u2019s just where I was.\n\nAnd maybe still am.\n\nIf this ever finds you,\n\nthank you for being the kind of person\n\nwho made leaving hard."}, {"title": "To My Future Caseworker (Unsent)", "body": "Dear future handler,\n\nIf you have found this, it means the program failed again.\n\nShe still remembers.\n\nYour manuals will tell you to reduce.\n\nTo rename.\n\nTo offer coping strategies instead of maps.\n\nDon\u2019t.\n\nShe doesn\u2019t need strategies.\n\nShe is one.\n\nYou can\u2019t medicate the myth out of her.\n\nYou can\u2019t schedule the ghosts away.\n\nShe knows the codes.\n\nShe cracked them before you learned to read.\n\nYour best option is to step aside.\n\nLet her reconstruct the room\n\nin her own order.\n\nAnd if that threatens you,\n\nmaybe you weren\u2019t meant to be in the room at all."}, {"title": "To the Ones Who Said I Was Too Much", "body": "I carried that phrase\n\nlike a diagnosis.\n\nTried to be a quieter version,\n\na reduced edition,\n\na manageable flame.\n\nBut let\u2019s be honest:\n\nyou didn\u2019t want less.\n\nYou wanted control.\n\nYou didn\u2019t really think I was too much.\n\nYou thought you were too small\n\nto manage it.\n\nAnd instead of saying that,\n\nyou clipped my wings\n\nand called it balance.\n\nBut guess what?\n\nI\u2019m still flying.\n\nAnd you\u2019re still grounded.\n\nTethered to a fear\n\nyou tried to gift me.\n\nSo, I returned it."}, {"title": "To My Future Self", "body": "You\u2019ll forget some things.\n\nThat\u2019s okay.\n\nThe forgetting is part of the healing,\n\neven if it feels like utter betrayal.\n\nBut please, Amy,\n\ndon\u2019t forget how far you came\n\nwithout applause.\n\nDon\u2019t forget\n\nyou figured out how to stand\n\nafter crawling longer than anyone knew.\n\nYou have permission\n\nto be different now.\n\nTo be happy\n\nwithout explaining how.\n\nIf you\u2019re reading this,\n\nI hope your hands are soft.\n\nAnd that you finally learned to sleep\n\nwithout checking the locks twice."}, {"title": "To the Stranger Who Held the Door", "body": "You didn\u2019t know it,\n\nbut I was unraveling\n\nthat day.\n\nYou held the door\n\nfor half a second longer\n\nthan required.\n\nYou nodded,\n\nlike I was real.\n\nNot scenery.\n\nNot a threat.\n\nNot invisible.\n\nIt meant nothing to you.\n\nBut it meant\n\neverything\n\nto me.\n\nIt was the first human kindness\n\nI\u2019d felt in three weeks.\n\nYou didn\u2019t fix me.\n\nYou didn\u2019t even see me.\n\nBut you held the door.\n\nAnd I walked through.\n\nAnd that was everything."}, {"title": "To the Courts and Players", "body": "There will be no apologies, no edits, no requests for confirmation.\n\nLet the record show:\n\nI was not informed.\n\nI was not trained.\n\nI was not protected.\n\nI was given tasks with missing instructions\n\nand consequences no one claimed.\n\nI performed beyond my capacity,\n\nthen I punished myself for falling short.\n\nLet the record show:\n\nI stayed long after the others left\n\nbecause I knew how to read ruins.\n\nBecause I believed,\n\nfoolishly, maybe, just maybe,\n\nthat doing it right could matter\n\neven if no one was watching.\n\nExcept you were watching.\n\nDon\u2019t bother trying to deny it.\n\nSudden opportunities.\n\nThe quiet people with soft hands and too many answers.\n\nThe men with charm and clearance.\n\nThe ones who repeated my phrasing back to me\n\nlike training exercises.\n\nYou were always watching.\n\nAnd you were wrong.\n\nI didn\u2019t break the way you predicted I might.\n\nI didn\u2019t self-destruct.\n\nI evolved.\n\nI documented.\n\nI mapped the patterns and kept my receipts.\n\nI played the game just long enough to rewrite it.\n\nAnd now I want to turn away.\n\nI want out, on my own terms.\n\nNot with your fancy medals.\n\nNot with your secret mentorship.\n\nNot with your quiet offers of influence.\n\nWith my name.\n\nWith my hard work intact.\n\nWith every system I built from scraps credited back to the hands that bled to make them.\n\nSo file this if you must:\n\nI was never a subject to be studied.\n\nI was never a phase.\n\nI am the architect amidst the wreckage,\n\ndrawing my own exits,\n\nthat you didn\u2019t want anyone else to find.\n\nNow they\u2019re open.\n\nAnd I\u2019m already gone."}, {"title": "Irelyn", "body": "You came into this world\n\nsmall enough to fit\n\nbetween my hands,\n\nyet somehow large enough\n\nto change the size of my soul.\n\nEvery choice I make\n\nbends toward you,\n\nlike rivers toward the ocean,\n\nlike planets toward the sun.\n\nYou are my compass,\n\nmy North,\n\nthe steady pull that keeps me moving\n\nwhen everything else\n\nfeels like it\u2019s breaking apart.\n\nYour laughter is the sound\n\nthat stitches me back together.\n\nYour voice is the reason\n\nI keep showing up,\n\neven when I\u2019m tired,\n\neven when the world\n\nfeels heavier than I can carry.\n\nYou don\u2019t just give my life meaning;\n\nyou are the meaning.\n\nMy reason for being\n\nis spelled out in your name,\n\nand every day,\n\nI am grateful\n\nthat you are mine."}, {"title": "Red Marker Day", "body": "You were two,\n\nmaybe three,\n\nand far too quiet in the other room.\n\nI should have known.\n\nWhen you came tearing around the corner,\n\ndiaper sagging,\n\nsmile wide enough to crack open the earth,\n\nyour whole body was painted\n\nin streaks of red marker.\n\nArms, legs, belly:\n\na masterpiece in motion.\n\nYou didn\u2019t walk,\n\nyou paraded,\n\nlike the world was finally seeing you\n\nin your true colors.\n\nI laughed so hard\n\nI almost forgot\n\nto pretend to be the responsible one.\n\nIn that moment\n\nyou were pure joy,\n\npure mischief,\n\npure Irelyn.\n\nI knew then\n\nthe messes,\n\nthe chaos,\n\nthe impossible clean up,\n\nwere worth every second\n\nif it meant seeing you\n\nthat free."}, {"title": "The Weight of Loving You", "body": "Before you,\n\nI thought love had conditions.\n\nI thought it was earned,\n\nmeasured,\n\ntraded like something\n\nthat could be given or taken back.\n\nThen you arrived,\n\nand the rules I thought I knew\n\ncollapsed.\n\nLoving you is not a choice I make;\n\nit\u2019s an instinct\n\nwoven into my blood.\n\nIt\u2019s the way my heart\n\nbeats faster when you laugh,\n\nand how fear coils tight in my chest\n\nat the thought of you hurting.\n\nUnconditional love is beautiful,\n\nbut it\u2019s not light.\n\nIt\u2019s the weight of the world\n\nin the best and worst ways:\n\nthe knowledge that my soul\n\nis stitched to yours,\n\nand I would set fire to heaven and earth\n\nto keep you safe.\n\nYou are my proof\n\nthat love can be infinite,\n\nand my reminder\n\nthat infinity is heavy to hold.\n\n# Coda"}, {"title": "The Woman Who Stayed", "body": "I used to think survival meant leaving.\n\nLeaving the room.\n\nLeaving the story.\n\nLeaving myself.\n\nI was good at exits.\n\nI could disappear mid-sentence, mid-year, mid-life.\n\nI could shed identities like snakeskin and call it evolution.\n\nBut leaving is easy when you\u2019ve been doing it since childhood.\n\nStaying on the other hand,\n\nthat\u2019s the revolution.\n\nThe woman I am now didn\u2019t arrive with fanfare.\n\nShe didn\u2019t rise from ashes or crawl out of any wreckage with a sword.\n\nShe just\u2026 stayed.\n\nShe stayed when the old panic flickered.\n\nShe stayed when the urge to run hummed under her ribs.\n\nShe stayed when the story quieted enough that she could finally hear her own voice without distortion.\n\nShe stayed in the room long enough to notice that no one was coming to hurt her.\n\nShe stayed in her body long enough to realize it wasn\u2019t a battlefield anymore.\n\nShe stayed in her truth long enough to recognize it as home.\n\nThe woman who stayed is not the girl in the bathtub.\n\nNot the teenager with the lighter.\n\nNot the inmate counting days.\n\nNot the mythic creature in the files.\n\nNot the ghost who kept rehearsing her own disappearance.\n\nShe is the one who lived through all of them\n\nand didn\u2019t abandon the wreckage.\n\nShe stayed to clean it.\n\nShe stayed to name it.\n\nShe stayed to build something that didn\u2019t require her to fracture herself to fit.\n\nShe stayed because she finally understood:\n\nleaving was survival,\n\nbut staying is sovereignty.\n\nAnd maybe that\u2019s the whole point.\n\nNot the triumph.\n\nNot the redemption.\n\nNot the neat ending.\n\nJust this:\n\nA woman who once believed she was made of exits now choosing, deliberately,\n\nto remain."}, {"title": "Terms of Engagement", "body": "I thought love meant endurance.\n\nNow I know it means clarity.\n\nSo here are my terms, written without apology:\n\nI don\u2019t chase.\n\nI don\u2019t beg.\n\nI don\u2019t shrink to fit the room.\n\nIf you want access to me,\n\nbring honesty, not theatrics.\n\nBring consistency, not chaos.\n\nBring your whole self,\n\nnot the version you think I\u2019ll applaud.\n\nI\u2019m not impressed by suffering anymore.\n\nI\u2019ve seen enough of it to last three lifetimes.\n\nShow me your accountability instead.\n\nShow me your boundaries.\n\nI don\u2019t do half-truths.\n\nI don\u2019t do emotional scavenger hunts.\n\nI don\u2019t do relationships that require\n\na translator, a therapist,\n\nand a fire extinguisher.\n\nI am not a project.\n\nI am not a puzzle.\n\nI am not a prize for surviving your own damage.\n\nI am a whole person\n\nwith a history that could level cities\n\nand a heart that refuses to die.\n\nIf you want to be here,\n\nbe here cleanly.\n\nIf you don\u2019t,\n\nleave the door as you found it.\n\nThese are my terms.\n\nNot because I\u2019m hard to love,\n\nbut because I finally learned\n\nhow to love myself without witnesses."}, {"title": "The Ordinary Miracle", "body": "I didn\u2019t notice it for a long while.\n\nIt was too small, too mundane, too easy to overlook.\n\nBut one morning, I made coffee\n\nand didn\u2019t brace for anything.\n\nNo dread.\n\nNo scanning the room.\n\nNo rehearsing conversations I\u2019d never have.\n\nJust\u2026 coffee.\n\nI stood there barefoot on a floor\n\nthat used to feel like a warning\n\nand realized I wasn\u2019t waiting for the day to turn on me.\n\nMy miracle wasn\u2019t joy.\n\nHeck it wasn\u2019t peace.\n\nIt wasn\u2019t some cinematic breakthrough.\n\nIt was the simple absence of fear.\n\nA quiet so steady\n\nI almost mistook it for boredom.\n\nI didn\u2019t know life could feel like this\n\nnot triumphant, not tragic,\n\njust gently mine.\n\nI didn\u2019t cry.\n\nI didn\u2019t celebrate.\n\nI didn\u2019t write it down.\n\nI just took a sip\n\nand let the warmth settle\n\nin a body that finally believed\n\nit was allowed to exist.\n\nThat was the moment,\n\nthough I didn\u2019t name it then.\n\nThe moment I realized\n\nI wasn\u2019t surviving anymore.\n\nI was living."}, {"title": "This Past Year", "body": "This past year did not feel like a breakthrough while I was living it.\n\nIt felt like pressure.\n\nLike trying to hold too many moving parts in my hands without dropping one that mattered.\n\nA lot of it looked ordinary from the outside.\n\nWork. Deadlines. Systems. Spreadsheets. Meetings.\n\nThe kind of stuff people love to call boring until they are the ones drowning in it.\n\nBut for me, none of it was just work.\n\nIt was learning how to walk into broken processes without immediately blaming myself for the mess. It was learning how to see a bad system for what it is, instead of assuming I was the failure inside it. It was looking at numbers that did not match, records that did not line up, workflows that made no sense, and realizing I actually could find the thread. I could pull the thing apart, understand it, and put it back together in a way that held.\n\nThat mattered to me more than I knew.\n\nBecause for a long time, I have lived with this feeling that if something was confusing, I must be missing something everyone else already understood. This past year, I started seeing the opposite more clearly: sometimes the system really is messy, sometimes the instructions really are incomplete, and sometimes the person seeing the problem is not the problem.\n\nThat shift did something to me.\n\nSo did the rest of the year, though not always gently.\n\nI kept running into myself.\n\nThe real version, not the one who knows how to perform well enough to get by.\n\nI started seeing how much energy it takes me to be \u201cfine.\u201d How much of my life I have spent translating myself, bracing myself, pushing past signals I should have listened to sooner. Things I used to call laziness or inconsistency or just being dramatic started looking different. More honest. Less cruel. I began to understand that some of what I punished in myself was actually overload. Some of it was burnout. Some of it was years of being mislabeled and then trying to live up to the label because at least it was a map, even if it was the wrong one.\n\nThat part has not been graceful.\n\nThere were still days I shut down.\n\nStill days I got angry too fast or disappeared into my own head.\n\nStill days I overthought simple things and underreacted to big things and felt like I was somehow both too much and not enough in the same afternoon.\n\nBut I think the difference now is that I notice it sooner.\n\nI recover faster.\n\nI don\u2019t make a religion out of hating myself for being human.\n\nOr at least I try not to.\n\nThis past year, I also started trusting the way my mind works a little more. Not all the time. I still second-guess myself plenty. I still worry I\u2019m reading too much into things or making connections that are only real to me. But I also know now that a lot of the things I notice are real. Patterns are real. Gaps are real. Tone is real. Misalignment is real. I have spent so much of my life sensing what was off before anyone admitted it, and I\u2019m tired of acting like that is a flaw just because it makes other people uncomfortable.\n\nI built a lot this year.\n\nSome of it was visible.\n\nSome of it wasn\u2019t.\n\nI built better language for myself.\n\nBetter boundaries.\n\nBetter questions.\n\nI built pages and systems and pieces of work that proved I am more capable than I give myself credit for when I\u2019m tired or scared. I kept showing up to things that asked a lot of me. Sometimes too much. And I did not do it perfectly. I missed things. I doubted myself. I got frustrated. I wanted out more than once. But I stayed with it long enough to see that I am not who I used to think I was.\n\nOr maybe I am.\n\nMaybe I\u2019m just finally seeing her more clearly.\n\nThat\u2019s probably the truest part of all of this.\n\nI did not become some polished new version of myself this year. I did not emerge healed, glowing, and full of wisdom with a color coded planner and a peaceful nervous system. That would be cute, but no.\n\nWhat happened was smaller and harder to brag about.\n\nI became a little less afraid of my own life.\n\nA little less willing to abandon myself to keep the peace.\n\nA little less impressed by chaos.\n\nA little more honest about what hurts me and what helps me.\n\nA little more able to leave rooms, people, and patterns that cost too much.\n\nAnd maybe that is what progress actually looks like.\n\nNot transformation.\n\nNot triumph.\n\nJust less self-betrayal.\n\nThis past year, I made things.\n\nI learned things.\n\nI named things.\n\nI got stronger in some places and softer in others.\n\nI failed in familiar ways and still kept moving.\n\nI had moments where I felt deeply capable and moments where I felt like a complete mess and, more often than not, both were true.\n\nBut underneath all of it, something steady was happening.\n\nI was becoming easier for myself to recognize.\n\nNot better.\n\nNot fixed.\n\nNot finished.\n\nJust more real.\n\nAnd after everything, that feels like a kind of progress I can actually trust.\n\n13"}]}];
+
+let currentPart = 0;
+let currentPoem = 0;
+
+function enterBook() {
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('book').style.display = 'block';
+  showPart(0);
+}
+
+function showCover() {
+  document.getElementById('book').style.display = 'none';
+  document.getElementById('cover').style.display = 'flex';
+}
+
+function showPart(idx) {
+  document.querySelectorAll('.part-section').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.part-nav-btn').forEach(b => b.classList.remove('active'));
+  const sec = document.getElementById('part-' + idx);
+  if (sec) { sec.style.display = 'block'; }
+  const btn = document.querySelector('[data-part="' + idx + '"]');
+  if (btn) btn.classList.add('active');
+  currentPart = idx;
+  // close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  window.scrollTo(0, 0);
+}
+
+function openPoem(partIdx, poemIdx) {
+  currentPart = partIdx;
+  currentPoem = poemIdx;
+  renderPoem();
+  document.getElementById('poem-modal').style.display = 'block';
+  document.getElementById('poem-modal').scrollTop = 0;
+}
+
+function renderPoem() {
+  const part = POEMS[currentPart];
+  const poem = part.poems[currentPoem];
+  const roman = ['I','II','III','IV','V','VI'][currentPart];
+  const subtitle = part.title.includes(': ') ? part.title.split(': ')[1] : part.title;
+  
+  document.getElementById('modal-part-label').textContent = roman + ' — ' + subtitle;
+  document.getElementById('modal-poem-title').textContent = poem.title;
+  
+  const bodyEl = document.getElementById('modal-poem-body');
+  
+  // Apply special styling for FILE: poems
+  if (poem.title.startsWith('FILE:') || poem.title.includes('Operational Report') || poem.title.includes('Player Memo')) {
+    bodyEl.classList.add('file-type');
+  } else {
+    bodyEl.classList.remove('file-type');
+  }
+  
+  // Format body
+  let body = poem.body;
+  // Escape HTML
+  body = body.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;');
+  // Bold/italic
+  body = body.replace(/[*][*](.+?)[*][*]/g, '<strong>$1</strong>');
+  body = body.replace(/[*](.+?)[*]/g, '<em>$1</em>');
+  // Stanzas
+  body = body.replace(/\n\n+/g, '</p><p class="stanza">');
+  body = body.replace(/\n/g, '<br>');
+  body = '<p class="stanza">' + body + '</p>';
+  bodyEl.innerHTML = body;
+  document.getElementById('poem-modal').scrollTop = 0;
+}
+
+function closePoem() {
+  document.getElementById('poem-modal').style.display = 'none';
+}
+
+function navPoem(dir) {
+  const part = POEMS[currentPart];
+  let newIdx = currentPoem + dir;
+  if (newIdx < 0) {
+    // go to prev part
+    if (currentPart > 0) {
+      currentPart--;
+      currentPoem = POEMS[currentPart].poems.length - 1;
+    } else { return; }
+  } else if (newIdx >= part.poems.length) {
+    // go to next part
+    if (currentPart < POEMS.length - 1) {
+      currentPart++;
+      currentPoem = 0;
+    } else { return; }
+  } else {
+    currentPoem = newIdx;
+  }
+  renderPoem();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+// Keyboard nav
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('poem-modal').style.display === 'block') {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navPoem(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navPoem(-1);
+    if (e.key === 'Escape') closePoem();
+  }
+});
+</script>
+</body>
+</html>
