@@ -104,7 +104,7 @@
       "files": [
         {
           "file": "sections/section-1.part-1.json",
-          "sha256": "f2c350b801be2b694e92d4860675d8cdb81d618eaac3cfbf69b7964d0b4f2290",
+          "sha256": "663dbf5b8e239bddc5168580c987126c7b728fc75af7ed35d59df1fd4db62f38",
           "piece_count": 5,
           "compression": "none",
           "format": "piece-shard"
@@ -303,6 +303,6 @@
       ]
     }
   ],
-  "assembled_sha256": "c9cc27207a7d8700ba0e2f8b385ed580afebed09b9975ccfd6f8f8067f0b75a6",
+  "assembled_sha256": "6d0c60c1120fa5c9f631e4a6692a92de858ae7a385a511ca5c53d1898da301f5",
   "storage": "hash-verified-section-shards"
 }
