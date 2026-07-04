@@ -1,2 +1,3 @@
 Phase 2 verification rerun requested after canonical index repair.
 Full verification requested after verified assembled hash finalization.
+Full verification requested after boundary navigation normalization.
