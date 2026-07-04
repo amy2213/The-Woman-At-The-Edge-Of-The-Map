@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: phase2-verification-${{ github.ref }}
@@ -29,6 +29,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Repair canonical index references
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          node scripts/repoint-canonical-index.mjs
+          if ! git diff --quiet -- content/book-content.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add content/book-content.json
+            git commit -m "Repair canonical content index"
+            git push origin HEAD:redesign/source-lock-v7
+          fi
 
       - name: Prepare verification evidence
         run: mkdir -p verification
