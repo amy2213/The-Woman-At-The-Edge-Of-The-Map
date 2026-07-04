@@ -1,0 +1,1 @@
+Phase 2 verification rerun requested after canonical index repair.
