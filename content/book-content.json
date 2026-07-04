@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "source_lock": {
+    "filename": "The_Woman_at_the_Edge_of_the_Map_2026_04_kdp_ready_v7_finalpass(1)(1).docx",
+    "sha256": "0f595f0080e7584f6fde1d42edc607bdf123ab40207b3c9eb54a0c21c7f45072",
+    "label": "KDP Ready v7 Final Pass, April 2026",
+    "locked_date": "2026-07-04",
+    "page_count": 124
+  },
+  "book": {
+    "title": "The Woman at the Edge of the Map",
+    "subtitle": "Poems, Memories, Mythic Files",
+    "author": "Amy Laird",
+    "edition": "First Edition: 2026",
+    "content_note": "Content note: suicide, abuse, incarceration.",
+    "dedication": "For every version of me that got me this far. And for the ones who never made it.",
+    "front_matter": [
+      {"type":"paragraph","runs":[{"text":"THE WOMAN AT THE EDGE OF THE MAP"}]},
+      {"type":"paragraph","runs":[{"text":"Poems, Memories, Mythic Files"}]},
+      {"type":"paragraph","runs":[{"text":"Amy Laird"}]},
+      {"type":"paragraph","runs":[{"text":"Content note: suicide, abuse, incarceration."}]},
+      {"type":"paragraph","runs":[{"text":"Copyright © 2026 Amy Laird"}]},
+      {"type":"paragraph","runs":[{"text":"All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means without permission in writing from the author, except for brief quotations in reviews or scholarly work."}]},
+      {"type":"paragraph","runs":[{"text":"Printed in the United States of America."}]},
+      {"type":"paragraph","runs":[{"text":"First Edition: 2026"}]},
+      {"type":"paragraph","runs":[{"text":"For every version of me that got me this far. And for the ones who never made it."}]}
+    ]
+  },
+  "section_count": 7,
+  "piece_count": 94,
+  "sections": [
+    {"id":"section-1","title":"Part I: The Edge","slug":"part-i-the-edge","piece_count":19,"file":"sections/section-1.json","sha256":"a854ae491890b4bb9e12e157097c0f7ec6e61d618b7c4db5fa95e8fad8b580a3"},
+    {"id":"section-2","title":"Part II: Seekers and Shadows","slug":"part-ii-seekers-and-shadows","piece_count":10,"file":"sections/section-2.json","sha256":"c127438deea0bcac794f811279b74a1068e3113bcbe86167d86fd280a15fc4f6"},
+    {"id":"section-3","title":"Part III: The Reckoning","slug":"part-iii-the-reckoning","piece_count":16,"file":"sections/section-3.json","sha256":"78496608dbc8d1b6c5c8c988cde1230f24d3b612eea32ea1af31bbe6bb09f729"},
+    {"id":"section-4","title":"Part IV: The Myth","slug":"part-iv-the-myth","piece_count":19,"file":"sections/section-4.json","sha256":"d24dcf3ca09ece9ce5b8579d584e66985396dbfb8df3eb69cc07dea71634e759"},
+    {"id":"section-5","title":"Part V: The Return","slug":"part-v-the-return","piece_count":15,"file":"sections/section-5.json","sha256":"c91528e85549c43337c598943a2bf93f8e4144d2851327cbeab5df47550edfda"},
+    {"id":"section-6","title":"Part VI: Personal Letters, Closings, and Artifacts","slug":"part-vi-personal-letters-closings-and-artifacts","piece_count":12,"file":"sections/section-6.json","sha256":"c8520e4e9ae71cedba593bbeec0edf751d17b75e244009ba7b6cbd582cdc2e5c"},
+    {"id":"section-7","title":"Coda","slug":"coda","piece_count":3,"file":"sections/section-7.json","sha256":"a98dd53d10269619812ea65a61e55280047aee170a724059948ce22df3963add"}
+  ],
+  "assembled_sha256": "8bbb60876fe46fe5a03bbc236e4d4e9dcd303c4c8f67934b89259880d5374ef5"
+}
