@@ -83,16 +83,19 @@ function validateManifest(manifest) {
     fail("Global piece order must be contiguous from 1 through 94.");
   }
 
-  const slugSet = new Set();
-  for (const piece of allPieces) {
-    if (EXPECTED.excludedTitles.has(piece.title)) {
-      fail(`Excluded work found in canonical manifest: ${piece.title}`);
-    }
+  const routeSet = new Set();
+  for (const section of sections) {
+    for (const piece of section.pieces ?? []) {
+      if (EXPECTED.excludedTitles.has(piece.title)) {
+        fail(`Excluded work found in canonical manifest: ${piece.title}`);
+      }
 
-    if (slugSet.has(piece.slug)) {
-      fail(`Duplicate piece slug found: ${piece.slug}`);
+      const routeKey = `${section.slug}/${piece.slug}`;
+      if (routeSet.has(routeKey)) {
+        fail(`Duplicate section-scoped piece route found: ${routeKey}`);
+      }
+      routeSet.add(routeKey);
     }
-    slugSet.add(piece.slug);
   }
 
   sections.forEach((section, index) => {
@@ -130,36 +133,39 @@ function validateContent(content, manifest) {
   }
 
   const ids = new Set();
-  const slugs = new Set();
+  const routes = new Set();
   const orders = new Set();
 
-  for (const piece of pieces) {
-    if (!piece.id) fail(`Piece without ID: ${piece.title ?? "untitled"}`);
-    if (ids.has(piece.id)) fail(`Duplicate piece ID: ${piece.id}`);
-    ids.add(piece.id);
+  for (const section of sections) {
+    for (const piece of section.pieces ?? []) {
+      if (!piece.id) fail(`Piece without ID: ${piece.title ?? "untitled"}`);
+      if (ids.has(piece.id)) fail(`Duplicate piece ID: ${piece.id}`);
+      ids.add(piece.id);
 
-    if (!piece.slug) fail(`Piece without slug: ${piece.title ?? piece.id}`);
-    if (slugs.has(piece.slug)) fail(`Duplicate piece slug: ${piece.slug}`);
-    slugs.add(piece.slug);
+      if (!piece.slug) fail(`Piece without slug: ${piece.title ?? piece.id}`);
+      const routeKey = `${section.slug}/${piece.slug}`;
+      if (routes.has(routeKey)) fail(`Duplicate section-scoped piece route: ${routeKey}`);
+      routes.add(routeKey);
 
-    if (orders.has(piece.global_order)) fail(`Duplicate global order: ${piece.global_order}`);
-    orders.add(piece.global_order);
+      if (orders.has(piece.global_order)) fail(`Duplicate global order: ${piece.global_order}`);
+      orders.add(piece.global_order);
 
-    if (EXPECTED.excludedTitles.has(piece.title)) {
-      fail(`Excluded work found in canonical content: ${piece.title}`);
-    }
+      if (EXPECTED.excludedTitles.has(piece.title)) {
+        fail(`Excluded work found in canonical content: ${piece.title}`);
+      }
 
-    if (!Array.isArray(piece.blocks) || piece.blocks.length === 0) {
-      fail(`Piece has no content blocks: ${piece.title ?? piece.id}`);
-    }
+      if (!Array.isArray(piece.blocks) || piece.blocks.length === 0) {
+        fail(`Piece has no content blocks: ${piece.title ?? piece.id}`);
+      }
 
-    if (piece.source?.page_end < piece.source?.page_start) {
-      fail(`Invalid source page range for ${piece.title ?? piece.id}.`);
-    }
+      if (piece.source?.page_end < piece.source?.page_start) {
+        fail(`Invalid source page range for ${piece.title ?? piece.id}.`);
+      }
 
-    const calculatedHash = normalizedContentHash(piece);
-    if (piece.source?.normalized_sha256 && piece.source.normalized_sha256 !== calculatedHash) {
-      fail(`Normalized content hash mismatch for ${piece.title ?? piece.id}.`);
+      const calculatedHash = normalizedContentHash(piece);
+      if (piece.source?.normalized_sha256 && piece.source.normalized_sha256 !== calculatedHash) {
+        fail(`Normalized content hash mismatch for ${piece.title ?? piece.id}.`);
+      }
     }
   }
 
