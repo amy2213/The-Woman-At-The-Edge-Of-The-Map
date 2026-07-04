@@ -21,6 +21,8 @@ const MIME = {
   '.json': 'application/json; charset=utf-8',
   '.txt': 'text/plain; charset=utf-8',
   '.xml': 'application/xml; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
 };
 
 const server = createServer(async (request, response) => {
@@ -87,12 +89,23 @@ try {
         const main = document.querySelector('main#main');
         const skip = document.querySelector('.skip-link');
         const canonical = document.querySelector('link[rel="canonical"]');
+        const favicon = document.querySelector('link[rel="icon"][type="image/svg+xml"]');
+        const appleTouchIcon = document.querySelector('link[rel="apple-touch-icon"]');
+        const ogImage = document.querySelector('meta[property="og:image"]');
+        const twitterImage = document.querySelector('meta[name="twitter:image"]');
+        const twitterCard = document.querySelector('meta[name="twitter:card"]');
         const emptyLinks = [...document.querySelectorAll('a')].filter((link) => !link.textContent.trim() && !link.getAttribute('aria-label')).length;
         return {
+          documentTitle: document.title,
           h1: h1?.textContent.trim() ?? '',
           hasMain: Boolean(main),
           skipTargetExists: Boolean(skip && document.querySelector(skip.getAttribute('href'))),
           canonicalUrl: canonical?.href ?? '',
+          faviconUrl: favicon?.href ?? '',
+          appleTouchIconUrl: appleTouchIcon?.href ?? '',
+          ogImageUrl: ogImage?.content ?? '',
+          twitterImageUrl: twitterImage?.content ?? '',
+          twitterCard: twitterCard?.content ?? '',
           emptyLinks,
           documentWidth: document.documentElement.scrollWidth,
           viewportWidth: document.documentElement.clientWidth,
@@ -104,6 +117,9 @@ try {
         runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
       }));
       const materialViolations = axe.violations.filter((violation) => ['serious', 'critical'].includes(violation.impact));
+
+      const screenshot = path.join(screenshotDir, `${target.name}-${viewport.name}.png`);
+      await page.screenshot({ path: screenshot, fullPage: true });
 
       await page.keyboard.press('Tab');
       const firstFocus = await page.evaluate(() => {
@@ -118,9 +134,6 @@ try {
           visible: rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none' && rect.bottom > 0,
         };
       });
-
-      const screenshot = path.join(screenshotDir, `${target.name}-${viewport.name}.png`);
-      await page.screenshot({ path: screenshot, fullPage: true });
 
       const record = {
         page: target.name,
@@ -143,8 +156,14 @@ try {
 
       if (!response?.ok()) failures.push(`${target.name}/${viewport.name}: HTTP ${record.status}`);
       if (!structural.hasMain || !structural.h1) failures.push(`${target.name}/${viewport.name}: missing main or h1`);
+      if (!structural.documentTitle) failures.push(`${target.name}/${viewport.name}: document title missing`);
       if (!structural.skipTargetExists) failures.push(`${target.name}/${viewport.name}: skip link target missing`);
       if (!structural.canonicalUrl) failures.push(`${target.name}/${viewport.name}: canonical URL missing`);
+      if (!structural.faviconUrl) failures.push(`${target.name}/${viewport.name}: favicon missing`);
+      if (!structural.appleTouchIconUrl) failures.push(`${target.name}/${viewport.name}: Apple touch icon missing`);
+      if (!structural.ogImageUrl) failures.push(`${target.name}/${viewport.name}: Open Graph image missing`);
+      if (!structural.twitterImageUrl) failures.push(`${target.name}/${viewport.name}: Twitter image missing`);
+      if (structural.twitterCard !== 'summary_large_image') failures.push(`${target.name}/${viewport.name}: Twitter card is not summary_large_image`);
       if (structural.emptyLinks) failures.push(`${target.name}/${viewport.name}: ${structural.emptyLinks} empty links`);
       if (structural.horizontalOverflow) failures.push(`${target.name}/${viewport.name}: horizontal overflow ${structural.documentWidth}px > ${structural.viewportWidth}px`);
       if (!firstFocus?.visible || firstFocus.className !== 'skip-link') failures.push(`${target.name}/${viewport.name}: first keyboard focus is not the visible skip link`);
