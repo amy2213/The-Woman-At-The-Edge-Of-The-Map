@@ -30,16 +30,17 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Repair canonical index references
+      - name: Finalize canonical content index
         if: github.event_name == 'push'
         shell: bash
         run: |
           node scripts/repoint-canonical-index.mjs
+          node scripts/finalize-assembled-hash.mjs
           if ! git diff --quiet -- content/book-content.json; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add content/book-content.json
-            git commit -m "Repair canonical content index"
+            git commit -m "Finalize verified canonical content index"
             git push origin HEAD:redesign/source-lock-v7
           fi
 
