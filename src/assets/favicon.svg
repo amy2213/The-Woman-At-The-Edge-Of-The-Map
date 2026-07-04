@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="82" fill="#F7F5F0"/>
+  <rect x="32" y="32" width="448" height="448" rx="74" fill="none" stroke="#C8D3D7" stroke-width="8"/>
+  <path d="M88 208 A182 182 0 0 1 416 152" fill="none" stroke="#668EAC" stroke-width="16"/>
+  <path d="M92 384 A182 182 0 0 0 424 288" fill="none" stroke="#668EAC" stroke-width="16"/>
+  <path d="M112 214 A154 154 0 0 1 306 100" fill="none" stroke="#4D8C8A" stroke-width="12"/>
+  <path d="M104 286 A154 154 0 0 0 404 296" fill="none" stroke="#4D8C8A" stroke-width="12"/>
+  <polyline points="94,390 182,294 272,322 414,146" fill="none" stroke="#C87968" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="94" cy="390" r="12" fill="#D5AE62"/>
+  <circle cx="182" cy="294" r="12" fill="#4D8C8A"/>
+  <circle cx="272" cy="322" r="12" fill="#C87968"/>
+  <circle cx="414" cy="146" r="12" fill="#668EAC"/>
+  <text x="256" y="318" text-anchor="middle" fill="#182633" font-family="Georgia, serif" font-size="190">W</text>
+</svg>
