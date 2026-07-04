@@ -10,12 +10,12 @@ const checks = [
   { name: 'map', path: 'map/', markers: ['Seven destinations.', 'One unfinished map.'] },
   { name: 'section', path: 'sections/part-i-the-edge/', markers: ['The Edge', 'The Quilt'] },
   { name: 'poem', path: 'read/part-i-the-edge/the-edge-lived/', markers: ['The Edge, Lived', 'Canonical position 1 of 94'] },
-  { name: 'prose', path: 'read/part-i-the-edge/the-quilt/', markers: ['The Quilt', 'Canonical position 8 of 94'] },
+  { name: 'prose', path: 'read/part-i-the-edge/the-quilt/', markers: ['The Quilt', 'Canonical position 6 of 94'] },
   { name: 'coda', path: 'read/coda/the-ordinary-miracle/', markers: ['The Ordinary Miracle', 'Canonical position 94 of 94'] },
   { name: 'closing', path: 'closing/', markers: ['The map stays open.', 'Return home'] },
   { name: 'robots', path: 'robots.txt', markers: ['Sitemap:', `${baseUrl.href}sitemap.xml`] },
   { name: 'sitemap', path: 'sitemap.xml', markers: [baseUrl.href, `${baseUrl.href}map/`] },
-  { name: '404-file', path: '404.html', markers: ['The map lost this coordinate.', 'Return to the map'] },
+  { name: '404-file', path: '404.html', markers: ['This path leaves the map.', 'Open the Map', 'Return home'] },
 ];
 const assets = [
   { name: 'base-css', path: 'assets/base.css', type: 'text/css' },
