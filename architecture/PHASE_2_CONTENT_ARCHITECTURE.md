@@ -3,33 +3,35 @@
 ## Status
 
 - **Phase:** 2
-- **Status:** IN PROGRESS
+- **Status:** LOCKED
 - **Started:** July 4, 2026
-- **Working branch:** `redesign/source-lock-v7`
-- **Live site:** Unchanged
+- **Locked:** July 4, 2026
+- **Approved by:** Amy Laird
+- **Lock record:** `architecture/PHASE_2_LOCK.md`
+- **Live site:** Unchanged pending Phase 3 deployment
 - **Source authority:** locked KDP Ready v7 Final Pass manuscript
 
 ## Objective
 
-Replace the current single-file website architecture with a source-controlled, data-driven static reading site that preserves every manuscript detail while supporting direct links, normal browser history, responsive layouts, accessibility, and future updates.
+Replace the former single-file website architecture with a source-controlled, data-driven static reading site that preserves every manuscript detail while supporting direct links, normal browser history, responsive layouts, accessibility, and future updates.
 
 ## Architecture decision
 
-The redesigned site will use a **static site generator built with dependency-light Node.js scripts** rather than a client-only single-page application.
+The redesigned site uses a **static site generator built with dependency-light Node.js scripts** rather than a client-only single-page application.
 
-This decision provides:
+This provides:
 
 - one stable URL per work
 - searchable and shareable pages
-- normal back and forward behavior
-- strong accessibility and SEO
+- normal browser back and forward behavior
+- strong accessibility and SEO foundations
 - fast GitHub Pages hosting
 - no runtime framework dependency
 - deterministic builds from the locked manuscript data
 
-The source data will remain separate from HTML, CSS, and JavaScript. Generated pages are outputs, not editing surfaces.
+Source data remains separate from HTML, CSS, and JavaScript. Generated pages are outputs, not editing surfaces.
 
-## Proposed repository structure
+## Repository structure
 
 ```text
 /
@@ -37,35 +39,22 @@ The source data will remain separate from HTML, CSS, and JavaScript. Generated p
     book-manifest.json
     book.schema.json
     book-content.json
+    sections/
   design/
     PHASE_1_DESIGN_SYSTEM.md
     PHASE_1_LOCK.md
   architecture/
     PHASE_2_CONTENT_ARCHITECTURE.md
+    PHASE_2_CHECKPOINT_3.md
+    PHASE_2_LOCK.md
   src/
     templates/
-      layout.html
-      landing.html
-      map.html
-      section.html
-      reading.html
-      archive.html
-      coda.html
     styles/
-      tokens.css
-      base.css
-      layout.css
-      reader.css
-      sections.css
     scripts/
-      navigation.js
-      progress.js
-      accessibility.js
   scripts/
-    validate-content.mjs
-    build.mjs
+    validation and build scripts
   docs/
-    generated GitHub Pages site
+    final GitHub Pages production site
   package.json
 ```
 
@@ -75,13 +64,12 @@ The source data will remain separate from HTML, CSS, and JavaScript. Generated p
 |---|---|
 | Landing | `/` |
 | Map and complete contents | `/map/` |
-| Front matter | `/front-matter/` |
 | Section overview | `/sections/{section-slug}/` |
-| Individual work | `/read/{piece-slug}/` |
+| Individual work | `/read/{section-slug}/{piece-slug}/` |
 | Coda overview | `/sections/coda/` |
-| Content note | `/content-note/` or accessible inline panel |
+| Closing page | `/closing/` |
 
-A generated `404.html` will redirect valid legacy or mistyped GitHub Pages paths without trapping the reader in a broken client-side route.
+The final production build must also include a generated `404.html` and legacy-path handling without trapping readers in broken client-side routes.
 
 ## Canonical content model
 
@@ -109,10 +97,10 @@ Each section contains:
 - Roman numeral or Coda label
 - approved interface descriptor
 - accent token
-- ordered piece references
-- source page reference
+- ordered work references
+- source-page reference
 
-### Piece
+### Work
 
 Each work contains:
 
@@ -123,15 +111,13 @@ Each work contains:
 - section order
 - global order
 - format type
-- source page start and end
-- content blocks
-- previous and next piece IDs
+- source-page start and end
+- structured content blocks
+- previous and next work IDs
 - optional archive metadata
 - optional interface-only reading-time estimate
 
-### Format types
-
-Approved format values:
+### Approved format types
 
 - `poem`
 - `prose`
@@ -158,38 +144,38 @@ The model preserves manuscript structure through ordered blocks:
 
 Text formatting is stored as inline runs so italics, bold text, deliberate capitalization, and other manuscript styling remain explicit rather than inferred by CSS.
 
-## Source fidelity rules
+## Source-fidelity rules
 
-1. The DOCX remains the authority.
-2. Piece titles and ordering must match `book-manifest.json`.
+1. The locked DOCX remains the authority.
+2. Work titles and ordering must match `book-manifest.json`.
 3. Paragraph and stanza breaks must match the DOCX.
 4. Intentional profanity, capitalization, punctuation, and grammar remain untouched.
 5. Web interface copy must be stored separately from manuscript text.
-6. No manuscript correction may be made during migration without a logged change request.
-7. Each migrated piece receives a content hash after normalization.
-8. The validator must reject duplicate IDs, duplicate slugs, missing global order values, and incorrect piece counts.
-9. The validator must reject `This Past Year` from canonical content.
-10. Coda must remain a separate seventh top-level section.
+6. No manuscript correction may be made without a logged change request.
+7. Each migrated work receives a normalized content hash.
+8. Validation rejects duplicate IDs, duplicate slugs, missing global-order values, and incorrect work counts.
+9. Validation rejects `This Past Year` from canonical content.
+10. Coda remains a separate seventh top-level section.
 
 ## Navigation rules
 
-- Global previous and next navigation follows canonical global order 1 through 94.
+- Global previous and next navigation follows canonical order 1 through 94.
 - Section pages follow canonical section order.
 - A reader can move from the final work of one section to the opening work of the next.
-- The final Part VI work leads to the Coda overview or first Coda work, depending on reader preference settings.
-- The final Coda work ends at a dedicated closing screen, not an abrupt contents dump.
-- Browser history and direct URLs must work without JavaScript.
-- JavaScript may enhance progress tracking but may not be required to read the book.
+- The final Part VI work leads into the separate Coda sequence.
+- The final Coda work ends at a dedicated closing screen.
+- Browser history and direct URLs work without JavaScript.
+- JavaScript may enhance progress tracking but is not required to read the book.
 
 ## Reader progress
 
 Reader progress is optional and local-only.
 
-Approved local storage values:
+Approved local-storage values include:
 
-- last piece ID
+- last work ID
 - last section ID
-- completed piece IDs
+- completed work IDs
 - optional preferred text size
 - optional reduced-decoration preference
 
@@ -198,87 +184,79 @@ No account, analytics profile, or external database is required.
 ## Build workflow
 
 1. Validate source-lock metadata.
-2. Validate `book-content.json` against `book.schema.json`.
+2. Validate canonical content against the schema.
 3. Confirm seven sections and 94 works.
-4. Confirm canonical global order.
-5. Calculate previous and next relationships.
-6. Render landing, map, section, reading, archive, and Coda templates.
-7. Generate sitemap, metadata, and `404.html`.
-8. Output the finished site to `docs/`.
-9. Run link and accessibility checks.
+4. Confirm canonical global order and reading relationships.
+5. Verify content and file hashes.
+6. Render landing, map, section, reading, archive, letter, Coda, and closing templates.
+7. Generate metadata, sitemap, and `404.html` for production.
+8. Output the finished production site to `docs/` during Phase 3.
+9. Run link, responsive, keyboard, browser, and accessibility checks.
 
-## Phase 2 work packages
+## Completed Phase 2 work packages
 
 ### 2.1 Schema and validation
 
-- define the formal JSON schema
-- create source-lock checks
-- validate canonical counts and order
-- prohibit duplicate slugs and excluded works
+- [x] Define the formal JSON schema.
+- [x] Create source-lock checks.
+- [x] Validate canonical counts and order.
+- [x] Prohibit duplicate slugs and excluded works.
 
-### 2.2 Content extraction model
+### 2.2 Content migration
 
-- define paragraph, stanza, line, metadata, dialogue, and list blocks
-- preserve inline formatting runs
-- assign permanent IDs and slugs
-- record DOCX page references
+- [x] Define paragraph, stanza, line, metadata, dialogue, and list blocks.
+- [x] Preserve inline formatting runs.
+- [x] Assign permanent IDs and slugs.
+- [x] Record source-page references.
+- [x] Migrate all 94 works.
+- [x] Confirm 94 visible-text matches and zero mismatches.
 
-### 2.3 Routing and build contract
+### 2.3 Routing and generation
 
-- define generated paths
-- define previous and next behavior
-- define legacy-path handling
-- define generated output structure
+- [x] Define generated paths.
+- [x] Define previous and next behavior.
+- [x] Define section-boundary navigation.
+- [x] Define generated output structure.
+- [x] Build all 104 static HTML pages.
+- [x] Pass the complete internal-link check.
 
-### 2.4 Template contract
+### 2.4 Template system
 
-Define data requirements for:
+Data-driven templates are complete for:
 
-- landing page
-- map overview
-- section page
-- standard poem page
-- long prose page
-- archive page
-- letter page
-- Coda page
-- closing page
+- [x] landing page
+- [x] map overview
+- [x] section overview
+- [x] standard poem page
+- [x] long prose page
+- [x] archive page
+- [x] dialogue page
+- [x] list page
+- [x] letter page
+- [x] Coda page
+- [x] closing page
 
-### 2.5 Migration readiness
+### 2.5 Final verification
 
-- create an exemplar migrated work
-- test schema validation
-- test preserved line and paragraph breaks
-- confirm no manuscript text is stored in presentation templates
+- [x] Review representative desktop screens.
+- [x] Review representative mobile screens.
+- [x] Verify keyboard operation and visible focus.
+- [x] Verify skip-link behavior.
+- [x] Check browser-console errors and horizontal overflow.
+- [x] Run automated accessibility scanning.
+- [x] Correct the remaining color-contrast defects.
+- [x] Pass every step in the final verification workflow.
+- [x] Merge the verified Phase 2 work into `main`.
+- [x] Obtain owner approval and lock Phase 2.
 
-## Deliverables
+## Final accepted result
 
-- [x] Record Phase 1 owner approval
-- [x] Establish static-generation architecture
-- [x] Establish route contract
-- [x] Establish canonical content entities
-- [x] Establish block and formatting model
-- [x] Establish source-fidelity rules
-- [x] Establish navigation rules
-- [x] Establish build workflow
-- [x] Create formal JSON schema
-- [x] Create automated validator
-- [x] Create package-level validation command
-- [ ] Create complete `book-content.json`
-- [ ] Migrate one exemplar from each major format
-- [ ] Validate exemplar content
-- [ ] Create build-script foundation
-- [ ] Generate first data-driven preview
-- [ ] Review architecture output
-- [ ] Lock Phase 2
+- **Sections:** 7
+- **Works:** 94
+- **Generated HTML pages:** 104
+- **Visible-text mismatches:** 0
+- **Final assembled SHA-256:** `6d0c60c1120fa5c9f631e4a6692a92de858ae7a385a511ca5c53d1898da301f5`
+- **Verification workflow run:** `28714172112`
+- **Merge commit:** `2f69f284544d5b31f74c4d39ab1a9dac188ad468`
 
-## Phase 2 acceptance criteria
-
-Phase 2 may be locked when:
-
-1. The content schema can represent every work type in the manuscript.
-2. Validation catches count, order, slug, section, source-lock, and excluded-piece errors.
-3. At least one poem, one long prose work, one archive work, one letter, and one Coda work validate successfully.
-4. Direct route generation is demonstrated.
-5. Manuscript data is fully separated from presentation templates.
-6. The architecture can generate the full site without manual duplication of 94 pages.
+Phase 2 is complete and locked. Production generation, GitHub Pages configuration, public deployment, and live-site testing transfer to Phase 3.
