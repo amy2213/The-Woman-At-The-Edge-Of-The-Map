@@ -7,10 +7,12 @@
 - **Phase 1:** LOCKED by owner approval July 4, 2026
 - **Phase 2:** LOCKED by owner approval July 4, 2026
 - **Phase 3:** IN PROGRESS, started July 4, 2026
-- **Current checkpoint:** Checkpoint 3, public deployment preparation
+- **Current checkpoint:** Checkpoint 3, awaiting release authorization
 - **Phase 3 control record:** `production/PHASE_3_PRODUCTION_PLAN.md`
 - **Checkpoint 1 record:** `production/PHASE_3_CHECKPOINT_1.md`
 - **Checkpoint 2 record:** `production/PHASE_3_CHECKPOINT_2.md`
+- **Deployment control:** `production/PHASE_3_DEPLOYMENT_CONTROL.md`
+- **Deployment workflow:** `.github/workflows/deploy-pages.yml`
 - **Phase 3 working branch:** `redesign/phase-3-production`
 - **Phase 2 lock record:** `architecture/PHASE_2_LOCK.md`
 - **Phase 2 merge commit:** `2f69f284544d5b31f74c4d39ab1a9dac188ad468`
@@ -53,18 +55,24 @@ Complete. Nine representative routes were reviewed at desktop and mobile widths.
 
 The verified Checkpoint 2 source commit is `2704e086c56e19f8eb5919b9fd15fda7c5da0aae`. Verification run `28716485973` passed all production checks and generated artifact `8084545538`.
 
-## Current Phase 3 checkpoint
+### Checkpoint 3: Deployment preparation
 
-**Checkpoint 3: Public deployment preparation**
+Prepared, not executed. The project now includes:
 
-Current work is limited to:
+- GitHub's supported Pages artifact publication method
+- a manual-only deployment workflow
+- exact 40-character release-SHA validation
+- typed `DEPLOY` confirmation
+- a fresh production rebuild and complete verification before upload
+- a protected `github-pages` deployment environment
+- a postdeployment live-site smoke test
+- retained predeployment and live-deployment evidence
+- a documented rollback procedure
 
-- confirming the GitHub Pages publication method
-- defining the approved deployment control
-- preserving the existing public release until deployment authorization
-- preparing the live-site smoke-test procedure
-- ensuring only a verified production artifact can be released
+## Current release state
+
+The deployment mechanism is ready, but the pull request remains a draft and the live site has not changed. The remaining sequence is explicit release authorization, merge into `main`, manual deployment against the recorded merge SHA, public smoke testing, live owner approval, and the Phase 3 lock.
 
 ## Current release rule
 
-The public website must not be switched to the redesigned build until the production output is generated, all required verification passes, representative screens are reviewed, the live deployment is tested, direct reading routes work, assets load correctly, and Amy Laird approves the release.
+The public website must not be switched to the redesigned build until the production output is generated, all required verification passes, representative screens are reviewed, Amy Laird explicitly authorizes release, the live deployment is tested, direct reading routes work, assets load correctly, and the live result receives final approval.
