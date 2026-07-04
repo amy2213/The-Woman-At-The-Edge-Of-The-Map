@@ -49,57 +49,30 @@ jobs:
           set -o pipefail
           npm run build 2>&1 | tee verification/production-build.log
 
-      - name: Verify production release contract
-        shell: bash
-        run: |
-          set -o pipefail
-          node --input-type=module <<'NODE' 2>&1 | tee verification/release-contract.log
-          import { readFile, readdir, access } from 'node:fs/promises';
-          import path from 'node:path';
-
-          const docs = path.resolve('docs');
-          const manifest = JSON.parse(await readFile(path.join(docs, 'release-manifest.json'), 'utf8'));
-          const required = ['.nojekyll', '404.html', 'robots.txt', 'sitemap.xml', 'sitemap.txt', 'release-manifest.json', 'build-report.json', 'index.html'];
-          for (const file of required) await access(path.join(docs, file));
-
-          async function walk(dir) {
-            const files = [];
-            for (const entry of await readdir(dir, { withFileTypes: true })) {
-              const candidate = path.join(dir, entry.name);
-              if (entry.isDirectory()) files.push(...await walk(candidate));
-              else files.push(candidate);
-            }
-            return files;
-          }
-
-          const htmlFiles = (await walk(docs)).filter((file) => file.endsWith('.html'));
-          const failures = [];
-          if (manifest.status !== 'built') failures.push('release manifest status is not built');
-          if (manifest.sections !== 7) failures.push(`sections ${manifest.sections} != 7`);
-          if (manifest.works !== 94) failures.push(`works ${manifest.works} != 94`);
-          if (manifest.core_html_pages !== 104) failures.push(`core pages ${manifest.core_html_pages} != 104`);
-          if (manifest.total_html_pages !== 105) failures.push(`total pages ${manifest.total_html_pages} != 105`);
-          if (htmlFiles.length !== 105) failures.push(`generated HTML files ${htmlFiles.length} != 105`);
-          if (manifest.source_sha256 !== '0f595f0080e7584f6fde1d42edc607bdf123ab40207b3c9eb54a0c21c7f45072') failures.push('source hash mismatch');
-          if (manifest.canonical_assembled_sha256 !== '6d0c60c1120fa5c9f631e4a6692a92de858ae7a385a511ca5c53d1898da301f5') failures.push('assembled hash mismatch');
-
-          const result = { status: failures.length ? 'failed' : 'passed', html_files: htmlFiles.length, required_files: required, failures };
-          console.log(JSON.stringify(result, null, 2));
-          if (failures.length) process.exit(1);
-          NODE
-
-      - name: Verify internal links
-        shell: bash
-        run: |
-          set -o pipefail
-          npm run check:links 2>&1 | tee verification/link-check.log
-
       - name: Install browser verification tools
         shell: bash
         run: |
           set -o pipefail
           npm install --no-save playwright@1.52.0 axe-core@4.10.3 2>&1 | tee verification/browser-install.log
           npx playwright install --with-deps chromium 2>&1 | tee -a verification/browser-install.log
+
+      - name: Render release images
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run render:assets 2>&1 | tee verification/release-assets.log
+
+      - name: Verify production release contract
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/verify-release.mjs 2>&1 | tee verification/release-contract.log
+
+      - name: Verify internal links
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run check:links 2>&1 | tee verification/link-check.log
 
       - name: Verify desktop, mobile, keyboard, metadata, and accessibility
         shell: bash
