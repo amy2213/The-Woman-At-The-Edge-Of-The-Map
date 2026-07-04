@@ -7,7 +7,10 @@
 - **Phase 1:** LOCKED by owner approval July 4, 2026
 - **Phase 2:** LOCKED by owner approval July 4, 2026
 - **Phase 3:** IN PROGRESS, started July 4, 2026
+- **Current checkpoint:** Checkpoint 3, public deployment preparation
 - **Phase 3 control record:** `production/PHASE_3_PRODUCTION_PLAN.md`
+- **Checkpoint 1 record:** `production/PHASE_3_CHECKPOINT_1.md`
+- **Checkpoint 2 record:** `production/PHASE_3_CHECKPOINT_2.md`
 - **Phase 3 working branch:** `redesign/phase-3-production`
 - **Phase 2 lock record:** `architecture/PHASE_2_LOCK.md`
 - **Phase 2 merge commit:** `2f69f284544d5b31f74c4d39ab1a9dac188ad468`
@@ -38,17 +41,29 @@ Phase 2 established and verified the complete canonical content system, permanen
 
 The final GitHub Actions verification passed every required step before the Phase 2 pull request was merged into `main`.
 
+## Phase 3 completion to date
+
+### Checkpoint 1: Production artifact foundation
+
+Complete. The production `docs/` target, canonical metadata, sitemap, robots file, `.nojekyll`, 404 page, release manifest, and repeatable Phase 3 verification workflow passed.
+
+### Checkpoint 2: Visual release review
+
+Complete. Nine representative routes were reviewed at desktop and mobile widths. The release has 105 unique document titles, 105 unique descriptions, approved favicon assets, an approved 1200 × 630 social-sharing image, clean normal-state screenshots, successful keyboard checks, no horizontal overflow, no browser-console errors, and no serious or critical accessibility violations.
+
+The verified Checkpoint 2 source commit is `2704e086c56e19f8eb5919b9fd15fda7c5da0aae`. Verification run `28716485973` passed all production checks and generated artifact `8084545538`.
+
 ## Current Phase 3 checkpoint
 
-**Checkpoint 1: Production artifact foundation**
+**Checkpoint 3: Public deployment preparation**
 
-Current work includes:
+Current work is limited to:
 
-- promoting generated output to the production `docs/` target
-- adding canonical and social metadata
-- generating sitemap, robots, `.nojekyll`, 404, and release-manifest files
-- creating the repeatable Phase 3 verification workflow
-- preserving the existing public release until the production artifact is reviewed and approved
+- confirming the GitHub Pages publication method
+- defining the approved deployment control
+- preserving the existing public release until deployment authorization
+- preparing the live-site smoke-test procedure
+- ensuring only a verified production artifact can be released
 
 ## Current release rule
 
