@@ -60,6 +60,16 @@ LIST_TITLES = {
 
 DIALOGUE_PREFIXES = ("Dialogue:",)
 
+# Explicit decisions from source review. These override heuristics but never alter text.
+FORMAT_OVERRIDES = {
+    "Abilene": "poem",
+    "Twice Without Warning": "poem",
+    "The One I Keep in the Basement": "poem",
+    "What You Don’t Say Still Counts": "poem",
+    "Belle of the Pity Party": "poem",
+    "God Doesn’t Knock": "poem",
+}
+
 
 @dataclass(frozen=True)
 class PieceRange:
@@ -110,8 +120,28 @@ def paragraph_runs(paragraph: Paragraph) -> list[dict[str, Any]]:
     return runs
 
 
-def rich_line(paragraph: Paragraph) -> dict[str, Any]:
-    return {"runs": paragraph_runs(paragraph)}
+def rich_lines_from_paragraph(paragraph: Paragraph) -> list[dict[str, Any]]:
+    """Split manual line breaks into line records while preserving run styling."""
+    lines: list[list[dict[str, Any]]] = [[]]
+    source_runs = paragraph.runs or []
+    if not source_runs and paragraph.text:
+        source_runs = [paragraph]
+
+    for run in source_runs:
+        text = run.text
+        parts = text.split("\n")
+        for index, part in enumerate(parts):
+            if part:
+                item: dict[str, Any] = {"text": part}
+                if getattr(run, "italic", False):
+                    item["italic"] = True
+                if getattr(run, "bold", False):
+                    item["bold"] = True
+                lines[-1].append(item)
+            if index < len(parts) - 1:
+                lines.append([])
+
+    return [{"runs": line or [{"text": ""}]} for line in lines]
 
 
 def trim_blank_paragraphs(paragraphs: list[Paragraph]) -> list[Paragraph]:
@@ -147,10 +177,13 @@ def paragraph_blocks(paragraphs: Iterable[Paragraph]) -> list[dict[str, Any]]:
 
 
 def stanza_blocks(paragraphs: Iterable[Paragraph]) -> list[dict[str, Any]]:
-    return [
-        {"type": "stanza", "lines": [rich_line(paragraph) for paragraph in group]}
-        for group in split_on_blank(paragraphs)
-    ]
+    blocks: list[dict[str, Any]] = []
+    for group in split_on_blank(paragraphs):
+        lines: list[dict[str, Any]] = []
+        for paragraph in group:
+            lines.extend(rich_lines_from_paragraph(paragraph))
+        blocks.append({"type": "stanza", "lines": lines})
+    return blocks
 
 
 def metadata_prefix(paragraphs: list[Paragraph]) -> tuple[list[dict[str, str]], list[Paragraph]]:
@@ -244,7 +277,7 @@ def list_blocks(title: str, paragraphs: list[Paragraph]) -> tuple[list[dict[str,
 
     for group in groups[1:]:
         if all(len(p.text.strip()) < 120 for p in group):
-            blocks.append({"type": "stanza", "lines": [rich_line(p) for p in group]})
+            blocks.append({"type": "stanza", "lines": [line for p in group for line in rich_lines_from_paragraph(p)]})
         else:
             blocks.extend(paragraph_blocks(group))
     return blocks, notes
@@ -256,6 +289,8 @@ def detect_format(piece: PieceRange, paragraphs: list[Paragraph]) -> tuple[str, 
     nonblank = [p for p in paragraphs if p.text.strip()]
     texts = [p.text.strip() for p in nonblank]
 
+    if title in FORMAT_OVERRIDES:
+        return FORMAT_OVERRIDES[title], notes
     if title in LIST_TITLES:
         return "list", notes
     if title.startswith(DIALOGUE_PREFIXES):
@@ -266,7 +301,7 @@ def detect_format(piece: PieceRange, paragraphs: list[Paragraph]) -> tuple[str, 
         return "letter", notes
 
     if title == "Before You Read":
-        return "prose", ["Repeated title; route must remain section-scoped."]
+        return "prose", notes
 
     if not texts:
         return "hybrid", ["No non-empty body paragraphs found."]
@@ -305,8 +340,6 @@ def build_blocks(format_name: str, title: str, paragraphs: list[Paragraph]) -> t
         notes: list[str] = []
         if entries:
             blocks.append({"type": "metadata", "entries": entries})
-        else:
-            notes.append("Archive format detected without leading metadata entries.")
         blocks.extend(stanza_blocks(remainder))
         return blocks, notes
     raise ValueError(f"Unsupported format: {format_name}")
