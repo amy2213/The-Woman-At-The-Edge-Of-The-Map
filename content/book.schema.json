@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://amy2213.github.io/The-Woman-At-The-Edge-Of-The-Map/content/book.schema.json",
+  "title": "The Woman at the Edge of the Map canonical content",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "source_lock", "book", "sections"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "source_lock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filename", "sha256", "label", "locked_date", "page_count"],
+      "properties": {
+        "filename": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "label": {"type": "string", "minLength": 1},
+        "locked_date": {"type": "string", "format": "date"},
+        "page_count": {"type": "integer", "const": 124}
+      }
+    },
+    "book": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "subtitle", "author", "edition", "content_note", "dedication", "front_matter"],
+      "properties": {
+        "title": {"const": "The Woman at the Edge of the Map"},
+        "subtitle": {"const": "Poems, Memories, Mythic Files"},
+        "author": {"const": "Amy Laird"},
+        "edition": {"type": "string", "minLength": 1},
+        "content_note": {"type": "string", "minLength": 1},
+        "dedication": {"type": "string", "minLength": 1},
+        "front_matter": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/contentBlock"}
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {"$ref": "#/$defs/section"}
+    }
+  },
+  "$defs": {
+    "inlineRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": {"type": "string"},
+        "italic": {"type": "boolean", "default": false},
+        "bold": {"type": "boolean", "default": false},
+        "small_caps": {"type": "boolean", "default": false}
+      }
+    },
+    "richLine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runs"],
+      "properties": {
+        "runs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/inlineRun"}
+        }
+      }
+    },
+    "contentBlock": {
+      "oneOf": [
+        {"$ref": "#/$defs/paragraphBlock"},
+        {"$ref": "#/$defs/stanzaBlock"},
+        {"$ref": "#/$defs/metadataBlock"},
+        {"$ref": "#/$defs/dialogueBlock"},
+        {"$ref": "#/$defs/listBlock"},
+        {"$ref": "#/$defs/dividerBlock"}
+      ]
+    },
+    "paragraphBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "runs"],
+      "properties": {
+        "type": {"const": "paragraph"},
+        "runs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/inlineRun"}
+        }
+      }
+    },
+    "stanzaBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "lines"],
+      "properties": {
+        "type": {"const": "stanza"},
+        "lines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/richLine"}
+        }
+      }
+    },
+    "metadataBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "entries"],
+      "properties": {
+        "type": {"const": "metadata"},
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "value"],
+            "properties": {
+              "label": {"type": "string"},
+              "value": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "dialogueBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "lines"],
+      "properties": {
+        "type": {"const": "dialogue"},
+        "lines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["speaker", "runs"],
+            "properties": {
+              "speaker": {"type": "string"},
+              "runs": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"$ref": "#/$defs/inlineRun"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "listBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "ordered", "items"],
+      "properties": {
+        "type": {"const": "list"},
+        "ordered": {"type": "boolean"},
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"$ref": "#/$defs/inlineRun"}
+          }
+        }
+      }
+    },
+    "dividerBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": {"const": "divider"}
+      }
+    },
+    "piece": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "slug", "order", "global_order", "format", "source", "blocks"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^piece-[0-9]{3}$"},
+        "title": {"type": "string", "minLength": 1},
+        "slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "order": {"type": "integer", "minimum": 1},
+        "global_order": {"type": "integer", "minimum": 1, "maximum": 94},
+        "format": {
+          "enum": ["poem", "prose", "hybrid", "archive", "dialogue", "letter", "list", "front-matter"]
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["page_start", "page_end"],
+          "properties": {
+            "page_start": {"type": "integer", "minimum": 1, "maximum": 124},
+            "page_end": {"type": "integer", "minimum": 1, "maximum": 124},
+            "normalized_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+          }
+        },
+        "blocks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/contentBlock"}
+        },
+        "archive_metadata": {"$ref": "#/$defs/metadataBlock"},
+        "previous_id": {"type": ["string", "null"], "pattern": "^piece-[0-9]{3}$"},
+        "next_id": {"type": ["string", "null"], "pattern": "^piece-[0-9]{3}$"}
+      }
+    },
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "slug", "order", "label", "accent", "source_page", "pieces"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^section-[1-7]$"},
+        "title": {"type": "string", "minLength": 1},
+        "slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "order": {"type": "integer", "minimum": 1, "maximum": 7},
+        "label": {"type": "string", "minLength": 1},
+        "descriptor": {"type": "string"},
+        "accent": {
+          "enum": ["horizon", "indigo", "coral", "sage", "sea-glass", "lavender-gray", "saffron"]
+        },
+        "source_page": {"type": "integer", "minimum": 1, "maximum": 124},
+        "pieces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/piece"}
+        }
+      }
+    }
+  }
+}

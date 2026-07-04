@@ -1,0 +1,141 @@
+{
+  "source_sha256": "0f595f0080e7584f6fde1d42edc607bdf123ab40207b3c9eb54a0c21c7f45072",
+  "extracted_sections": 7,
+  "extracted_pieces": 94,
+  "section_counts": {
+    "Part I: The Edge": 19,
+    "Part II: Seekers and Shadows": 10,
+    "Part III: The Reckoning": 16,
+    "Part IV: The Myth": 19,
+    "Part V: The Return": 15,
+    "Part VI: Personal Letters, Closings, and Artifacts": 12,
+    "Coda": 3
+  },
+  "format_counts": {
+    "poem": 56,
+    "prose": 12,
+    "hybrid": 1,
+    "list": 3,
+    "archive": 13,
+    "dialogue": 1,
+    "letter": 8
+  },
+  "review_required_count": 16,
+  "review_queue": [
+    {
+      "piece_id": "piece-020",
+      "section": "Part II: Seekers and Shadows",
+      "title": "Before You Read",
+      "format": "prose",
+      "notes": "Repeated title; route must remain section-scoped."
+    },
+    {
+      "piece_id": "piece-029",
+      "section": "Part II: Seekers and Shadows",
+      "title": "The One I Keep in the Basement",
+      "format": "poem",
+      "notes": "Detected from short-line structure; confirm manually."
+    },
+    {
+      "piece_id": "piece-030",
+      "section": "Part III: The Reckoning",
+      "title": "Before You Read",
+      "format": "prose",
+      "notes": "Repeated title; route must remain section-scoped."
+    },
+    {
+      "piece_id": "piece-036",
+      "section": "Part III: The Reckoning",
+      "title": "What You Don’t Say Still Counts",
+      "format": "poem",
+      "notes": "Detected from short-line structure; confirm manually."
+    },
+    {
+      "piece_id": "piece-039",
+      "section": "Part III: The Reckoning",
+      "title": "Belle of the Pity Party",
+      "format": "hybrid",
+      "notes": "Mixed paragraph profile; confirm hybrid versus prose manually."
+    },
+    {
+      "piece_id": "piece-046",
+      "section": "Part IV: The Myth",
+      "title": "Before You Read",
+      "format": "prose",
+      "notes": "Repeated title; route must remain section-scoped."
+    },
+    {
+      "piece_id": "piece-048",
+      "section": "Part IV: The Myth",
+      "title": "Testimony Excerpt No. 9B",
+      "format": "archive",
+      "notes": "Archive format detected without leading metadata entries."
+    },
+    {
+      "piece_id": "piece-049",
+      "section": "Part IV: The Myth",
+      "title": "Court Exhibit X: The Day the Mirror Broke",
+      "format": "archive",
+      "notes": "Archive format detected without leading metadata entries."
+    },
+    {
+      "piece_id": "piece-055",
+      "section": "Part IV: The Myth",
+      "title": "FILE: JG-R/OS.2 (“Jorge”)",
+      "format": "archive",
+      "notes": "Archive format detected without leading metadata entries."
+    },
+    {
+      "piece_id": "piece-057",
+      "section": "Part IV: The Myth",
+      "title": "FILE: SIGNAL-GIVE.8 (“Give It Away”)",
+      "format": "archive",
+      "notes": "Archive format detected without leading metadata entries."
+    },
+    {
+      "piece_id": "piece-059",
+      "section": "Part IV: The Myth",
+      "title": "FILE: GUT SIGNAL.2B",
+      "format": "archive",
+      "notes": "Archive format detected without leading metadata entries."
+    },
+    {
+      "piece_id": "piece-061",
+      "section": "Part IV: The Myth",
+      "title": "Redacted Testimony from the Girl in the Chair",
+      "format": "archive",
+      "notes": "Archive format detected without leading metadata entries."
+    },
+    {
+      "piece_id": "piece-064",
+      "section": "Part IV: The Myth",
+      "title": "Player Memo: Observed Subject #451 A",
+      "format": "archive",
+      "notes": "Archive format detected without leading metadata entries."
+    },
+    {
+      "piece_id": "piece-065",
+      "section": "Part V: The Return",
+      "title": "Before You Read",
+      "format": "prose",
+      "notes": "Repeated title; route must remain section-scoped."
+    },
+    {
+      "piece_id": "piece-072",
+      "section": "Part V: The Return",
+      "title": "God Doesn’t Knock",
+      "format": "poem",
+      "notes": "Detected from short-line structure; confirm manually."
+    },
+    {
+      "piece_id": "piece-080",
+      "section": "Part VI: Personal Letters, Closings, and Artifacts",
+      "title": "Before You Read",
+      "format": "prose",
+      "notes": "Repeated title; route must remain section-scoped."
+    }
+  ],
+  "excluded_title_present": false,
+  "draft_sha256": "771a6895edd75513ea233291a084e8ee52f1e65f5cd607e9c5ee8b57286fa73d",
+  "audit_sha256": "55039793641a68e85e39772d72da199f6eedfb8159309d438413d5db1ba31aab"
+}

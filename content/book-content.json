@@ -1,0 +1,308 @@
+{
+  "schema_version": "1.0",
+  "source_lock": {
+    "filename": "The_Woman_at_the_Edge_of_the_Map_2026_04_kdp_ready_v7_finalpass(1)(1).docx",
+    "sha256": "0f595f0080e7584f6fde1d42edc607bdf123ab40207b3c9eb54a0c21c7f45072",
+    "label": "KDP Ready v7 Final Pass, April 2026",
+    "locked_date": "2026-07-04",
+    "page_count": 124
+  },
+  "book": {
+    "title": "The Woman at the Edge of the Map",
+    "subtitle": "Poems, Memories, Mythic Files",
+    "author": "Amy Laird",
+    "edition": "First Edition: 2026",
+    "content_note": "Content note: suicide, abuse, incarceration.",
+    "dedication": "For every version of me that got me this far. And for the ones who never made it.",
+    "front_matter": [
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "THE WOMAN AT THE EDGE OF THE MAP"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Poems, Memories, Mythic Files"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Amy Laird"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Content note: suicide, abuse, incarceration."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Copyright © 2026 Amy Laird"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "All rights reserved. No part of this book may be reproduced in any form or by any electronic or mechanical means without permission in writing from the author, except for brief quotations in reviews or scholarly work."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Printed in the United States of America."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "First Edition: 2026"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "For every version of me that got me this far. And for the ones who never made it."
+          }
+        ]
+      }
+    ]
+  },
+  "section_count": 7,
+  "piece_count": 94,
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "Part I: The Edge",
+      "slug": "part-i-the-edge",
+      "order": 1,
+      "label": "Part I",
+      "accent": "horizon",
+      "source_page": 12,
+      "piece_count": 19,
+      "files": [
+        {
+          "file": "sections/section-1.part-1.json",
+          "sha256": "663dbf5b8e239bddc5168580c987126c7b728fc75af7ed35d59df1fd4db62f38",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-1.part-2.json",
+          "sha256": "34bcf0c9159567b715ac57f518ab386fc98e7ec52abf61e81e1faffe47466e91",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-1.part-3.json",
+          "sha256": "d2098881270b6b988cc333e7d155042d3a37ff86197bbcc8412f24e078a5d54e",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-1.part-4.json",
+          "sha256": "962804f84a3726083c13cb38ac01304602db3c39a9bf5fd5aa388d9ad07d7be4",
+          "piece_count": 4,
+          "compression": "none",
+          "format": "piece-shard"
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "Part II: Seekers and Shadows",
+      "slug": "part-ii-seekers-and-shadows",
+      "order": 2,
+      "label": "Part II",
+      "accent": "indigo",
+      "source_page": 36,
+      "piece_count": 10,
+      "files": [
+        {
+          "file": "sections/section-2.part-1.json",
+          "sha256": "067c37ac9670ce275183a2c45c22031ce5b947dc617fb2b9101b36403c25796b",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-2.part-2.json",
+          "sha256": "92e3763152ae0e9019b8899a08ef12995baa4fd4238bca5925e0aa8d811d135f",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "Part III: The Reckoning",
+      "slug": "part-iii-the-reckoning",
+      "order": 3,
+      "label": "Part III",
+      "accent": "coral",
+      "source_page": 47,
+      "piece_count": 16,
+      "files": [
+        {
+          "file": "sections/section-3.part-1.json",
+          "sha256": "65e0f224eb40db2008b3c9d3c9dfbb4f7371a7ecd8635060923fcb4fd2947436",
+          "piece_count": 6,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-3.part-2.json",
+          "sha256": "3afcfcc7979b75a634b448603d8524f4667e778e67d2702401f7584d6449f1b9",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-3.part-3.json",
+          "sha256": "c6676899adc9eb5086f688a12dd3de1faa1f817aa4e709f68f4a0e7b2d444b40",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "Part IV: The Myth",
+      "slug": "part-iv-the-myth",
+      "order": 4,
+      "label": "Part IV",
+      "accent": "sage",
+      "source_page": 66,
+      "piece_count": 19,
+      "files": [
+        {
+          "file": "sections/section-4.json.br",
+          "compression": "brotli",
+          "sha256": "85a7919a0eff9ab02a3f4730b146c091c1c0523ae07dd1dc621102368ec0a509",
+          "piece_count": 19,
+          "format": "full-section"
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "Part V: The Return",
+      "slug": "part-v-the-return",
+      "order": 5,
+      "label": "Part V",
+      "accent": "sea-glass",
+      "source_page": 87,
+      "piece_count": 15,
+      "files": [
+        {
+          "file": "sections/section-5.part-1.json",
+          "sha256": "624f34073db32738677c4d455496450b57a7943719a097e2dd01b6c85d80dd63",
+          "piece_count": 4,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-5.part-2.json",
+          "sha256": "dc5bbad15ceb8e75b20523f1bb09b0702bedff1aa80af151ee4e0882c4baa36f",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-5.part-3.json",
+          "sha256": "377b53feaad772ffc08a77bc51da048b137d0eebb5d40e813596d6548d27a042",
+          "piece_count": 5,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-5.part-4.json",
+          "sha256": "e72c42e81378fbad1bfa7d14cfd1f7f394056cb5a446e6db4241d92a0093952a",
+          "piece_count": 1,
+          "compression": "none",
+          "format": "piece-shard"
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "Part VI: Personal Letters, Closings, and Artifacts",
+      "slug": "part-vi-personal-letters-closings-and-artifacts",
+      "order": 6,
+      "label": "Part VI",
+      "accent": "lavender-gray",
+      "source_page": 105,
+      "piece_count": 12,
+      "files": [
+        {
+          "file": "sections/section-6.part-1.json",
+          "sha256": "4c7d03a0db5ed162196c8888103cc5aacbfa17313ef6311d55ff5be952425788",
+          "piece_count": 7,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-6.part-2.json",
+          "sha256": "55833b229a6e5593715683f298280d49bca193a42bc8d7588758be28c52819cc",
+          "piece_count": 4,
+          "compression": "none",
+          "format": "piece-shard"
+        },
+        {
+          "file": "sections/section-6.part-3.json",
+          "sha256": "c7c2929c6b6aa2faf4c4e1604d03640d25b57f2935398f4799d382c5af64022d",
+          "piece_count": 1,
+          "compression": "none",
+          "format": "piece-shard"
+        }
+      ]
+    },
+    {
+      "id": "section-7",
+      "title": "Coda",
+      "slug": "coda",
+      "order": 7,
+      "label": "Coda",
+      "accent": "saffron",
+      "source_page": 118,
+      "piece_count": 3,
+      "files": [
+        {
+          "file": "sections/section-7.part-1.json",
+          "sha256": "dd3a48d3cad161ed0eac9ad7df90bc0b4f765c6e22c37d92aaa240a39bfa84e1",
+          "piece_count": 3,
+          "compression": "none",
+          "format": "piece-shard"
+        }
+      ]
+    }
+  ],
+  "assembled_sha256": "6d0c60c1120fa5c9f631e4a6692a92de858ae7a385a511ca5c53d1898da301f5",
+  "storage": "hash-verified-section-shards"
+}

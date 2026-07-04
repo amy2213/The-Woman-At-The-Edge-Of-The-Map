@@ -1,0 +1,21 @@
+* { box-sizing: border-box; }
+html { background: var(--color-canvas); color: var(--color-ink); }
+body { margin: 0; min-height: 100vh; font-family: var(--font-interface); }
+a { color: #416f8d; }
+a:hover { color: #2d566f; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid rgba(47, 111, 120, 0.35); outline-offset: 3px; }
+.skip-link { position: fixed; top: 1rem; left: 1rem; z-index: 20; padding: .75rem 1rem; background: var(--color-ink); color: white; transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem clamp(1rem, 5vw, 4rem); border-bottom: 1px solid var(--color-line); background: rgba(247,245,240,.94); }
+.wordmark { color: var(--color-ink); font-family: var(--font-literary); font-weight: 600; text-decoration: none; }
+.prototype-label { color: var(--color-slate); font-family: var(--font-archive); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+main { padding: clamp(2rem, 6vw, 5rem) 1.25rem; }
+.prototype-index { max-width: 72rem; margin: 0 auto; }
+.prototype-index h1 { margin: 0; font-family: var(--font-literary); font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1; }
+.prototype-index > p { max-width: 48rem; color: var(--color-slate); font-family: var(--font-literary); font-size: 1.25rem; line-height: 1.6; }
+.prototype-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; margin-top: 3rem; }
+.prototype-card { display: flex; min-height: 12rem; flex-direction: column; justify-content: space-between; padding: 1.5rem; border: 1px solid var(--color-line); border-radius: .75rem; background: var(--color-surface); color: var(--color-ink); text-decoration: none; box-shadow: var(--shadow-soft); }
+.prototype-card:hover { border-color: var(--color-horizon); color: var(--color-ink); }
+.prototype-card small { color: var(--color-slate); font-family: var(--font-archive); text-transform: uppercase; }
+.prototype-card strong { font-family: var(--font-literary); font-size: 1.5rem; }
+@media (max-width: 600px) { .prototype-label { display: none; } }
