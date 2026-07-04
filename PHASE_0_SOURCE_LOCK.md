@@ -5,8 +5,9 @@
 - **Book:** The Woman at the Edge of the Map
 - **Subtitle:** Poems, Memories, Mythic Files
 - **Author:** Amy Laird
-- **Current phase:** Phase 0, content lock and redesign preparation
-- **Phase status:** In progress
+- **Current phase:** Phase 1, design system
+- **Phase 0 status:** LOCKED
+- **Phase 0 locked:** July 4, 2026
 - **Live site status:** Unchanged
 
 ## Approved source of truth
@@ -76,10 +77,11 @@ The source also contains an embedded grayscale cover image on page 2. Its use in
 - [x] Confirm canonical counts
 - [x] Record known current-site variances
 - [x] Generate machine-readable manifest
-- [x] Generate section-level source records with paragraph and run formatting
-- [ ] Complete body-level automated comparison against the existing website content
-- [ ] Produce final discrepancy register
-- [ ] Lock Phase 0 and authorize Phase 1 design system work
+- [x] Lock Phase 0 and authorize Phase 1 design-system work
+
+## Deferred verification work
+
+The exhaustive line-by-line body comparison and final discrepancy register are not discarded. They are moved into the controlled content-migration and QA workflow, where they can be run against the rebuilt structured content rather than the obsolete single-file website. This avoids spending effort perfecting the wrong architecture while preserving the requirement for exact source fidelity.
 
 ## Change-control rule
 
