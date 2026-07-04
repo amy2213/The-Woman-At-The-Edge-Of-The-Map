@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir, rm, copyFile } from 'node:fs/promises';
+import { writeFile, mkdir, rm, copyFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -11,6 +11,7 @@ const output = path.resolve(root, outputDirectory);
 const siteBaseUrl = new URL(process.env.SITE_BASE_URL || 'https://amy2213.github.io/The-Woman-At-The-Edge-Of-The-Map/');
 if (!siteBaseUrl.pathname.endsWith('/')) siteBaseUrl.pathname += '/';
 const siteBasePath = siteBaseUrl.pathname;
+const socialImageUrl = new URL('assets/social-share.png', siteBaseUrl).toString();
 
 function escapeHtml(value = '') {
   return String(value)
@@ -73,15 +74,25 @@ function shell({ title, description, pageClass, accent = 'horizon', rootPrefix, 
   <meta name="robots" content="index,follow">
   <title>${escapeHtml(documentTitle)}</title>
   <link rel="canonical" href="${escapeHtml(canonical)}">
+  <link rel="icon" href="${rootPrefix}assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="${rootPrefix}assets/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="${rootPrefix}assets/apple-touch-icon.png" sizes="180x180">
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="${escapeHtml(contentType)}">
   <meta property="og:site_name" content="${escapeHtml(assembled.book.title)}">
   <meta property="og:title" content="${escapeHtml(documentTitle)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${escapeHtml(canonical)}">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="${escapeHtml(socialImageUrl)}">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The Woman at the Edge of the Map by Amy Laird">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(documentTitle)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
+  <meta name="twitter:image" content="${escapeHtml(socialImageUrl)}">
+  <meta name="twitter:image:alt" content="The Woman at the Edge of the Map by Amy Laird">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
@@ -119,6 +130,9 @@ await rm(output, { recursive: true, force: true });
 await mkdir(path.join(output, 'assets'), { recursive: true });
 for (const filename of ['tokens.css', 'base.css', 'reader.css', 'sections.css']) {
   await copyFile(path.join(root, 'src', 'styles', filename), path.join(output, 'assets', filename));
+}
+for (const filename of ['favicon.svg', 'social-share.svg']) {
+  await copyFile(path.join(root, 'src', 'assets', filename), path.join(output, 'assets', filename));
 }
 
 const landingDescription = `${assembled.book.subtitle}, a literary collection by ${assembled.book.author}.`;
@@ -162,8 +176,9 @@ for (const piece of pieces) {
     <nav class="reader-navigation" aria-label="Reading sequence">${prevLink}${nextLink}</nav>
     <footer class="piece-footer"><p>Canonical position ${piece.global_order} of 94</p><a href="../../../sections/${piece.section.slug}/index.html">Return to section</a></footer>
   </article>`;
-  const description = `${piece.title}, from ${assembled.book.title} by ${assembled.book.author}.`;
-  await writeFile(path.join(dir, 'index.html'), shell({ title: piece.title, description, pageClass: `reading-page format-${piece.format}`, accent: piece.section.accent, rootPrefix, canonicalPath: `read/${piece.section.slug}/${piece.slug}/`, content, contentType: 'article' }), 'utf8');
+  const metadataTitle = `${piece.title} · ${piece.section.label}`;
+  const description = `${piece.title}, from ${piece.section.title} in ${assembled.book.title} by ${assembled.book.author}.`;
+  await writeFile(path.join(dir, 'index.html'), shell({ title: metadataTitle, description, pageClass: `reading-page format-${piece.format}`, accent: piece.section.accent, rootPrefix, canonicalPath: `read/${piece.section.slug}/${piece.slug}/`, content, contentType: 'article' }), 'utf8');
 }
 
 await mkdir(path.join(output, 'closing'), { recursive: true });
@@ -188,6 +203,15 @@ await writeFile(path.join(output, 'robots.txt'), `User-agent: *\nAllow: /\n\nSit
 await writeFile(path.join(output, 'sitemap.xml'), sitemapXml, 'utf8');
 await writeFile(path.join(output, 'sitemap.txt'), `${routeUrls.join('\n')}\n`, 'utf8');
 
+const releaseAssets = [
+  'assets/favicon.svg',
+  'assets/favicon-16x16.png',
+  'assets/favicon-32x32.png',
+  'assets/favicon-512.png',
+  'assets/apple-touch-icon.png',
+  'assets/social-share.svg',
+  'assets/social-share.png',
+];
 const releaseManifest = {
   status: 'built',
   site_base_url: siteBaseUrl.toString(),
@@ -200,7 +224,8 @@ const releaseManifest = {
   core_html_pages: routePaths.length,
   support_html_pages: 1,
   total_html_pages: routePaths.length + 1,
-  generated_support_files: ['.nojekyll', '404.html', 'robots.txt', 'sitemap.xml', 'sitemap.txt', 'release-manifest.json', 'build-report.json'],
+  release_assets: releaseAssets,
+  generated_support_files: ['.nojekyll', '404.html', 'robots.txt', 'sitemap.xml', 'sitemap.txt', 'release-manifest.json', 'build-report.json', ...releaseAssets],
 };
 await writeFile(path.join(output, 'release-manifest.json'), `${JSON.stringify(releaseManifest, null, 2)}\n`, 'utf8');
 await writeFile(path.join(output, 'build-report.json'), `${JSON.stringify({ status: 'passed', ...releaseManifest }, null, 2)}\n`, 'utf8');
@@ -213,4 +238,5 @@ console.log(JSON.stringify({
   sectionPages: assembled.sections.length,
   coreHtmlPages: routePaths.length,
   totalHtmlPages: routePaths.length + 1,
+  releaseAssets,
 }, null, 2));
