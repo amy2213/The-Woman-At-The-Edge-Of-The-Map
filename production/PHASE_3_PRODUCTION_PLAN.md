@@ -9,8 +9,9 @@
 - **Working branch:** `redesign/phase-3-production`
 - **Base branch:** `main`
 - **Predecessor:** Phase 2, LOCKED
-- **Current checkpoint:** Checkpoint 2, visual release review
+- **Current checkpoint:** Checkpoint 3, public deployment preparation
 - **Checkpoint 1 record:** `production/PHASE_3_CHECKPOINT_1.md`
+- **Checkpoint 2 record:** `production/PHASE_3_CHECKPOINT_2.md`
 - **Live website:** Existing root-site release remains unchanged until production approval
 
 ## Objective
@@ -55,11 +56,11 @@ This value remains configurable at build time so a future custom domain does not
 ### 3.2 Search and sharing metadata
 
 - [x] Add canonical URLs to every generated page.
-- [x] Add Open Graph title, description, URL, and content-type metadata.
-- [x] Add Twitter summary metadata.
-- [ ] Confirm unique page titles and descriptions across repeated work titles.
-- [ ] Add approved favicon assets.
-- [ ] Add an approved social-sharing image.
+- [x] Add Open Graph title, description, URL, content type, and image metadata.
+- [x] Add Twitter large-image card metadata.
+- [x] Confirm unique page titles and descriptions across repeated work titles.
+- [x] Add approved favicon assets.
+- [x] Add an approved social-sharing image.
 
 ### 3.3 Release verification
 
@@ -71,7 +72,8 @@ This value remains configurable at build time so a future custom domain does not
 - [x] Run keyboard and skip-link checks.
 - [x] Run automated accessibility checks.
 - [x] Confirm no serious or critical accessibility violations.
-- [ ] Review representative screenshots with the owner.
+- [x] Review representative normal-state desktop and mobile screenshots.
+- [x] Record Checkpoint 2 visual, metadata, and release-asset evidence.
 
 ### 3.4 Deployment
 
@@ -80,7 +82,7 @@ This value remains configurable at build time so a future custom domain does not
 - [ ] Deploy only the verified release artifact.
 - [ ] Confirm the production URL returns the redesigned landing page.
 - [ ] Confirm direct reading routes return HTTP 200.
-- [ ] Confirm CSS, fonts, metadata, sitemap, robots file, and 404 page load correctly.
+- [ ] Confirm CSS, fonts, metadata, sitemap, robots file, images, and 404 page load correctly.
 - [ ] Confirm the former root-site experience is no longer being served after approval.
 
 ### 3.5 Release approval and lock
@@ -100,11 +102,11 @@ This value remains configurable at build time so a future custom domain does not
 
 ### Checkpoint 2: Visual release review
 
-**IN PROGRESS.** Review the production artifact and representative desktop and mobile screenshots. Correct only release defects that preserve the Phase 1 and Phase 2 locks. Complete favicon, social-sharing image, and repeated-title metadata handling.
+**COMPLETE.** Nine representative routes were reviewed at desktop and mobile widths. Normal-state screenshots, unique metadata, favicon assets, and the social-sharing image passed release verification. The screenshot process was corrected so keyboard-focus evidence no longer contaminates normal visual-review images. See `production/PHASE_3_CHECKPOINT_2.md`.
 
 ### Checkpoint 3: Public deployment
 
-Deploy the approved artifact, test the public URL and direct routes, and document the live release.
+**IN PREPARATION.** Confirm the GitHub Pages publication method and release controls. Deployment remains blocked until release authorization. After authorization, deploy the verified artifact, test the public URL and direct routes, and document the live release.
 
 ### Checkpoint 4: Phase lock
 
