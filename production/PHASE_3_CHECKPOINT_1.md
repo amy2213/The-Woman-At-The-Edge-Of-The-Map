@@ -52,7 +52,7 @@ The verified artifact contains:
 
 Every canonical generated page now includes:
 
-- a unique document title
+- a page-specific document title
 - a page description
 - author metadata
 - robots index and follow instructions
@@ -60,7 +60,7 @@ Every canonical generated page now includes:
 - Open Graph locale, type, site name, title, description, and URL
 - Twitter summary-card title and description
 
-Approved favicon and social-sharing image assets remain open Phase 3 tasks.
+Repeated work titles still require final uniqueness handling during Checkpoint 2. Approved favicon and social-sharing image assets also remain open Phase 3 tasks.
 
 ## Release identity
 
@@ -109,4 +109,4 @@ Passed checks:
 
 Checkpoint 1 is accepted as a verified production-artifact foundation. It does not authorize public deployment.
 
-Phase 3 proceeds to Checkpoint 2: visual release review, approved favicon and social-sharing assets, and final production presentation corrections before deployment.
+Phase 3 proceeds to Checkpoint 2: visual release review, repeated-title metadata handling, approved favicon and social-sharing assets, and final production presentation corrections before deployment.
