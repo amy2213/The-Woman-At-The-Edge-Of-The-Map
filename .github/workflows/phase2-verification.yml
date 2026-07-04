@@ -36,11 +36,12 @@ jobs:
         run: |
           node scripts/repoint-canonical-index.mjs
           node scripts/finalize-assembled-hash.mjs
-          if ! git diff --quiet -- content/book-content.json; then
+          node scripts/normalize-navigation-and-hashes.mjs
+          if ! git diff --quiet -- content/book-content.json content/sections; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add content/book-content.json
-            git commit -m "Finalize verified canonical content index"
+            git add content/book-content.json content/sections
+            git commit -m "Normalize canonical navigation and hashes"
             git push origin HEAD:redesign/source-lock-v7
           fi
 
