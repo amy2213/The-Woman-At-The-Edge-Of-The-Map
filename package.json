@@ -9,6 +9,7 @@
     "build": "node scripts/build.mjs",
     "render:assets": "node scripts/render-release-assets.mjs",
     "check:links": "node scripts/check-links.mjs",
+    "smoke:live": "node scripts/smoke-test-live.mjs",
     "test": "node scripts/validate-content.mjs"
   },
   "engines": {
