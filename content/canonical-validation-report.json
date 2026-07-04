@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "validated_date": "2026-07-04",
+  "source_sha256": "0f595f0080e7584f6fde1d42edc607bdf123ab40207b3c9eb54a0c21c7f45072",
+  "assembled_sha256": "8bbb60876fe46fe5a03bbc236e4d4e9dcd303c4c8f67934b89259880d5374ef5",
+  "sections": 7,
+  "pieces": 94,
+  "routes": 94,
+  "source_files": 12,
+  "format_counts": {"poem":59,"prose":10,"list":3,"archive":13,"dialogue":1,"letter":8},
+  "checks": {
+    "source_lock": "passed",
+    "section_counts": "passed",
+    "canonical_order": "passed",
+    "piece_ids": "passed",
+    "section_scoped_routes": "passed",
+    "content_block_hashes": "passed",
+    "previous_next_links": "passed",
+    "coda_structure": "passed",
+    "excluded_title": "passed",
+    "docx_visible_text_comparison": "94 of 94 passed"
+  },
+  "preview": {"generated_pages":104,"reading_pages":94,"section_pages":7,"internal_link_check":"passed across all generated HTML files"},
+  "remaining_qa": ["Representative desktop visual review","Representative mobile visual review","Keyboard and screen-reader review","Automated accessibility scan","Owner review before Phase 2 lock"]
+}
