@@ -1,0 +1,14 @@
+{
+  "name": "the-woman-at-the-edge-of-the-map",
+  "version": "2.0.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "description": "Data-driven static literary website for The Woman at the Edge of the Map by Amy Laird.",
+  "scripts": {
+    "validate:content": "node scripts/validate-content.mjs",
+    "test": "npm run validate:content"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
