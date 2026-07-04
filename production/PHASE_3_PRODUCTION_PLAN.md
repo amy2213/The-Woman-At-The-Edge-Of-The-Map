@@ -3,23 +3,26 @@
 ## Status
 
 - **Phase:** 3
-- **Status:** IN PROGRESS
+- **Status:** LOCKED
 - **Started:** July 4, 2026
+- **Completed:** July 4, 2026
 - **Approved to begin by:** Amy Laird
-- **Working branch:** `redesign/phase-3-production`
-- **Base branch:** `main`
+- **Final live-site approval by:** Amy Laird
 - **Predecessor:** Phase 2, LOCKED
-- **Current checkpoint:** Checkpoint 3, awaiting release authorization
 - **Checkpoint 1 record:** `production/PHASE_3_CHECKPOINT_1.md`
 - **Checkpoint 2 record:** `production/PHASE_3_CHECKPOINT_2.md`
 - **Deployment control:** `production/PHASE_3_DEPLOYMENT_CONTROL.md`
-- **Live website:** Existing root-site release remains unchanged until production approval
+- **Phase 3 lock:** `production/PHASE_3_LOCK.md`
+- **Production URL:** `https://amy2213.github.io/The-Woman-At-The-Edge-Of-The-Map/`
+- **Deployed release commit:** `f75bf9bfc1371e825bbc798f32d992c047b3f801`
 
 ## Objective
 
 Convert the locked Phase 2 architecture into the final production website, verify the release artifact, deploy it through GitHub Pages, test the public URL, and obtain owner approval before locking Phase 3.
 
-Phase 3 does not reopen the manuscript, canonical reading order, visual direction, route contract, or accessibility baseline.
+**Objective complete.**
+
+Phase 3 did not reopen the manuscript, canonical reading order, visual direction, route contract, or accessibility baseline.
 
 ## Locked inputs
 
@@ -32,13 +35,13 @@ Phase 3 does not reopen the manuscript, canonical reading order, visual directio
 - **Design direction:** The Living Map
 - **Phase 2 lock:** `architecture/PHASE_2_LOCK.md`
 
-## Production URL assumption
+## Production URL
 
-Until a custom domain is explicitly approved, production metadata targets the repository GitHub Pages URL:
+The launched production website is:
 
 `https://amy2213.github.io/The-Woman-At-The-Edge-Of-The-Map/`
 
-This value remains configurable at build time so a future custom domain does not require rewriting manuscript or template data.
+The public base URL remains configurable at build time so a future approved custom domain does not require rewriting manuscript or template data.
 
 ## Work packages
 
@@ -84,40 +87,40 @@ This value remains configurable at build time so a future custom domain does not
 - [x] Require a full rebuild and verification before artifact upload.
 - [x] Add an automated postdeployment live-site smoke test.
 - [x] Document deployment, evidence, and rollback controls.
-- [ ] Obtain Amy Laird's explicit release authorization.
-- [ ] Merge the approved production branch into `main`.
-- [ ] Run the manual deployment workflow against the recorded merge commit.
-- [ ] Confirm the production URL returns the redesigned landing page.
-- [ ] Confirm direct reading routes return HTTP 200.
-- [ ] Confirm CSS, fonts, metadata, sitemap, robots file, images, and 404 page load correctly.
-- [ ] Confirm the former root-site experience is no longer being served.
+- [x] Obtain Amy Laird's explicit release authorization.
+- [x] Merge the approved production branch into `main`.
+- [x] Run the manual deployment workflow against the recorded release commit.
+- [x] Confirm the production URL returns the redesigned landing page.
+- [x] Confirm direct reading routes return HTTP 200.
+- [x] Confirm CSS, fonts, metadata, sitemap, robots file, images, and 404 page load correctly.
+- [x] Confirm the former root-site experience is no longer being served.
 
 ### 3.5 Release evidence and lock
 
-- [ ] Record the deployed commit and workflow run.
-- [ ] Complete and review the live-site smoke-test report.
-- [ ] Obtain Amy Laird's final live-release approval.
-- [ ] Create `production/PHASE_3_LOCK.md`.
-- [ ] Update `PROJECT_STATUS.md` to record the launched release.
+- [x] Record the deployed commit and successful workflow run.
+- [x] Complete and review the live-site smoke-test report.
+- [x] Obtain Amy Laird's final live-release approval.
+- [x] Create `production/PHASE_3_LOCK.md`.
+- [x] Update `PROJECT_STATUS.md` to record the launched release.
 
 ## Checkpoints
 
 ### Checkpoint 1: Production artifact foundation
 
-**COMPLETE.** The `docs/` production artifact, release metadata, sitemap, robots file, 404 page, release manifest, and repeatable verification workflow passed. See `production/PHASE_3_CHECKPOINT_1.md`.
+**COMPLETE.** The `docs/` production artifact, release metadata, sitemap, robots file, 404 page, release manifest, and repeatable Phase 3 verification workflow passed. See `production/PHASE_3_CHECKPOINT_1.md`.
 
 ### Checkpoint 2: Visual release review
 
-**COMPLETE.** Nine representative routes were reviewed at desktop and mobile widths. Normal-state screenshots, unique metadata, favicon assets, and the social-sharing image passed release verification. The screenshot process was corrected so keyboard-focus evidence no longer contaminates normal visual-review images. See `production/PHASE_3_CHECKPOINT_2.md`.
+**COMPLETE.** Nine representative routes were reviewed at desktop and mobile widths. Normal-state screenshots, unique metadata, favicon assets, and the social-sharing image passed release verification. See `production/PHASE_3_CHECKPOINT_2.md`.
 
 ### Checkpoint 3: Public deployment
 
-**PREPARED, NOT EXECUTED.** The supported GitHub Pages artifact method, guarded manual deployment workflow, exact-SHA authorization gate, predeployment verification, production environment controls, postdeployment smoke test, evidence retention, and rollback procedure are documented and committed. The live site remains unchanged while release authorization is pending. See `production/PHASE_3_DEPLOYMENT_CONTROL.md`.
+**COMPLETE.** The supported GitHub Pages artifact method, guarded manual deployment workflow, exact-SHA authorization gate, predeployment verification, protected production environment, postdeployment smoke test, evidence retention, and rollback procedure were used successfully. The public site is live at the production URL.
 
 ### Checkpoint 4: Phase lock
 
-After the authorized deployment passes its live-site tests, record final approval, hashes, deployed commit, deployment evidence, and change-control rules.
+**COMPLETE.** Amy Laird reviewed the launched website and approved the live release with the statement, “It looks great.” Final release identity, deployment evidence, corrective smoke-test history, rollback controls, and future change-control rules are recorded in `production/PHASE_3_LOCK.md`.
 
-## Release rule
+## Final release rule
 
-No production deployment is approved merely because a build exists or a workflow turns green. The release must also be visually reviewed, explicitly authorized by Amy Laird, deployed successfully, tested at the public URL, and approved in its live state. Computers remain tragically unable to determine whether a website actually feels finished.
+Phase 3 is locked. Future changes to manuscript content, canonical order, routes, design, accessibility behavior, metadata, release assets, build logic, or deployment behavior require a documented change request, complete verification, authorized deployment, and live review. Apparently even websites deserve boundaries once they finally behave.
