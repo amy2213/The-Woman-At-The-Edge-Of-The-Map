@@ -11,7 +11,7 @@ body[data-accent="saffron"] { --section-accent: var(--color-saffron); }
 .header-actions a { font-size: .85rem; text-decoration: none; }
 .landing-shell, .map-shell, .section-shell, .closing-shell { max-width: 72rem; margin: 0 auto; }
 .landing-shell { min-height: calc(100svh - 6rem); display: grid; align-content: center; padding-block: clamp(3rem, 10vw, 8rem); }
-.landing-eyebrow, .map-eyebrow, .section-eyebrow { color: var(--color-horizon); font-family: var(--font-archive); font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; }
+.landing-eyebrow, .map-eyebrow, .section-eyebrow { color: var(--color-slate); font-family: var(--font-archive); font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; }
 .landing-shell h1 { max-width: 64rem; margin: 1rem 0; font-family: var(--font-literary); font-size: clamp(3.4rem, 9vw, 7.6rem); font-weight: 500; letter-spacing: -.055em; line-height: .92; }
 .landing-subtitle { color: var(--color-slate); font-family: var(--font-literary); font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
 .landing-author { margin-top: 2rem; font-size: .9rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
@@ -25,7 +25,7 @@ body[data-accent="saffron"] { --section-accent: var(--color-saffron); }
 .section-grid { display: grid; gap: 1rem; margin-top: 3rem; }
 .section-card { position: relative; display: grid; grid-template-columns: 5rem 1fr auto; gap: 1.25rem; align-items: center; min-height: 8rem; padding: 1.35rem; border: 1px solid var(--color-line); border-radius: .9rem; background: var(--color-surface); color: var(--color-ink); text-decoration: none; box-shadow: var(--shadow-soft); overflow: hidden; }
 .section-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--card-accent); }
-.section-card-number { color: var(--card-accent); font-family: var(--font-literary); font-size: 2rem; }
+.section-card-number { color: var(--color-slate); font-family: var(--font-literary); font-size: 2rem; }
 .section-card strong { display: block; font-family: var(--font-literary); font-size: 1.55rem; }
 .section-card small { color: var(--color-slate); }
 .section-header { border-left: 5px solid var(--section-accent); padding-left: clamp(1.25rem, 3vw, 2rem); }
