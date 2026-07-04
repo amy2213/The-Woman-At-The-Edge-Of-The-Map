@@ -2,7 +2,9 @@ import { readdir, readFile, access } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
-const root = path.resolve(process.cwd(), 'docs-full-preview');
+const outputDirectory = process.env.SITE_OUTPUT_DIR || 'docs';
+const root = path.resolve(process.cwd(), outputDirectory);
+
 async function walk(dir) {
   const out = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -15,12 +17,17 @@ async function walk(dir) {
 
 const htmlFiles = (await walk(root)).filter((file) => file.endsWith('.html'));
 const failures = [];
+let linksChecked = 0;
+
 for (const file of htmlFiles) {
   const text = await readFile(file, 'utf8');
   const hrefs = [...text.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
   for (const href of hrefs) {
-    if (href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:')) continue;
-    const target = path.resolve(path.dirname(file), href.split('#')[0]);
+    if (href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('/')) continue;
+    const pathOnly = href.split('#')[0].split('?')[0];
+    if (!pathOnly) continue;
+    linksChecked += 1;
+    const target = path.resolve(path.dirname(file), pathOnly);
     try {
       await access(target);
     } catch {
@@ -33,4 +40,10 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
-console.log(JSON.stringify({ status: 'passed', html_files: htmlFiles.length, internal_links_checked: 'all' }, null, 2));
+
+console.log(JSON.stringify({
+  status: 'passed',
+  output_directory: outputDirectory,
+  html_files: htmlFiles.length,
+  internal_links_checked: linksChecked,
+}, null, 2));

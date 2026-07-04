@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">The Woman at the Edge of the Map by Amy Laird</title>
+  <desc id="desc">A bright literary social sharing card with subtle map lines and a compass motif.</desc>
+  <rect width="1200" height="630" fill="#F7F5F0"/>
+  <rect x="44" y="44" width="1112" height="542" rx="18" fill="none" stroke="#C8D3D7" stroke-width="2"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.42">
+    <path d="M24 443 L216 366 L372 390 L528 296 L684 320 L864 214 L1152 246" stroke="#668EAC" stroke-width="2"/>
+    <path d="M36 516 L264 476 L456 528 L648 441 L840 466 L1032 385 L1176 416" stroke="#4D8C8A" stroke-width="2"/>
+    <path d="M600 24 L648 126 L588 220 L696 302 L636 397 L756 510 L720 624" stroke="#C87968" stroke-width="2"/>
+    <path d="M936 18 L852 102 L936 194 L840 298 L924 385 L840 492 L972 618" stroke="#D5AE62" stroke-width="2"/>
+    <path d="M96 64 L252 126 L216 240 L348 316 L276 442 L408 570" stroke="#788F82" stroke-width="2"/>
+  </g>
+  <g fill="#F7F5F0" stroke-width="1.5" opacity="0.8">
+    <circle cx="216" cy="366" r="5" stroke="#668EAC"/>
+    <circle cx="372" cy="390" r="5" stroke="#668EAC"/>
+    <circle cx="528" cy="296" r="5" stroke="#668EAC"/>
+    <circle cx="864" cy="214" r="5" stroke="#668EAC"/>
+    <circle cx="264" cy="476" r="5" stroke="#4D8C8A"/>
+    <circle cx="648" cy="441" r="5" stroke="#4D8C8A"/>
+    <circle cx="936" cy="194" r="5" stroke="#D5AE62"/>
+    <circle cx="840" cy="492" r="5" stroke="#D5AE62"/>
+  </g>
+  <rect x="72" y="62" width="778" height="506" rx="26" fill="#F7F5F0" fill-opacity="0.95"/>
+  <text x="108" y="128" fill="#40505C" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="600" letter-spacing="0.5">POEMS · MEMORIES · MYTHIC FILES</text>
+  <text x="104" y="222" fill="#182633" font-family="Newsreader, Georgia, serif" font-size="78" font-weight="500">The Woman at the</text>
+  <text x="104" y="306" fill="#182633" font-family="Newsreader, Georgia, serif" font-size="78" font-weight="500">Edge of the Map</text>
+  <text x="108" y="376" fill="#40505C" font-family="Newsreader, Georgia, serif" font-size="32">Poems, Memories, Mythic Files</text>
+  <line x1="108" y1="430" x2="270" y2="430" stroke="#668EAC" stroke-width="4"/>
+  <text x="108" y="486" fill="#182633" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="600">AMY LAIRD</text>
+  <g transform="translate(1000 315)">
+    <circle r="128" fill="#DDE9ED" stroke="#C8D3D7" stroke-width="2"/>
+    <circle r="88" fill="#FFFFFF" stroke="#C8D3D7" stroke-width="2"/>
+    <circle r="48" fill="#F7F5F0" stroke="#C8D3D7" stroke-width="2"/>
+    <line x1="-145" y1="0" x2="145" y2="0" stroke="#668EAC" stroke-width="3"/>
+    <line x1="0" y1="-145" x2="0" y2="145" stroke="#4D8C8A" stroke-width="3"/>
+    <circle r="13" fill="#C87968"/>
+  </g>
+  <text x="922" y="514" fill="#40505C" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="600">THE LIVING MAP</text>
+</svg>
