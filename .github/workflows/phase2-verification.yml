@@ -30,22 +30,39 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Prepare verification evidence
+        run: mkdir -p verification
+
       - name: Verify canonical content
-        run: npm test
+        shell: bash
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee verification/content-validation.log
 
       - name: Build all 104 pages
-        run: npm run build
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee verification/build.log
 
       - name: Verify internal links
-        run: npm run check:links
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run check:links 2>&1 | tee verification/link-check.log
 
       - name: Install browser verification tools
+        shell: bash
         run: |
-          npm install --no-save playwright@1.52.0 axe-core@4.10.3
-          npx playwright install --with-deps chromium
+          set -o pipefail
+          npm install --no-save playwright@1.52.0 axe-core@4.10.3 2>&1 | tee verification/browser-install.log
+          npx playwright install --with-deps chromium 2>&1 | tee -a verification/browser-install.log
 
       - name: Verify desktop, mobile, keyboard, and accessibility
-        run: node scripts/verify-browser.mjs
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/verify-browser.mjs 2>&1 | tee verification/browser-verification.log
 
       - name: Upload verification evidence
         if: always()
