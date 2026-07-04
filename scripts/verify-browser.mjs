@@ -1,10 +1,12 @@
 import { createServer } from 'node:http';
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, mkdir, writeFile, stat } from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import process from 'node:process';
 import { chromium } from 'playwright';
 
+const require = createRequire(import.meta.url);
 const root = process.cwd();
 const siteRoot = path.join(root, 'docs-full-preview');
 const reportDir = path.join(root, 'verification');
@@ -29,8 +31,8 @@ const server = createServer(async (request, response) => {
       response.writeHead(403).end('Forbidden');
       return;
     }
-    const stat = await import('node:fs/promises').then(({ stat }) => stat(candidate));
-    if (!stat.isFile()) throw new Error('Not a file');
+    const candidateStat = await stat(candidate);
+    if (!candidateStat.isFile()) throw new Error('Not a file');
     response.writeHead(200, { 'content-type': MIME[path.extname(candidate)] ?? 'application/octet-stream' });
     createReadStream(candidate).pipe(response);
   } catch {
@@ -39,12 +41,7 @@ const server = createServer(async (request, response) => {
 });
 
 await new Promise((resolve) => server.listen(4173, '127.0.0.1', resolve));
-
-const axeSource = await readFile(require.resolve('axe-core/axe.min.js'), 'utf8').catch(async () => {
-  const { createRequire } = await import('node:module');
-  const require = createRequire(import.meta.url);
-  return readFile(require.resolve('axe-core/axe.min.js'), 'utf8');
-});
+const axeSource = await readFile(require.resolve('axe-core/axe.min.js'), 'utf8');
 
 const pages = [
   { name: 'landing', path: '/' },
@@ -78,7 +75,8 @@ try {
       });
       page.on('pageerror', (error) => consoleErrors.push(error.message));
 
-      const response = await page.goto(`http://127.0.0.1:4173${target.path}`, { waitUntil: 'networkidle' });
+      const response = await page.goto(`http://127.0.0.1:4173${target.path}`, { waitUntil: 'domcontentloaded' });
+      await page.waitForTimeout(350);
       await page.evaluate(() => document.fonts?.ready);
       await page.addScriptTag({ content: axeSource });
 
