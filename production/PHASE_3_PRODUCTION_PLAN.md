@@ -9,9 +9,10 @@
 - **Working branch:** `redesign/phase-3-production`
 - **Base branch:** `main`
 - **Predecessor:** Phase 2, LOCKED
-- **Current checkpoint:** Checkpoint 3, public deployment preparation
+- **Current checkpoint:** Checkpoint 3, awaiting release authorization
 - **Checkpoint 1 record:** `production/PHASE_3_CHECKPOINT_1.md`
 - **Checkpoint 2 record:** `production/PHASE_3_CHECKPOINT_2.md`
+- **Deployment control:** `production/PHASE_3_DEPLOYMENT_CONTROL.md`
 - **Live website:** Existing root-site release remains unchanged until production approval
 
 ## Objective
@@ -75,22 +76,27 @@ This value remains configurable at build time so a future custom domain does not
 - [x] Review representative normal-state desktop and mobile screenshots.
 - [x] Record Checkpoint 2 visual, metadata, and release-asset evidence.
 
-### 3.4 Deployment
+### 3.4 Deployment preparation and execution
 
-- [ ] Confirm GitHub Pages publication method.
-- [ ] Configure the deployment workflow or approved branch source.
-- [ ] Deploy only the verified release artifact.
+- [x] Confirm GitHub Pages artifact publication method.
+- [x] Create a manual-only guarded deployment workflow.
+- [x] Require an exact release SHA and typed deployment confirmation.
+- [x] Require a full rebuild and verification before artifact upload.
+- [x] Add an automated postdeployment live-site smoke test.
+- [x] Document deployment, evidence, and rollback controls.
+- [ ] Obtain Amy Laird's explicit release authorization.
+- [ ] Merge the approved production branch into `main`.
+- [ ] Run the manual deployment workflow against the recorded merge commit.
 - [ ] Confirm the production URL returns the redesigned landing page.
 - [ ] Confirm direct reading routes return HTTP 200.
 - [ ] Confirm CSS, fonts, metadata, sitemap, robots file, images, and 404 page load correctly.
-- [ ] Confirm the former root-site experience is no longer being served after approval.
+- [ ] Confirm the former root-site experience is no longer being served.
 
-### 3.5 Release approval and lock
+### 3.5 Release evidence and lock
 
 - [ ] Record the deployed commit and workflow run.
-- [ ] Complete a live-site smoke-test report.
-- [ ] Obtain Amy Laird's release approval.
-- [ ] Merge the production branch into `main`.
+- [ ] Complete and review the live-site smoke-test report.
+- [ ] Obtain Amy Laird's final live-release approval.
 - [ ] Create `production/PHASE_3_LOCK.md`.
 - [ ] Update `PROJECT_STATUS.md` to record the launched release.
 
@@ -106,12 +112,12 @@ This value remains configurable at build time so a future custom domain does not
 
 ### Checkpoint 3: Public deployment
 
-**IN PREPARATION.** Confirm the GitHub Pages publication method and release controls. Deployment remains blocked until release authorization. After authorization, deploy the verified artifact, test the public URL and direct routes, and document the live release.
+**PREPARED, NOT EXECUTED.** The supported GitHub Pages artifact method, guarded manual deployment workflow, exact-SHA authorization gate, predeployment verification, production environment controls, postdeployment smoke test, evidence retention, and rollback procedure are documented and committed. The live site remains unchanged while release authorization is pending. See `production/PHASE_3_DEPLOYMENT_CONTROL.md`.
 
 ### Checkpoint 4: Phase lock
 
-Record owner approval, final hashes, deployed commit, deployment evidence, and change-control rules.
+After the authorized deployment passes its live-site tests, record final approval, hashes, deployed commit, deployment evidence, and change-control rules.
 
 ## Release rule
 
-No production deployment is approved merely because a build exists or a workflow turns green. The release must also be visually reviewed, deployed successfully, tested at the public URL, and approved by Amy Laird. Computers remain tragically unable to determine whether a website actually feels finished.
+No production deployment is approved merely because a build exists or a workflow turns green. The release must also be visually reviewed, explicitly authorized by Amy Laird, deployed successfully, tested at the public URL, and approved in its live state. Computers remain tragically unable to determine whether a website actually feels finished.
