@@ -1,0 +1,21 @@
+:root {
+  --color-canvas: #f7f5f0;
+  --color-surface: #ffffff;
+  --color-ink: #182633;
+  --color-slate: #40505c;
+  --color-mist: #dde9ed;
+  --color-line: #c8d3d7;
+  --color-sea-glass: #4d8c8a;
+  --color-horizon: #668eac;
+  --color-coral: #c87968;
+  --color-saffron: #d5ae62;
+  --color-indigo: #58647f;
+  --color-sage: #788f82;
+  --color-lavender-gray: #8c8498;
+  --font-literary: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-interface: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-archive: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  --measure-poetry: 42rem;
+  --measure-prose: 46rem;
+  --shadow-soft: 0 0.75rem 2.5rem rgba(24, 38, 51, 0.08);
+}
