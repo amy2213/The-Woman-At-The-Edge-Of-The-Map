@@ -9,6 +9,8 @@
 - **Working branch:** `redesign/phase-3-production`
 - **Base branch:** `main`
 - **Predecessor:** Phase 2, LOCKED
+- **Current checkpoint:** Checkpoint 2, visual release review
+- **Checkpoint 1 record:** `production/PHASE_3_CHECKPOINT_1.md`
 - **Live website:** Existing root-site release remains unchanged until production approval
 
 ## Objective
@@ -30,7 +32,7 @@ Phase 3 does not reopen the manuscript, canonical reading order, visual directio
 
 ## Production URL assumption
 
-Until a custom domain is explicitly approved, production metadata will target the repository GitHub Pages URL:
+Until a custom domain is explicitly approved, production metadata targets the repository GitHub Pages URL:
 
 `https://amy2213.github.io/The-Woman-At-The-Edge-Of-The-Map/`
 
@@ -42,33 +44,33 @@ This value remains configurable at build time so a future custom domain does not
 
 - [x] Create the Phase 3 production branch.
 - [x] Create the Phase 3 control record.
-- [ ] Change the default generated output from temporary preview storage to `docs/`.
-- [ ] Keep output and public base URL configurable through build-time environment values.
-- [ ] Generate `.nojekyll` for predictable GitHub Pages asset handling.
-- [ ] Generate a production `404.html`.
-- [ ] Generate `robots.txt`.
-- [ ] Generate standards-compliant `sitemap.xml`.
-- [ ] Generate a release manifest containing content and source hashes.
+- [x] Change the default generated output from temporary preview storage to `docs/`.
+- [x] Keep output and public base URL configurable through build-time environment values.
+- [x] Generate `.nojekyll` for predictable GitHub Pages asset handling.
+- [x] Generate a production `404.html`.
+- [x] Generate `robots.txt`.
+- [x] Generate standards-compliant `sitemap.xml`.
+- [x] Generate a release manifest containing content and source hashes.
 
 ### 3.2 Search and sharing metadata
 
-- [ ] Add canonical URLs to every generated page.
-- [ ] Add Open Graph title, description, URL, and content type metadata.
-- [ ] Add Twitter summary metadata.
-- [ ] Confirm unique page titles and descriptions.
+- [x] Add canonical URLs to every generated page.
+- [x] Add Open Graph title, description, URL, and content-type metadata.
+- [x] Add Twitter summary metadata.
+- [ ] Confirm unique page titles and descriptions across repeated work titles.
 - [ ] Add approved favicon assets.
 - [ ] Add an approved social-sharing image.
 
 ### 3.3 Release verification
 
-- [ ] Validate the canonical content source.
-- [ ] Generate the complete production artifact.
-- [ ] Confirm all 104 core pages plus release-support files.
-- [ ] Run the complete internal-link check.
-- [ ] Run desktop and mobile browser checks.
-- [ ] Run keyboard and skip-link checks.
-- [ ] Run automated accessibility checks.
-- [ ] Confirm no serious or critical accessibility violations.
+- [x] Validate the canonical content source.
+- [x] Generate the complete production artifact.
+- [x] Confirm all 104 core pages plus release-support files.
+- [x] Run the complete internal-link check.
+- [x] Run desktop and mobile browser checks.
+- [x] Run keyboard and skip-link checks.
+- [x] Run automated accessibility checks.
+- [x] Confirm no serious or critical accessibility violations.
 - [ ] Review representative screenshots with the owner.
 
 ### 3.4 Deployment
@@ -94,11 +96,11 @@ This value remains configurable at build time so a future custom domain does not
 
 ### Checkpoint 1: Production artifact foundation
 
-Complete the production output path, release metadata, sitemap, robots file, 404 page, release manifest, and repeatable verification workflow.
+**COMPLETE.** The `docs/` production artifact, release metadata, sitemap, robots file, 404 page, release manifest, and repeatable verification workflow passed. See `production/PHASE_3_CHECKPOINT_1.md`.
 
 ### Checkpoint 2: Visual release review
 
-Review the production artifact and representative desktop and mobile screenshots. Correct only release defects that preserve the Phase 1 and Phase 2 locks.
+**IN PROGRESS.** Review the production artifact and representative desktop and mobile screenshots. Correct only release defects that preserve the Phase 1 and Phase 2 locks. Complete favicon, social-sharing image, and repeated-title metadata handling.
 
 ### Checkpoint 3: Public deployment
 
