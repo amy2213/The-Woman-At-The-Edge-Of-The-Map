@@ -8,7 +8,8 @@ import { chromium } from 'playwright';
 
 const require = createRequire(import.meta.url);
 const root = process.cwd();
-const siteRoot = path.join(root, 'docs-full-preview');
+const outputDirectory = process.env.SITE_OUTPUT_DIR || 'docs';
+const siteRoot = path.join(root, outputDirectory);
 const reportDir = path.join(root, 'verification');
 const screenshotDir = path.join(reportDir, 'screenshots');
 await mkdir(screenshotDir, { recursive: true });
@@ -19,6 +20,7 @@ const MIME = {
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.txt': 'text/plain; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
 };
 
 const server = createServer(async (request, response) => {
@@ -84,11 +86,13 @@ try {
         const h1 = document.querySelector('h1');
         const main = document.querySelector('main#main');
         const skip = document.querySelector('.skip-link');
+        const canonical = document.querySelector('link[rel="canonical"]');
         const emptyLinks = [...document.querySelectorAll('a')].filter((link) => !link.textContent.trim() && !link.getAttribute('aria-label')).length;
         return {
           h1: h1?.textContent.trim() ?? '',
           hasMain: Boolean(main),
           skipTargetExists: Boolean(skip && document.querySelector(skip.getAttribute('href'))),
+          canonicalUrl: canonical?.href ?? '',
           emptyLinks,
           documentWidth: document.documentElement.scrollWidth,
           viewportWidth: document.documentElement.clientWidth,
@@ -140,6 +144,7 @@ try {
       if (!response?.ok()) failures.push(`${target.name}/${viewport.name}: HTTP ${record.status}`);
       if (!structural.hasMain || !structural.h1) failures.push(`${target.name}/${viewport.name}: missing main or h1`);
       if (!structural.skipTargetExists) failures.push(`${target.name}/${viewport.name}: skip link target missing`);
+      if (!structural.canonicalUrl) failures.push(`${target.name}/${viewport.name}: canonical URL missing`);
       if (structural.emptyLinks) failures.push(`${target.name}/${viewport.name}: ${structural.emptyLinks} empty links`);
       if (structural.horizontalOverflow) failures.push(`${target.name}/${viewport.name}: horizontal overflow ${structural.documentWidth}px > ${structural.viewportWidth}px`);
       if (!firstFocus?.visible || firstFocus.className !== 'skip-link') failures.push(`${target.name}/${viewport.name}: first keyboard focus is not the visible skip link`);
@@ -158,6 +163,7 @@ try {
 const report = {
   generatedAt: new Date().toISOString(),
   status: failures.length ? 'failed' : 'passed',
+  outputDirectory,
   testedPages: pages.length,
   testedViewports: viewports.length,
   totalCases: results.length,
