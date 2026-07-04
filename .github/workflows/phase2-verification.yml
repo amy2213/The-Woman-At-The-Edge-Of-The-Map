@@ -33,6 +33,10 @@ jobs:
       - name: Prepare verification evidence
         run: mkdir -p verification
 
+      - name: Diagnose canonical hashes
+        shell: bash
+        run: node scripts/diagnose-content-hashes.mjs > verification/hash-diagnostics.log
+
       - name: Verify canonical content
         shell: bash
         run: |
